@@ -30,6 +30,9 @@
     <ClCompile Include="JsonRequestPacketDeserializer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="JsonRequestPacketSerializer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Comunicator.h">
@@ -48,6 +51,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="json.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="JsonRequestPacketSerializer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -7,38 +7,34 @@
 #include <bitset>
 #include "json.hpp"
 
-#define LOGIN_RES 100
-#define SIGNUP_RES 101
-#define ERROR_RES 102
+//#define LOGIN_RES 100
+//#define SIGNUP_RES 101
+//#define ERROR_RES 102
 
 enum class BYTE : std::uint8_t {};
 
-typedef struct ErrorResponse
+typedef struct LoginRequest
 {
-	std::string message;
-	NLOHMANN_DEFINE_TYPE_INTRUSIVE(ErrorResponse, message)
-} ErrorResponse;
-
-typedef struct LoginResponse
-{
-	unsigned int status;
-	NLOHMANN_DEFINE_TYPE_INTRUSIVE(LoginResponse, status)
+	std::string userName;
+	std::string password;
+	// Constructor to initialize struct directly from nlohmann::json object
+	LoginRequest(const nlohmann::json& j);
 } LoginResponse;
 
-typedef struct SignupResponse
+typedef struct SignUpRequest
 {
-	unsigned int status;
-	NLOHMANN_DEFINE_TYPE_INTRUSIVE(SignupResponse, status)
+	std::string userName;
+	std::string password;
+	std::string email;
+	SignUpRequest(const nlohmann::json& j);
 } SignupResponse;
 
 class JsonRequestPacketDeserializer
 {
 public:
-	static std::vector<std::uint8_t> serializeResponse(ErrorResponse err);
-	static std::vector<std::uint8_t> serializeResponse(LoginResponse l);
-	static std::vector<std::uint8_t> serializeResponse(SignupResponse s);
+	static LoginRequest deserializeLoginRequest(std::vector<std::uint8_t> l);
+	static SignUpRequest deserializeSignUpRequest(std::vector<std::uint8_t> s);
 
 private:
-	static std::vector<uint8_t> intToBytes(int value);
 	static std::vector<uint8_t> buildMsg(nlohmann::json j, unsigned int id);
 };
