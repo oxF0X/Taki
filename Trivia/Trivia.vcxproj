@@ -128,6 +128,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Comunicator.cpp" />
+    <ClCompile Include="JsonRequestPacketDeserializer.cpp" />
     <ClCompile Include="LoginRequestHandler.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Server.cpp" />
@@ -135,6 +136,8 @@
   <ItemGroup>
     <ClInclude Include="Comunicator.h" />
     <ClInclude Include="IRequestHandler.h" />
+    <ClInclude Include="json.hpp" />
+    <ClInclude Include="JsonRequestPacketDeserializer.h" />
     <ClInclude Include="LoginRequestHandler.h" />
     <ClInclude Include="Server.h" />
   </ItemGroup>
