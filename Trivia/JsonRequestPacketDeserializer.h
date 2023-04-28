@@ -7,6 +7,9 @@
 #include <bitset>
 #include "json.hpp"
 
+//#define LOGIN_RES 100
+//#define SIGNUP_RES 101
+//#define ERROR_RES 102
 
 enum class BYTE : std::uint8_t {};
 

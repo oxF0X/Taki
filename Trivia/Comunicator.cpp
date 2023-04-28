@@ -52,6 +52,25 @@ void Comunicator::bindAndListen()
 	}
 }
 
+void Comunicator::handleNewClient(SOCKET socket)
+{
+	char data[] = "Hello";
+
+	if (send(socket, data, 5 , 0) == INVALID_SOCKET)
+	{
+		throw std::exception("Error while sending message to client");
+	}
+
+	int res = recv(socket, data, 5, 0);
+	if (res == INVALID_SOCKET)
+	{
+		throw std::exception("Error while recieving from socket");
+	}
+
+	std::cout << data << std::endl;
+	closesocket(socket);
+}
+
 void Comunicator::acceptClient()
 {
 	SOCKET clientSocket = accept(this->m_serverSocket, NULL, NULL);
@@ -62,28 +81,7 @@ void Comunicator::acceptClient()
 	std::cout << "Client accepted. Server and client can speak" << std::endl;
 	// the function that handle the conversation with the client
 
-	this->m_clients[clientSocket] = LoginRequestHandler();
+	this->m_clients[clientSocket] = LoginRequestHaandler();
 	std::thread t(&Comunicator::handleNewClient, this, clientSocket);
 	t.detach();
 }
-
-void Comunicator::handleNewClient(SOCKET socket)
-{
-	char headers[HEADERS_SIZE];
-
-	//if (send(socket, data, 5 , 0) == INVALID_SOCKET)
-	//{
-	//	throw std::exception("Error while sending message to client");
-	//}
-
-	int res = recv(socket, headers, HEADERS_SIZE, 0);
-	if (res == INVALID_SOCKET)
-	{
-		throw std::exception("Error while recieving from socket");
-	}
-
-	
-	closesocket(socket);
-}
-
-
