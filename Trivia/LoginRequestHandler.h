@@ -2,8 +2,10 @@
 
 #include "IRequestHandler.h"
 
-class LoginRequestHaandler : public IRequestHandler
+class LoginRequestHandler : public IRequestHandler
 {
 public:
-	LoginRequestHaandler();
+	LoginRequestHandler();
+	bool isRequestRelevant(RequestInfo info) override;
+	RequestResult handleRequest(RequestInfo info) override;
 };

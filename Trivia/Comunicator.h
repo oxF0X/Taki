@@ -13,6 +13,7 @@
 #include "LoginRequestHandler.h"
 
 #define PORT 4444
+#define HEADERS_SIZE 5
 
 class Comunicator
 {
