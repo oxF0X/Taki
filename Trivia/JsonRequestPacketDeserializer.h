@@ -32,6 +32,4 @@ public:
 	static LoginRequest deserializeLoginRequest(std::vector<std::uint8_t> l);
 	static SignUpRequest deserializeSignUpRequest(std::vector<std::uint8_t> s);
 
-private:
-	static std::vector<uint8_t> buildMsg(nlohmann::json j, unsigned int id);
 };

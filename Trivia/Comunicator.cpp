@@ -69,20 +69,19 @@ void Comunicator::acceptClient()
 
 void Comunicator::handleNewClient(SOCKET socket)
 {
-	char headers[HEADERS_SIZE];
-
-	//if (send(socket, data, 5 , 0) == INVALID_SOCKET)
-	//{
-	//	throw std::exception("Error while sending message to client");
-	//}
-
-	int res = recv(socket, headers, HEADERS_SIZE, 0);
-	if (res == INVALID_SOCKET)
+	int msgCode, msgSize;
+	std::vector<uint8_t> msg;
+	msgCode = Helper::getIntPartFromSocket(socket, CODE_SIZE);
+	msgSize = Helper::getIntPartFromSocket(socket, LENGTH_SIZE);
+	msg = Helper::getDataFromSocket(socket, msgSize);
+	RequestInfo info{ msgCode, msg };
+	if (!this->m_clients[socket].isRequestRelevant(info))
 	{
-		throw std::exception("Error while recieving from socket");
+		Helper::sendData(socket, JsonRequestPacketSerializer::serializeResponse(ErrorResponse{"ERROR: Irelevant request.\n"}));
 	}
+	std::cout << "walla sabba\n";
 
-	
+
 	closesocket(socket);
 }
 

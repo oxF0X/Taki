@@ -9,11 +9,13 @@
 #include <mutex>
 #include <map>
 #include <string>
-
+#include "Helper.h"
 #include "LoginRequestHandler.h"
+#include "JsonRequestPacketSerializer.h"
 
 #define PORT 4444
-#define HEADERS_SIZE 5
+#define CODE_SIZE 1
+#define LENGTH_SIZE 4
 
 class Comunicator
 {

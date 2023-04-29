@@ -6,6 +6,7 @@
 #include <array>
 #include <bitset>
 #include "json.hpp"
+#include "Helper.h"
 
 #define LOGIN_RES 100
 #define SIGNUP_RES 101
@@ -39,6 +40,5 @@ public:
 	static std::vector<std::uint8_t> serializeResponse(SignupResponse s);
 
 private:
-	static std::vector<uint8_t> intToBytes(int value);
 	static std::vector<uint8_t> buildMsg(nlohmann::json j, unsigned int id);
 }; 
