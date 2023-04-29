@@ -11,7 +11,9 @@ using std::string;
 // returns the data as int
 int Helper::getIntPartFromSocket(const SOCKET sc, const int bytesNum)
 {
-	return atoi(getPartFromSocket(sc, bytesNum).c_str());
+	
+	 const char* data = getPartFromSocket(sc, bytesNum).c_str();
+	 return *(reinterpret_cast<const int*>(data));
 }
 
 std::vector<uint8_t> Helper::getDataFromSocket(SOCKET sc, const int bytesNum)

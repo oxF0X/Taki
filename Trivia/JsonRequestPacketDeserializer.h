@@ -8,28 +8,29 @@
 #include "json.hpp"
 
 
-enum class BYTE : std::uint8_t {};
-
-typedef struct LoginRequest
+namespace Requests
 {
-	std::string userName;
-	std::string password;
-	// Constructor to initialize struct directly from nlohmann::json object
-	LoginRequest(const nlohmann::json& j);
-} LoginResponse;
+	typedef struct LoginRequest
+	{
+		std::string userName;
+		std::string password;
+	} LoginResponse;
 
-typedef struct SignUpRequest
-{
-	std::string userName;
-	std::string password;
-	std::string email;
-	SignUpRequest(const nlohmann::json& j);
-} SignupResponse;
+	typedef struct SignUpRequest
+	{
+		std::string userName;
+		std::string password;
+		std::string email;
+	} SignupResponse;
+
+	void from_json(const nlohmann::json& j, SignUpRequest& s);
+	void from_json(const nlohmann::json& j, LoginRequest& l);
+}
 
 class JsonRequestPacketDeserializer
 {
 public:
-	static LoginRequest deserializeLoginRequest(std::vector<std::uint8_t> l);
-	static SignUpRequest deserializeSignUpRequest(std::vector<std::uint8_t> s);
+	static Requests::LoginRequest deserializeLoginRequest(std::vector<std::uint8_t> l);
+	static Requests::SignUpRequest deserializeSignUpRequest(std::vector<std::uint8_t> s);
 
 };

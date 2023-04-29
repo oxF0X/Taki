@@ -12,8 +12,6 @@
 #define SIGNUP_RES 101
 #define ERROR_RES 102
 
-enum class BYTE : std::uint8_t {};
-
 typedef struct ErrorResponse
 {
 	std::string message;

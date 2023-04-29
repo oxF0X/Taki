@@ -7,6 +7,9 @@
 #define LOGIN_REQ 10
 #define SIGNUP_REQ 11
 
+
+class IRequestHandler;
+
 typedef struct RequestInfo
 {
 	int requestId;
@@ -25,3 +28,4 @@ public:
 	virtual bool isRequestRelevant(RequestInfo info) = 0;
 	virtual RequestResult handleRequest(RequestInfo info) = 0;
 };
+

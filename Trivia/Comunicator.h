@@ -33,5 +33,5 @@ private:
 	void acceptClient();
 
 	SOCKET m_serverSocket;
-	std::map<SOCKET, IRequestHandler> m_clients;
+	std::map<SOCKET, IRequestHandler*> m_clients;
 };

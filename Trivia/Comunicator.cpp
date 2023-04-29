@@ -14,6 +14,12 @@ Comunicator::Comunicator()
 
 Comunicator::~Comunicator()
 {
+	for (std::pair<SOCKET, IRequestHandler*> client : this->m_clients)
+	{
+		closesocket(client.first);
+		delete(client.second);
+	}
+
 	try
 	{
 		WSACleanup();
@@ -62,7 +68,7 @@ void Comunicator::acceptClient()
 	std::cout << "Client accepted. Server and client can speak" << std::endl;
 	// the function that handle the conversation with the client
 
-	this->m_clients[clientSocket] = LoginRequestHandler();
+	this->m_clients[clientSocket] = new LoginRequestHandler();
 	std::thread t(&Comunicator::handleNewClient, this, clientSocket);
 	t.detach();
 }
@@ -75,9 +81,18 @@ void Comunicator::handleNewClient(SOCKET socket)
 	msgSize = Helper::getIntPartFromSocket(socket, LENGTH_SIZE);
 	msg = Helper::getDataFromSocket(socket, msgSize);
 	RequestInfo info{ msgCode, msg };
-	if (!this->m_clients[socket].isRequestRelevant(info))
+	if (!this->m_clients[socket]->isRequestRelevant(info))
 	{
-		Helper::sendData(socket, JsonRequestPacketSerializer::serializeResponse(ErrorResponse{"ERROR: Irelevant request.\n"}));
+		try
+		{
+			Helper::sendData(socket, JsonRequestPacketSerializer::serializeResponse(ErrorResponse{ "ERROR: Irelevant request.\n" }));
+		}
+		catch (...)
+		{
+			delete(this->m_clients[socket]);
+			closesocket(socket);
+			return;
+		}
 	}
 	std::cout << "walla sabba\n";
 
