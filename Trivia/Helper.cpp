@@ -11,9 +11,7 @@ using std::string;
 // returns the data as int
 int Helper::getIntPartFromSocket(const SOCKET sc, const int bytesNum)
 {
-	//char arrData[5] = { 0 };
 	std::string data(getPartFromSocket(sc, bytesNum));
-	//strncpy_s(arrData, data.c_str(), data.size());
 	if (bytesNum == 1)
 	{
 		return (int)data[0];

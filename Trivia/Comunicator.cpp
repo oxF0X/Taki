@@ -96,6 +96,8 @@ void Comunicator::handleNewClient(SOCKET socket)
 	}
 	std::cout << "walla sabba\n";
 
+	Helper::sendData(socket, JsonRequestPacketSerializer::serializeResponse(LoginResponse{1}));
+
 
 	closesocket(socket);
 }
