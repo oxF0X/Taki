@@ -11,9 +11,22 @@ using std::string;
 // returns the data as int
 int Helper::getIntPartFromSocket(const SOCKET sc, const int bytesNum)
 {
-	
-	 const char* data = getPartFromSocket(sc, bytesNum).c_str();
-	 return *(reinterpret_cast<const int*>(data));
+	//char arrData[5] = { 0 };
+	std::string data(getPartFromSocket(sc, bytesNum));
+	//strncpy_s(arrData, data.c_str(), data.size());
+	if (bytesNum == 1)
+	{
+		return (int)data[0];
+	}
+
+	unsigned char bytes[] = {0, 0, 0, 0};
+
+	for (int i = 0; i < data.size(); i++)
+	{
+		bytes[i] = data[i];
+	}
+
+	return (int)((bytes[3] << 24) | (bytes[2] << 16) | (bytes[1] << 8) | bytes[0]);
 }
 
 std::vector<uint8_t> Helper::getDataFromSocket(SOCKET sc, const int bytesNum)
@@ -36,9 +49,6 @@ std::vector<uint8_t> Helper::getDataFromSocket(SOCKET sc, const int bytesNum)
 	return byte_vector;
 	
 }
-
-
-
 
 
 // send data to socket
