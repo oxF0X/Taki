@@ -11,7 +11,6 @@ std::vector<std::uint8_t> JsonRequestPacketSerializer::serializeResponse(LoginRe
 {
     nlohmann::json j;
     l.to_json(j, l);
-    std::cout << j << std::endl;
     return buildMsg(j, LOGIN_RES);
 }
 

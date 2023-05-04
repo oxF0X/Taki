@@ -17,13 +17,31 @@ RequestResult LoginRequestHandler::handleRequest(RequestInfo info)
 {
 	if (info.requestId == LOGIN_REQ)
 	{
-		LoginRequest l = JsonRequestPacketDeserializer::deserializeLoginRequest(info.buffer);
+		LoginRequest l;
+		try
+		{
+			l = JsonRequestPacketDeserializer::deserializeLoginRequest(info.buffer);
+		}
+		catch (ParsingExceprion& e)
+		{
+			return RequestResult{ JsonRequestPacketSerializer::serializeResponse(ErrorResponse{std::string(e.what())}), nullptr};
+		}
+
 		std::cout << "[Login] " << l.username << " " << l.password << std::endl;
 		return RequestResult{ JsonRequestPacketSerializer::serializeResponse(LoginResponse{1}), nullptr };
 
 	}
 
-	SignupRequest s = JsonRequestPacketDeserializer::deserializeSignupRequest(info.buffer);
-	std::cout << "[Login] " << s.username << " " << s.password << " " << s.email << std::endl;
+	SignupRequest s;
+	try
+	{
+		s = JsonRequestPacketDeserializer::deserializeSignupRequest(info.buffer);
+	}
+	catch (ParsingExceprion& e)
+	{
+		return RequestResult{ JsonRequestPacketSerializer::serializeResponse(ErrorResponse{std::string(e.what())}), nullptr };
+	}
+
+	std::cout << "[Signup] " << s.username << " " << s.password << " " << s.email << std::endl;
 	return RequestResult{ JsonRequestPacketSerializer::serializeResponse(LoginResponse{1}), nullptr };
 }

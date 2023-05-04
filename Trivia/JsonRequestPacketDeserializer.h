@@ -7,6 +7,7 @@
 #include <bitset>
 #include "json.hpp"
 #include "Helper.h"
+#include "ParsingException.h"
 
 
 
