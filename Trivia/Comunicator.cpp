@@ -90,6 +90,7 @@ void Comunicator::handleNewClient(SOCKET socket)
 		catch (...)
 		{
 			delete(this->m_clients[socket]);
+			this->m_clients.erase(socket);
 			closesocket(socket);
 			return;
 		}

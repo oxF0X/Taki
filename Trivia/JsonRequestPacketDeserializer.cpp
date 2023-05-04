@@ -1,28 +1,21 @@
 #include "JsonRequestPacketDeserializer.h"
 
 
-void Requests::from_json(const nlohmann::json& j, SignUpRequest& s)
+
+LoginRequest JsonRequestPacketDeserializer::deserializeLoginRequest(std::vector<std::uint8_t> l)
 {
-	j.at("userName").get_to(s.userName);
-	j.at("email").get_to(s.email);
-	j.at("password").get_to(s.password);
+	LoginRequest login = { "sad", "sda" };
+	nlohmann::json j;
+	login.from_json(j, login);
+	return login;
 }
 
-void Requests::from_json(const nlohmann::json& j, LoginRequest& l)
+SignUpRequest JsonRequestPacketDeserializer::deserializeSignUpRequest(std::vector<std::uint8_t> s)
 {
-	j.at("userName").get_to(l.userName);
-	j.at("password").get_to(l.password);
-}
-
-
-Requests::LoginRequest JsonRequestPacketDeserializer::deserializeLoginRequest(std::vector<std::uint8_t> l)
-{
-	return nlohmann::json::parse(l).get<Requests::LoginRequest>();
-}
-
-Requests::SignUpRequest JsonRequestPacketDeserializer::deserializeSignUpRequest(std::vector<std::uint8_t> s)
-{
-	return nlohmann::json::parse(s).get<Requests::SignUpRequest>();
+	SignUpRequest login = { "sad", "sda" };
+	nlohmann::json j;
+	login.from_json(j, login);
+	return login;
 }
 
 

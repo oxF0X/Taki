@@ -6,31 +6,31 @@
 #include <array>
 #include <bitset>
 #include "json.hpp"
+#include "Helper.h"
 
 
-namespace Requests
+
+typedef struct LoginRequest
 {
-	typedef struct LoginRequest
-	{
-		std::string userName;
-		std::string password;
-	} LoginResponse;
+	std::string userName;
+	std::string password;
+	NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(LoginRequest, userName, password)
+} LoginRequest;
 
-	typedef struct SignUpRequest
-	{
-		std::string userName;
-		std::string password;
-		std::string email;
-	} SignupResponse;
+typedef struct SignUpRequest
+{
+	std::string userName;
+	std::string password;
+	std::string email;
+	NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(SignUpRequest, userName, password, email)
+} SignUpRequest;
 
-	void from_json(const nlohmann::json& j, SignUpRequest& s);
-	void from_json(const nlohmann::json& j, LoginRequest& l);
-}
+
 
 class JsonRequestPacketDeserializer
 {
 public:
-	static Requests::LoginRequest deserializeLoginRequest(std::vector<std::uint8_t> l);
-	static Requests::SignUpRequest deserializeSignUpRequest(std::vector<std::uint8_t> s);
+	static LoginRequest deserializeLoginRequest(std::vector<std::uint8_t> l);
+	static SignUpRequest deserializeSignUpRequest(std::vector<std::uint8_t> s);
 
 };
