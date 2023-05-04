@@ -95,11 +95,11 @@ void Comunicator::handleNewClient(SOCKET socket)
 			return;
 		}
 	}
-	std::cout << "walla sabba\n";
 
-	Helper::sendData(socket, JsonRequestPacketSerializer::serializeResponse(LoginResponse{1}));
+	RequestResult r = this->m_clients[socket]->handleRequest(info);
 
-
+	this->m_clients[socket] = r.newHandler ? r.newHandler : this->m_clients[socket];
+	Helper::sendData(socket, r.buffer);
 	closesocket(socket);
 }
 

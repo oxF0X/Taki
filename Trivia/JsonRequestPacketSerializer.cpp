@@ -11,14 +11,15 @@ std::vector<std::uint8_t> JsonRequestPacketSerializer::serializeResponse(LoginRe
 {
     nlohmann::json j;
     l.to_json(j, l);
+    std::cout << j << std::endl;
     return buildMsg(j, LOGIN_RES);
 }
 
-std::vector<std::uint8_t> JsonRequestPacketSerializer::serializeResponse(SignUpResponse s)
+std::vector<std::uint8_t> JsonRequestPacketSerializer::serializeResponse(SignupResponse s)
 {
     nlohmann::json j;
     s.to_json(j, s);
-    return buildMsg(j, SIGNUP_RES);
+    return buildMsg(j, Signup_RES);
 }
 
 

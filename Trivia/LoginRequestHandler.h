@@ -1,6 +1,8 @@
 #pragma once
 
 #include "IRequestHandler.h"
+#include "JsonRequestPacketDeserializer.h"
+#include  "JsonRequestPacketSerializer.h"
 
 class LoginRequestHandler : public IRequestHandler
 {

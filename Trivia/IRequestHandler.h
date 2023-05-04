@@ -5,7 +5,7 @@
 #include <iostream>
 
 #define LOGIN_REQ 10
-#define SIGNUP_REQ 11
+#define Signup_REQ 11
 
 
 class IRequestHandler;

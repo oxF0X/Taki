@@ -12,18 +12,25 @@
 
 typedef struct LoginRequest
 {
-	std::string userName;
+	std::string username;
 	std::string password;
-	NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(LoginRequest, userName, password)
+
+	LoginRequest() : username(""), password("") {}
+
+	NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(LoginRequest, username, password)
 } LoginRequest;
 
-typedef struct SignUpRequest
+
+typedef struct SignupRequest
 {
-	std::string userName;
+	std::string username;
 	std::string password;
 	std::string email;
-	NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(SignUpRequest, userName, password, email)
-} SignUpRequest;
+
+	SignupRequest() : username(""), password(""), email("") { }
+
+	NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(SignupRequest, username, password, email)
+} SignupRequest;
 
 
 
@@ -31,6 +38,6 @@ class JsonRequestPacketDeserializer
 {
 public:
 	static LoginRequest deserializeLoginRequest(std::vector<std::uint8_t> l);
-	static SignUpRequest deserializeSignUpRequest(std::vector<std::uint8_t> s);
+	static SignupRequest deserializeSignupRequest(std::vector<std::uint8_t> s);
 
 };

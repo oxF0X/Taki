@@ -4,18 +4,18 @@
 
 LoginRequest JsonRequestPacketDeserializer::deserializeLoginRequest(std::vector<std::uint8_t> l)
 {
-	LoginRequest login = { "sad", "sda" };
-	nlohmann::json j;
+	LoginRequest login;
+	nlohmann::json j = nlohmann::json::parse(l);
 	login.from_json(j, login);
 	return login;
 }
 
-SignUpRequest JsonRequestPacketDeserializer::deserializeSignUpRequest(std::vector<std::uint8_t> s)
+SignupRequest JsonRequestPacketDeserializer::deserializeSignupRequest(std::vector<std::uint8_t> s)
 {
-	SignUpRequest login = { "sad", "sda" };
-	nlohmann::json j;
-	login.from_json(j, login);
-	return login;
+	SignupRequest Signup;
+	nlohmann::json j = nlohmann::json::parse(s);
+	Signup.from_json(j, Signup);
+	return Signup;
 }
 
 
