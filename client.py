@@ -1,16 +1,27 @@
 import socket
+import json
+from dataclasses import dataclass
+import struct
+import base64
+
 SERVER_IP = "127.0.0.1"
 SERVER_PORT = 4444
 
-# Create a TCP/IP socket
+l = {"username": "test", "password": "123"}
+jsonData = json.dumps(l)
+
+binary_string = format(len(jsonData))
+
+code = struct.pack('>B', 10)
+
+size = struct.pack('I', len(jsonData))
+
+
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-# Connecting to remote computer 80
 server_address = (SERVER_IP, SERVER_PORT)
 sock.connect(server_address)
 
-msg = "Hello"
-sock.sendall(msg.encode())
-
-server_msg = sock.recv(1024)
-print(server_msg.decode())
+sock.sendall(code + size + jsonData.encode())
+print(jsonData)
+print(sock.recv(1024).decode())
