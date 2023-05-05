@@ -136,10 +136,13 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ParsingException.cpp" />
     <ClCompile Include="Server.cpp" />
+    <ClCompile Include="sqlite3.c" />
+    <ClCompile Include="SqliteDatabase.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Comunicator.h" />
     <ClInclude Include="Helper.h" />
+    <ClInclude Include="IDatabase.h" />
     <ClInclude Include="IRequestHandler.h" />
     <ClInclude Include="json.hpp" />
     <ClInclude Include="JsonRequestPacketDeserializer.h" />
@@ -147,6 +150,8 @@
     <ClInclude Include="LoginRequestHandler.h" />
     <ClInclude Include="ParsingException.h" />
     <ClInclude Include="Server.h" />
+    <ClInclude Include="sqlite3.h" />
+    <ClInclude Include="SqliteDatabase.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
