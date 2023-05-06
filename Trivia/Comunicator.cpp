@@ -1,6 +1,7 @@
 #include "Comunicator.h"
 
-Comunicator::Comunicator()
+
+Comunicator::Comunicator(RequestHandlerFactory& handler): m_handlerFactory(handler)
 {
 	WSADATA wsaData;
 	int wsaret = WSAStartup(0x0202, &wsaData);

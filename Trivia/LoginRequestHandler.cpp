@@ -1,6 +1,8 @@
 #include "LoginRequestHandler.h"
 
-LoginRequestHandler::LoginRequestHandler()
+
+
+LoginRequestHandler::LoginRequestHandler(RequestHandlerFactory& handler):m_handlerFactory(handler)
 {
 }
 
@@ -44,4 +46,24 @@ RequestResult LoginRequestHandler::handleRequest(RequestInfo info)
 
 	std::cout << "[Signup] " << s.username << " " << s.password << " " << s.email << std::endl;
 	return RequestResult{ JsonRequestPacketSerializer::serializeResponse(LoginResponse{1}), nullptr };
+}
+
+RequestResult LoginRequestHandler::login(RequestInfo info)
+{
+	if (this->isRequestRelevant(info))
+	{
+		return this->handleRequest(info);
+	}
+	return RequestResult{ info.buffer,  nullptr };
+
+}
+
+RequestResult LoginRequestHandler::signup(RequestInfo info)
+{
+	if (this->isRequestRelevant(info))
+	{
+		return this->handleRequest(info);
+	}
+	return RequestResult{ info.buffer,  nullptr };
+
 }

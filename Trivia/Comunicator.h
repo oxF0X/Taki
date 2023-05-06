@@ -12,6 +12,7 @@
 #include "Helper.h"
 #include "LoginRequestHandler.h"
 #include "JsonRequestPacketSerializer.h"
+#include "RequestHandlerFactory.h"
 
 #define PORT 4444
 #define CODE_SIZE 1
@@ -20,7 +21,7 @@
 class Comunicator
 {
 public:
-	Comunicator();
+	Comunicator(RequestHandlerFactory& handler);
 	~Comunicator();
 	void startHandleRequests();
 
@@ -34,4 +35,5 @@ private:
 
 	SOCKET m_serverSocket;
 	std::map<SOCKET, IRequestHandler*> m_clients;
+	RequestHandlerFactory& m_handlerFactory;
 };
