@@ -14,6 +14,12 @@ Comunicator::Comunicator()
 
 Comunicator::~Comunicator()
 {
+	for (std::pair<SOCKET, IRequestHandler*> client : this->m_clients)
+	{
+		closesocket(client.first);
+		delete(client.second);
+	}
+
 	try
 	{
 		WSACleanup();
@@ -52,25 +58,6 @@ void Comunicator::bindAndListen()
 	}
 }
 
-void Comunicator::handleNewClient(SOCKET socket)
-{
-	char data[] = "Hello";
-
-	if (send(socket, data, 5 , 0) == INVALID_SOCKET)
-	{
-		throw std::exception("Error while sending message to client");
-	}
-
-	int res = recv(socket, data, 5, 0);
-	if (res == INVALID_SOCKET)
-	{
-		throw std::exception("Error while recieving from socket");
-	}
-
-	std::cout << data << std::endl;
-	closesocket(socket);
-}
-
 void Comunicator::acceptClient()
 {
 	SOCKET clientSocket = accept(this->m_serverSocket, NULL, NULL);
@@ -81,7 +68,39 @@ void Comunicator::acceptClient()
 	std::cout << "Client accepted. Server and client can speak" << std::endl;
 	// the function that handle the conversation with the client
 
-	this->m_clients[clientSocket] = LoginRequestHaandler();
+	this->m_clients[clientSocket] = new LoginRequestHandler();
 	std::thread t(&Comunicator::handleNewClient, this, clientSocket);
 	t.detach();
 }
+
+void Comunicator::handleNewClient(SOCKET socket)
+{
+	int msgCode, msgSize;
+	std::vector<uint8_t> msg;
+	msgCode = Helper::getIntPartFromSocket(socket, CODE_SIZE);
+	msgSize = Helper::getIntPartFromSocket(socket, LENGTH_SIZE);
+	msg = Helper::getDataFromSocket(socket, msgSize);
+	RequestInfo info{ msgCode, msg };
+	if (!this->m_clients[socket]->isRequestRelevant(info))
+	{
+		try
+		{
+			Helper::sendData(socket, JsonRequestPacketSerializer::serializeResponse(ErrorResponse{ "ERROR: Irelevant request.\n" }));
+		}
+		catch (...)
+		{
+			delete(this->m_clients[socket]);
+			this->m_clients.erase(socket);
+			closesocket(socket);
+			return;
+		}
+	}
+
+	RequestResult r = this->m_clients[socket]->handleRequest(info);
+
+	this->m_clients[socket] = r.newHandler ? r.newHandler : this->m_clients[socket];
+	Helper::sendData(socket, r.buffer);
+	closesocket(socket);
+}
+
+

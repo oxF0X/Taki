@@ -6,35 +6,39 @@
 #include <array>
 #include <bitset>
 #include "json.hpp"
+#include "Helper.h"
+#include "ParsingException.h"
 
-//#define LOGIN_RES 100
-//#define SIGNUP_RES 101
-//#define ERROR_RES 102
 
-enum class BYTE : std::uint8_t {};
 
 typedef struct LoginRequest
 {
-	std::string userName;
+	std::string username;
 	std::string password;
-	// Constructor to initialize struct directly from nlohmann::json object
-	LoginRequest(const nlohmann::json& j);
-} LoginResponse;
 
-typedef struct SignUpRequest
+	LoginRequest() : username(""), password("") {}
+
+	NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(LoginRequest, username, password)
+} LoginRequest;
+
+
+typedef struct SignupRequest
 {
-	std::string userName;
+	std::string username;
 	std::string password;
 	std::string email;
-	SignUpRequest(const nlohmann::json& j);
-} SignupResponse;
+
+	SignupRequest() : username(""), password(""), email("") { }
+
+	NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(SignupRequest, username, password, email)
+} SignupRequest;
+
+
 
 class JsonRequestPacketDeserializer
 {
 public:
 	static LoginRequest deserializeLoginRequest(std::vector<std::uint8_t> l);
-	static SignUpRequest deserializeSignUpRequest(std::vector<std::uint8_t> s);
+	static SignupRequest deserializeSignupRequest(std::vector<std::uint8_t> s);
 
-private:
-	static std::vector<uint8_t> buildMsg(nlohmann::json j, unsigned int id);
 };

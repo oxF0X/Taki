@@ -13,12 +13,9 @@ jsonData = json.dumps(l)
 binary_string = format(len(jsonData))
 
 code = struct.pack('>B', 10)
-#size = struct.pack('<I', len(jsonData))
 
 size = struct.pack('I', len(jsonData))
 
-print(size)
-#print(code + size.decode().zfill(8).encode() + jsonData.encode())
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
@@ -26,3 +23,5 @@ server_address = (SERVER_IP, SERVER_PORT)
 sock.connect(server_address)
 
 sock.sendall(code + size + jsonData.encode())
+print(jsonData)
+print(sock.recv(1024).decode())
