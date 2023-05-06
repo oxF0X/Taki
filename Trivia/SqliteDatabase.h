@@ -19,6 +19,5 @@ public:
 
 private:
 	sqlite3* _db;
-
 	static int userCallback(void* ptr, int argc, char** argv, char** azColName);
 };

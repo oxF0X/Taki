@@ -128,10 +128,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AuthorizationException.cpp" />
     <ClCompile Include="Comunicator.cpp" />
     <ClCompile Include="Helper.cpp" />
     <ClCompile Include="JsonRequestPacketDeserializer.cpp" />
     <ClCompile Include="JsonRequestPacketSerializer.cpp" />
+    <ClCompile Include="LoggedUser.cpp" />
+    <ClCompile Include="LoginManager.cpp" />
     <ClCompile Include="LoginRequestHandler.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ParsingException.cpp" />
@@ -140,6 +143,7 @@
     <ClCompile Include="SqliteDatabase.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AuthorizationException.h" />
     <ClInclude Include="Comunicator.h" />
     <ClInclude Include="Helper.h" />
     <ClInclude Include="IDatabase.h" />
@@ -147,6 +151,8 @@
     <ClInclude Include="json.hpp" />
     <ClInclude Include="JsonRequestPacketDeserializer.h" />
     <ClInclude Include="JsonRequestPacketSerializer.h" />
+    <ClInclude Include="LoggedUser.h" />
+    <ClInclude Include="LoginManager.h" />
     <ClInclude Include="LoginRequestHandler.h" />
     <ClInclude Include="ParsingException.h" />
     <ClInclude Include="Server.h" />

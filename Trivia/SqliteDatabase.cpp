@@ -92,7 +92,7 @@ int SqliteDatabase::addNewUser(std::string username, std::string password, std::
 {
     if (this->doesUserExist(username))
     {
-        throw(std::runtime_error("This user already exists"));
+        return 1;
     }
 
     std::string sqlQuery = "INSERT INTO USERS(ID, NAME, PASSWORD, EMAIL) VALUES(NULL, '" + username + "', " + "'" + password + "', " + "'" + email + "' ); ";
