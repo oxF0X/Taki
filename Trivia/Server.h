@@ -7,7 +7,7 @@
 class Server
 {
 public:
-	//Server(IDatabase* database ,);
+	Server(IDatabase* db);
 	void run();
 
 private:

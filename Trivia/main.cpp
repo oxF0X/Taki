@@ -3,9 +3,11 @@
 
 #include <iostream>
 #include "Server.h" 
+#include "SqliteDatabase.h" 
 
 int main()
 {
-    Server s;
+    SqliteDatabase db;
+    Server s(&db);
     s.run();
 }

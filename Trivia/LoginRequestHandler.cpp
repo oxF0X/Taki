@@ -19,51 +19,48 @@ RequestResult LoginRequestHandler::handleRequest(RequestInfo info)
 {
 	if (info.requestId == LOGIN_REQ)
 	{
-		LoginRequest l;
-		try
-		{
-			l = JsonRequestPacketDeserializer::deserializeLoginRequest(info.buffer);
-		}
-		catch (ParsingExceprion& e)
-		{
-			return RequestResult{ JsonRequestPacketSerializer::serializeResponse(ErrorResponse{std::string(e.what())}), nullptr};
-		}
-
-		std::cout << "[Login] " << l.username << " " << l.password << std::endl;
-		return RequestResult{ JsonRequestPacketSerializer::serializeResponse(LoginResponse{1}), nullptr };
+		return this->login(info);
 
 	}
+	return this->signup(info);
+}
 
-	SignupRequest s;
+RequestResult LoginRequestHandler::login(RequestInfo info)
+{
+	LoginRequest l;
+	
 	try
 	{
-		s = JsonRequestPacketDeserializer::deserializeSignupRequest(info.buffer);
+		l = JsonRequestPacketDeserializer::deserializeLoginRequest(info.buffer);
+		this->m_handlerFactory.getLoginManger().login(l.username, l.password);
 	}
 	catch (ParsingExceprion& e)
 	{
 		return RequestResult{ JsonRequestPacketSerializer::serializeResponse(ErrorResponse{std::string(e.what())}), nullptr };
 	}
-
-	std::cout << "[Signup] " << s.username << " " << s.password << " " << s.email << std::endl;
-	return RequestResult{ JsonRequestPacketSerializer::serializeResponse(LoginResponse{1}), nullptr };
-}
-
-RequestResult LoginRequestHandler::login(RequestInfo info)
-{
-	if (this->isRequestRelevant(info))
+	catch (AuthorizationException& e)
 	{
-		return this->handleRequest(info);
+		return RequestResult{ JsonRequestPacketSerializer::serializeResponse(ErrorResponse{std::string(e.what())}), nullptr };
 	}
-	return RequestResult{ info.buffer,  nullptr };
-
+	
+	return RequestResult{ JsonRequestPacketSerializer::serializeResponse(LoginResponse{1}), nullptr };
 }
 
 RequestResult LoginRequestHandler::signup(RequestInfo info)
 {
-	if (this->isRequestRelevant(info))
+	SignupRequest s;
+	try
 	{
-		return this->handleRequest(info);
+		s = JsonRequestPacketDeserializer::deserializeSignupRequest(info.buffer);
+		this->m_handlerFactory.getLoginManger().signup(s.username, s.password, s.email);
 	}
-	return RequestResult{ info.buffer,  nullptr };
-
+	catch (ParsingExceprion& e)
+	{
+		return RequestResult{ JsonRequestPacketSerializer::serializeResponse(ErrorResponse{std::string(e.what())}), nullptr };
+	}
+	catch (AuthorizationException& e)
+	{
+		return RequestResult{ JsonRequestPacketSerializer::serializeResponse(ErrorResponse{std::string(e.what())}), nullptr };
+	}
+	return RequestResult{ JsonRequestPacketSerializer::serializeResponse(SignupResponse{1}), nullptr };
 }
