@@ -2,6 +2,9 @@
 
 
 #include <iostream>
+#include "IRequestHandler.h"
+#include "LoginRequestHandler.h"
+#include "RequestHandlerFactory.h"
 #include "Server.h" 
 #include "SqliteDatabase.h" 
 

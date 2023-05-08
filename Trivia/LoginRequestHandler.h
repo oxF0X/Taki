@@ -7,6 +7,8 @@
 #include  "JsonRequestPacketSerializer.h"
 #include "IRequestHandler.h"
 
+class RequestHandlerFactory;
+
 
 
 class LoginRequestHandler : public IRequestHandler
