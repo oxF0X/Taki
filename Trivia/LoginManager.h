@@ -11,14 +11,16 @@
 class LoginManager
 {
 public:
-	LoginManager(IDatabase* db);
+	static LoginManager getLoginManager(IDatabase* db);
 	void signup(const std::string username, const std::string password, const std::string email, const std::string address, const std::string phoneNumber, const std::string birthday);
 	void login(const std::string username, const std::string password);
 	void logout(const std::string username);
-
+	~LoginManager();
 private:
 	IDatabase *m_database;
 	std::vector<LoggedUser> m_loggedUsers;
+	static bool is_exsit;
 
+	LoginManager(IDatabase* db);
 	void matchRegex(std::regex r, std::string s, std::string err);
 };

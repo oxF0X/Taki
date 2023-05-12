@@ -11,6 +11,6 @@
 int main()
 {
     SqliteDatabase db;
-    Server s(&db);
+    Server s(Server::getServer(&db));
     s.run();
 }

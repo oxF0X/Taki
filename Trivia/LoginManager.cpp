@@ -1,8 +1,19 @@
 #include "LoginManager.h"
 
+bool LoginManager::is_exsit = false;
 LoginManager::LoginManager(IDatabase* db) : m_database(db)
 {
 	this->m_database->open();
+	LoginManager::is_exsit = true;
+}
+
+LoginManager LoginManager::getLoginManager(IDatabase* db)
+{
+	if (LoginManager::is_exsit)
+	{
+		throw(std::runtime_error("Instance of this object is already exsit"));
+	}
+	return LoginManager(db);
 }
 
 void LoginManager::signup(const std::string username, const std::string password, const std::string email, const std::string address, const std::string phoneNumber, const std::string birthday)
@@ -52,6 +63,11 @@ void LoginManager::logout(const std::string username)
 	}
 
 	this->m_loggedUsers.erase(it);
+}
+
+LoginManager::~LoginManager()
+{
+	LoginManager::is_exsit = false;
 }
 
 void LoginManager::matchRegex(std::regex r, std::string s, std::string err)

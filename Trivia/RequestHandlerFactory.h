@@ -9,13 +9,15 @@ class LoginRequestHandler;
 class RequestHandlerFactory
 {
 public:
-	RequestHandlerFactory(IDatabase* db);
+	static RequestHandlerFactory getFactory(IDatabase* db);
 	LoginManager& getLoginManger();
 	LoginRequestHandler* createLoginRequestHandler();
 
-
+	~RequestHandlerFactory();
 private:
 	LoginManager m_loginManager;
 	IDatabase* m_database;
+	static bool is_exsit;
+	RequestHandlerFactory(IDatabase* db);
 };
 
