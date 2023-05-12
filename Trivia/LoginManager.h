@@ -19,4 +19,6 @@ public:
 private:
 	IDatabase *m_database;
 	std::vector<LoggedUser> m_loggedUsers;
+
+	void matchRegex(std::regex r, std::string s, std::string err);
 };
