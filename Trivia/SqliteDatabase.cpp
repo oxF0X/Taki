@@ -32,11 +32,12 @@ bool SqliteDatabase::open()
     }
 
     char* errMessage = nullptr;
-    const char* sqlStatement = "CREATE TABLE USERS (ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, NAME TEXT NOT NULL, PASSWRD TEXT NOT NULL, EMAIL TEXT NOT NULL);";
+    const char* sqlStatement = "CREATE TABLE USERS (ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, NAME TEXT NOT NULL, PASSWRD TEXT NOT NULL, EMAIL TEXT NOT NULL, ADDRESS TEXT NOT NULL, PHONE_NUMBER TEXT NOT NULL, BIRTHDAY DTAE NOT NULL);";
 
     if (sqlite3_exec(this->_db, sqlStatement, nullptr, nullptr, &errMessage) != SQLITE_OK)   // Check if the command was executed
     {
         std::cout << "Failed to create tables" << std::endl << "Exiting..." << std::endl;
+        throw(AuthorizationException(std::string("Couldnt execute db query")));
         sqlite3_close(this->_db);
         return false;
     }
@@ -66,7 +67,7 @@ int SqliteDatabase::doesUserExist(std::string username)
 
     if (res != SQLITE_OK)   // Check if the command was executed
     {
-        throw(std::runtime_error("Couldn't execute SQL query"));
+        throw(AuthorizationException(std::string("Couldnt execute db query")));
     }
 
     return user.size() != 0;
@@ -82,26 +83,26 @@ int SqliteDatabase::doesPasswordMatch(std::string username, std::string password
 
     if (res != SQLITE_OK)   // Check if the command was executed
     {
-        throw(std::runtime_error("Couldn't execute SQL query"));
+        throw(AuthorizationException(std::string("Couldnt execute db query")));
     }
 
     return user.size() != 0;
 }
 
-int SqliteDatabase::addNewUser(std::string username, std::string password, std::string email)
+int SqliteDatabase::addNewUser(std::string username, std::string password, std::string email, const std::string address, const std::string phoneNumber, const std::string birthday)
 {
     if (this->doesUserExist(username))
     {
         return 1;
     }
 
-    std::string sqlQuery = "INSERT INTO USERS(ID, NAME, PASSWORD, EMAIL) VALUES(NULL, '" + username + "', " + "'" + password + "', " + "'" + email + "' ); ";
+    std::string sqlQuery = "INSERT INTO USERS(ID, NAME, PASSWORD, EMAIL, ADDRESS, PHONE_NNUMBER, BIRTHDAY) VALUES(NULL, '" + username + "', " + "'" + password + "', " + "'" + email + "', '" + address + "', '" + phoneNumber + "', '" + birthday + "' ); ";
     char* errMessage = nullptr;
     bool res = sqlite3_exec(this->_db, sqlQuery.c_str(), nullptr, nullptr, &errMessage);
 
     if (res != SQLITE_OK)   // Check if the command was executed
     {
-        throw(std::runtime_error("Couldn't execute SQL query"));
+        throw(AuthorizationException(std::string("Couldnt execute db query")));
     }
     return 0;
 }
