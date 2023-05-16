@@ -36,5 +36,4 @@ private:
 	SOCKET m_serverSocket;
 	std::map<SOCKET, IRequestHandler*> m_clients;
 	RequestHandlerFactory& m_handlerFactory;
-	static bool is_exsit;
 };

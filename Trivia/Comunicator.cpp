@@ -1,7 +1,5 @@
 #include "Comunicator.h"
 
-bool Comunicator::is_exsit = false;
-
 Comunicator::Comunicator(RequestHandlerFactory& handler): m_handlerFactory(handler)
 {
 	WSADATA wsaData;
@@ -12,7 +10,6 @@ Comunicator::Comunicator(RequestHandlerFactory& handler): m_handlerFactory(handl
 	}
 
 	this->m_serverSocket = socket(AF_INET, SOCK_STREAM, 0);
-	Comunicator::is_exsit = true;
 }
 
 Comunicator::~Comunicator()
@@ -28,7 +25,6 @@ Comunicator::~Comunicator()
 		WSACleanup();
 	}
 	catch (...) {}
-	Comunicator::is_exsit = false;
 }
 
 void Comunicator::startHandleRequests()
@@ -38,11 +34,8 @@ void Comunicator::startHandleRequests()
 
 Comunicator Comunicator::getComunicator(RequestHandlerFactory& handler)
 {
-	if (Comunicator::is_exsit)
-	{
-		throw(std::runtime_error("Instance of this object is already exsit"));
-	}
-	return Comunicator(handler);
+	static Comunicator c(handler);
+	return c;
 }
 
 void Comunicator::bindAndListen()

@@ -17,5 +17,4 @@ private:
 	Comunicator m_comunicator;
 	IDatabase* m_database;
 	RequestHandlerFactory m_handlerFactory;
-	static bool is_exsit;
 };
