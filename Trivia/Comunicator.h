@@ -24,7 +24,7 @@ public:
 
 	~Comunicator();
 	void startHandleRequests();
-	static Comunicator getComunicator(RequestHandlerFactory& handler);
+	static Comunicator& getComunicator(RequestHandlerFactory& handler);
 private:
 	void bindAndListen();
 	void handleNewClient(SOCKET socket);

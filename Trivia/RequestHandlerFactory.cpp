@@ -7,7 +7,7 @@ RequestHandlerFactory::RequestHandlerFactory(IDatabase* db): m_database(db), m_l
 {
 }
 
-RequestHandlerFactory RequestHandlerFactory::getFactory(IDatabase* db)
+RequestHandlerFactory& RequestHandlerFactory::getFactory(IDatabase* db)
 {
 	static RequestHandlerFactory r(db);
 	return r;

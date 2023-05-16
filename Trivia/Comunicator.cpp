@@ -32,7 +32,7 @@ void Comunicator::startHandleRequests()
 	this->bindAndListen();
 }
 
-Comunicator Comunicator::getComunicator(RequestHandlerFactory& handler)
+Comunicator& Comunicator::getComunicator(RequestHandlerFactory& handler)
 {
 	static Comunicator c(handler);
 	return c;
