@@ -10,7 +10,7 @@
 
 int main()
 {
-    SqliteDatabase db;
+    SqliteDatabase db = SqliteDatabase::getDB();
     Server s(Server::getServer(&db));
     s.run();
 }

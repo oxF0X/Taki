@@ -9,7 +9,7 @@ Server::Server(IDatabase* db):m_database(db), m_handlerFactory(RequestHandlerFac
 Server& Server::getServer(IDatabase* db)
 {
 	static Server s(db);
-	return Server(db);
+	return s;
 }
 
 void Server::run()
