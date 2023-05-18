@@ -2,11 +2,15 @@
 
 
 #include <iostream>
+#pragma comment (lib, "mongocxx.lib")
+#pragma comment (lib, "bsoncxx.lib")
 #include "IRequestHandler.h"
 #include "LoginRequestHandler.h"
 #include "RequestHandlerFactory.h"
 #include "Server.h" 
 #include "SqliteDatabase.h" 
+
+
 
 int main()
 {
