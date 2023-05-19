@@ -1,5 +1,10 @@
 #include "Room.h"
 
+Room::Room(RoomData data, LoggedUser owner) : m_metatdata(data)
+{
+	this->m_users.push_back(owner);
+}
+
 void Room::addUser(LoggedUser user)
 {
 	if (std::find_if(this->m_users.begin(), this->m_users.end(),
@@ -24,4 +29,9 @@ std::vector<std::string> Room::getAllUsers() const
 		v.push_back(u.getUsername());
 	}
 	return v;
+}
+
+const unsigned int Room::isActive() const
+{
+	return this->m_metatdata.isActive;
 }

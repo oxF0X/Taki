@@ -20,9 +20,11 @@ typedef struct RoomData
 class Room
 {
 public:
+	Room(RoomData data, LoggedUser owner);
 	void addUser(LoggedUser user);
 	void removeUser(LoggedUser user);
 	std::vector<std::string> getAllUsers() const;
+	const unsigned int isActive() const;
 
 private:
 	RoomData m_metatdata;
