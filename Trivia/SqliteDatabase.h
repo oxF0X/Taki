@@ -22,6 +22,7 @@ private:
 
 	SqliteDatabase();
 
+	std::shared_mutex _mtx;
 	sqlite3* _db;
 	static int userCallback(void* ptr, int argc, char** argv, char** azColName);
 };
