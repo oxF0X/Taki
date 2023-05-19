@@ -42,4 +42,5 @@ public:
 
 private:
 	static std::vector<uint8_t> buildMsg(nlohmann::json j, unsigned int id);
+
 }; 

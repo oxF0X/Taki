@@ -21,10 +21,10 @@
 class Comunicator
 {
 public:
-	Comunicator(RequestHandlerFactory& handler);
+
 	~Comunicator();
 	void startHandleRequests();
-
+	static Comunicator& getComunicator(RequestHandlerFactory& handler);
 private:
 	void bindAndListen();
 	void handleNewClient(SOCKET socket);
@@ -32,7 +32,7 @@ private:
 	///////////////////////////////
 
 	void acceptClient();
-
+	Comunicator(RequestHandlerFactory& handler);
 	SOCKET m_serverSocket;
 	std::map<SOCKET, IRequestHandler*> m_clients;
 	RequestHandlerFactory& m_handlerFactory;

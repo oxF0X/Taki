@@ -1,6 +1,5 @@
 #include "Comunicator.h"
 
-
 Comunicator::Comunicator(RequestHandlerFactory& handler): m_handlerFactory(handler)
 {
 	WSADATA wsaData;
@@ -31,6 +30,12 @@ Comunicator::~Comunicator()
 void Comunicator::startHandleRequests()
 {
 	this->bindAndListen();
+}
+
+Comunicator& Comunicator::getComunicator(RequestHandlerFactory& handler)
+{
+	static Comunicator c(handler);
+	return c;
 }
 
 void Comunicator::bindAndListen()

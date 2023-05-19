@@ -1,8 +1,15 @@
 #include "LoginManager.h"
 
+
 LoginManager::LoginManager(IDatabase* db) : m_database(db)
 {
 	this->m_database->open();
+}
+
+LoginManager& LoginManager::getLoginManager(IDatabase* db)
+{
+	static LoginManager m(db);
+	return m;
 }
 
 void LoginManager::signup(const std::string username, const std::string password, const std::string email, const std::string address, const std::string phoneNumber, const std::string birthday)
@@ -12,6 +19,9 @@ void LoginManager::signup(const std::string username, const std::string password
 	this->matchRegex(std::regex("^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\\W).{8}$"), password, "Invalid password");
 
 	this->matchRegex(std::regex("^[a-zA-Z\\s]+,\\s*\\d+,\\s*[A-Za-z\\s]+$"), address, "Invalid password");
+
+	this->matchRegex(std::regex("0\\d{2}-\\d{4}-\\d{3}$|0\\d{1}-\\d{4}\\d{3}$"), phoneNumber, "Invalid phone number");
+	this->matchRegex(std::regex("\\d{2}.\\d{2}.\\d{4}$|\\d{2}/\\d{3}/\\d{4}$"), birthday, "Invalid birthday");
 
 
 	if (this->m_database->addNewUser(username, password, email, address, phoneNumber, birthday))
@@ -49,6 +59,10 @@ void LoginManager::logout(const std::string username)
 	}
 
 	this->m_loggedUsers.erase(it);
+}
+
+LoginManager::~LoginManager()
+{
 }
 
 void LoginManager::matchRegex(std::regex r, std::string s, std::string err)

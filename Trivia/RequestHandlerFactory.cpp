@@ -2,9 +2,15 @@
 
 class LoginRequestHandler;
 
-RequestHandlerFactory::RequestHandlerFactory(IDatabase* db): m_database(db), m_loginManager(db)
+
+RequestHandlerFactory::RequestHandlerFactory(IDatabase* db): m_database(db), m_loginManager(LoginManager::getLoginManager(db))
 {
-	
+}
+
+RequestHandlerFactory& RequestHandlerFactory::getFactory(IDatabase* db)
+{
+	static RequestHandlerFactory r(db);
+	return r;
 }
 
 LoginManager& RequestHandlerFactory::getLoginManger()
@@ -15,4 +21,8 @@ LoginManager& RequestHandlerFactory::getLoginManger()
 LoginRequestHandler* RequestHandlerFactory::createLoginRequestHandler()
 {
 	return new LoginRequestHandler(*this);
+}
+
+RequestHandlerFactory::~RequestHandlerFactory()
+{
 }

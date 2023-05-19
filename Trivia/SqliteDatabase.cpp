@@ -107,6 +107,12 @@ int SqliteDatabase::addNewUser(std::string username, std::string password, std::
     return 0;
 }
 
+SqliteDatabase& SqliteDatabase::getDB()
+{
+    static SqliteDatabase db = SqliteDatabase();
+    return db;
+}
+
 int SqliteDatabase::userCallback(void* ptr, int argc, char** argv, char** azColName)
 {
     std::string *s = reinterpret_cast<std::string*>(ptr);

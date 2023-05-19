@@ -52,11 +52,6 @@ RequestResult LoginRequestHandler::signup(RequestInfo info)
 	try
 	{
 		s = JsonRequestPacketDeserializer::deserializeSignupRequest(info.buffer);
-		std::regex r("([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-]+)(\.[a-zA-Z]{2,5}){1,2}$");
-		if (!std::regex_search(s.email, r))
-		{
-
-		}
 
 		this->m_handlerFactory.getLoginManger().signup(s.username, s.password, s.email, s.address, s.phoneNumber, s.birthday);
 	}
