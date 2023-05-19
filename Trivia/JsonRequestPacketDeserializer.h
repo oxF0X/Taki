@@ -27,10 +27,13 @@ typedef struct SignupRequest
 	std::string username;
 	std::string password;
 	std::string email;
+	std::string address;
+	std::string birthday;
+	std::string phoneNumber;
 
-	SignupRequest() : username(""), password(""), email("") { }
+	SignupRequest() : username(""), password(""), email(""), phoneNumber(), address(), birthday() { }
 
-	NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(SignupRequest, username, password, email)
+	NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(SignupRequest, username, password, email, address, birthday, phoneNumber)
 } SignupRequest;
 
 

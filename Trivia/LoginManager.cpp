@@ -5,9 +5,16 @@ LoginManager::LoginManager(IDatabase* db) : m_database(db)
 	this->m_database->open();
 }
 
-void LoginManager::signup(const std::string username, const std::string password, const std::string email)
+void LoginManager::signup(const std::string username, const std::string password, const std::string email, const std::string address, const std::string phoneNumber, const std::string birthday)
 {
-	if (this->m_database->addNewUser(username, password, email))
+	this->matchRegex(std::regex("([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-]+)(\.[a-zA-Z]{2,5}){1,2}$"), email, "Invalid email");
+    
+	this->matchRegex(std::regex("^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\\W).{8}$"), password, "Invalid password");
+
+	this->matchRegex(std::regex("^[a-zA-Z\\s]+,\\s*\\d+,\\s*[A-Za-z\\s]+$"), address, "Invalid password");
+
+
+	if (this->m_database->addNewUser(username, password, email, address, phoneNumber, birthday))
 	{
 		throw(AuthorizationException(std::string("This user already exists")));
 	}
@@ -42,4 +49,13 @@ void LoginManager::logout(const std::string username)
 	}
 
 	this->m_loggedUsers.erase(it);
+}
+
+void LoginManager::matchRegex(std::regex r, std::string s, std::string err)
+{
+	if (!std::regex_search(s, r))
+	{
+		throw(AuthorizationException(std::string(err)));
+	}
+
 }
