@@ -17,10 +17,7 @@ bool SqliteDatabase::open()
 {
     std::string dbFileName = DB_NAME;
 
-    if (_access(dbFileName.c_str(), 0) == 0) 
-    {
-        return true;
-    }
+    bool isExsit = _access(dbFileName.c_str(), 0);
 
     if (sqlite3_open(dbFileName.c_str(), &(this->_db)) != SQLITE_OK)   // If can't open throw exception
     {
@@ -30,8 +27,13 @@ bool SqliteDatabase::open()
         return false;
     }
 
+    if (isExsit == 0)
+    {
+        return true;
+    }
+
     char* errMessage = nullptr;
-    const char* sqlStatement = "CREATE TABLE USERS (ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, NAME TEXT NOT NULL, PASSWRD TEXT NOT NULL, EMAIL TEXT NOT NULL, ADDRESS TEXT NOT NULL, PHONE_NUMBER TEXT NOT NULL, BIRTHDAY DTAE NOT NULL);";
+    const char* sqlStatement = "CREATE TABLE USERS (ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, NAME TEXT NOT NULL, PASSWORD TEXT NOT NULL, EMAIL TEXT NOT NULL, ADDRESS TEXT NOT NULL, PHONE_NUMBER TEXT NOT NULL, BIRTHDAY DTAE NOT NULL);";
 
     if (sqlite3_exec(this->_db, sqlStatement, nullptr, nullptr, &errMessage) != SQLITE_OK)   // Check if the command was executed
     {
@@ -58,10 +60,14 @@ bool SqliteDatabase::close()
 
 int SqliteDatabase::doesUserExist(std::string username)
 {
-    std::string sqlQuery = "SELECT * FROM USERS WHERE USERNAME = '" + username + "' LIMIT 1; ";
+    std::string sqlQuery = "SELECT * FROM USERS WHERE NAME = '" + username + "' LIMIT 1; ";
     char* errMessage = nullptr;
 
     std::string user;
+<<<<<<< HEAD
+    bool res = sqlite3_exec(this->_db, sqlQuery.c_str(), SqliteDatabase::userCallback, &user, &errMessage);
+ 
+=======
     bool res;
 
     {
@@ -69,6 +75,7 @@ int SqliteDatabase::doesUserExist(std::string username)
         bool res = sqlite3_exec(this->_db, sqlQuery.c_str(), SqliteDatabase::userCallback, &user, &errMessage);
     }
 
+>>>>>>> v1.0.4
     if (res != SQLITE_OK)   // Check if the command was executed
     {
         throw(AuthorizationException(std::string("Couldnt execute db query")));
@@ -79,7 +86,7 @@ int SqliteDatabase::doesUserExist(std::string username)
 
 int SqliteDatabase::doesPasswordMatch(std::string username, std::string password)
 {
-    std::string sqlQuery = "SELECT * FROM USERS WHERE USERNAME = '" + username  + "' AND PASSWORD = '" + password + "' LIMIT 1; ";
+    std::string sqlQuery = "SELECT * FROM USERS WHERE NAME = '" + username  + "' AND PASSWORD = '" + password + "' LIMIT 1; ";
     char* errMessage = nullptr;
 
     std::string user ;
@@ -92,6 +99,7 @@ int SqliteDatabase::doesPasswordMatch(std::string username, std::string password
 
     if (res != SQLITE_OK)   // Check if the command was executed
     {
+        std::cout << sqlite3_errmsg(this->_db);
         throw(AuthorizationException(std::string("Couldnt execute db query")));
     }
 
@@ -105,7 +113,7 @@ int SqliteDatabase::addNewUser(std::string username, std::string password, std::
         return 1;
     }
 
-    std::string sqlQuery = "INSERT INTO USERS(ID, NAME, PASSWORD, EMAIL, ADDRESS, PHONE_NNUMBER, BIRTHDAY) VALUES(NULL, '" + username + "', " + "'" + password + "', " + "'" + email + "', '" + address + "', '" + phoneNumber + "', '" + birthday + "' ); ";
+    std::string sqlQuery = "INSERT INTO USERS(ID, NAME, PASSWORD, EMAIL, ADDRESS, PHONE_NUMBER, BIRTHDAY) VALUES(NULL, '" + username + "', " + "'" + password + "', " + "'" + email + "', '" + address + "', '" + phoneNumber + "', '" + birthday + "' ); ";
     char* errMessage = nullptr;
     bool res;
 
