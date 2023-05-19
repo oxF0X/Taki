@@ -18,10 +18,7 @@ bool SqliteDatabase::open()
 {
     std::string dbFileName = DB_NAME;
 
-    if (_access(dbFileName.c_str(), 0) == 0) 
-    {
-        return true;
-    }
+    bool isExsit = _access(dbFileName.c_str(), 0);
 
     if (sqlite3_open(dbFileName.c_str(), &(this->_db)) != SQLITE_OK)   // If can't open throw exception
     {
@@ -29,6 +26,11 @@ bool SqliteDatabase::open()
         sqlite3_close(this->_db);
         this->_db = nullptr;
         return false;
+    }
+
+    if (isExsit == 0)
+    {
+        return true;
     }
 
     char* errMessage = nullptr;
@@ -83,6 +85,7 @@ int SqliteDatabase::doesPasswordMatch(std::string username, std::string password
 
     if (res != SQLITE_OK)   // Check if the command was executed
     {
+        std::cout << sqlite3_errmsg(this->_db);
         throw(AuthorizationException(std::string("Couldnt execute db query")));
     }
 

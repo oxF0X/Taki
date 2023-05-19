@@ -44,7 +44,7 @@ void LoginManager::login(const std::string username, const std::string password)
 		throw(AuthorizationException(std::string("This user already logged in")));
 	}
 
-	if (!this->m_database->doesPasswordMatch(username, password))
+	if (!(this->m_database->doesPasswordMatch(username, password)))
 	{
 		throw(AuthorizationException(std::string("Invalid credetionals")));
 	}
