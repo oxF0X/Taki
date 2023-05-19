@@ -18,14 +18,14 @@ LoginManager LoginManager::getLoginManager(IDatabase* db)
 
 void LoginManager::signup(const std::string username, const std::string password, const std::string email, const std::string address, const std::string phoneNumber, const std::string birthday)
 {
-	this->matchRegex(std::regex("([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-]+)(\.[a-zA-Z]{2,5}){1,2}$"), email, "Invalid email");
-    
-	this->matchRegex(std::regex("^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\\W).{8}$"), password, "Invalid password");
+	//this->matchRegex(std::regex("([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-]+)(\.[a-zA-Z]{2,5}){1,2}$"), email, "Invalid email");
+ //   
+	//this->matchRegex(std::regex("^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\\W).{8}$"), password, "Invalid password");
 
-	this->matchRegex(std::regex("^[a-zA-Z\\s]+,\\s*\\d+,\\s*[A-Za-z\\s]+$"), address, "Invalid password");
+	//this->matchRegex(std::regex("^[a-zA-Z\\s]+,\\s*\\d+,\\s*[A-Za-z\\s]+$"), address, "Invalid password");
 
-	this->matchRegex(std::regex("0\\d{2}-\\d{4}-\\d{3}$|0\\d{1}-\\d{4}\\d{3}$"), phoneNumber, "Invalid phone number");
-	this->matchRegex(std::regex("\\d{2}.\\d{2}.\\d{4}$|\\d{2}/\\d{3}/\\d{4}$"), birthday, "Invalid birthday");
+	//this->matchRegex(std::regex("0\\d{2}-\\d{4}-\\d{3}$|0\\d{1}-\\d{4}\\d{3}$"), phoneNumber, "Invalid phone number");
+	//this->matchRegex(std::regex("\\d{2}.\\d{2}.\\d{4}$|\\d{2}/\\d{3}/\\d{4}$"), birthday, "Invalid birthday");
 
 
 	if (this->m_database->addNewUser(username, password, email, address, phoneNumber, birthday))
