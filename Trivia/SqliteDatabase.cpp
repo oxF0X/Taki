@@ -1,8 +1,7 @@
 #include "SqliteDatabase.h"
 
-SqliteDatabase::SqliteDatabase()
+SqliteDatabase::SqliteDatabase() : _db(nullptr)
 {
-	this->_db = nullptr;
 }
 
 SqliteDatabase::~SqliteDatabase()
@@ -65,8 +64,18 @@ int SqliteDatabase::doesUserExist(std::string username)
     char* errMessage = nullptr;
 
     std::string user;
+<<<<<<< HEAD
     bool res = sqlite3_exec(this->_db, sqlQuery.c_str(), SqliteDatabase::userCallback, &user, &errMessage);
  
+=======
+    bool res;
+
+    {
+        std::shared_lock<std::shared_mutex> lock(this->_mtx);
+        bool res = sqlite3_exec(this->_db, sqlQuery.c_str(), SqliteDatabase::userCallback, &user, &errMessage);
+    }
+
+>>>>>>> v1.0.4
     if (res != SQLITE_OK)   // Check if the command was executed
     {
         throw(AuthorizationException(std::string("Couldnt execute db query")));
@@ -81,7 +90,12 @@ int SqliteDatabase::doesPasswordMatch(std::string username, std::string password
     char* errMessage = nullptr;
 
     std::string user ;
-    bool res = sqlite3_exec(this->_db, sqlQuery.c_str(), SqliteDatabase::userCallback, &user, &errMessage);
+    bool res;
+    {
+        std::shared_lock<std::shared_mutex> lock(this->_mtx);
+        res = sqlite3_exec(this->_db, sqlQuery.c_str(), SqliteDatabase::userCallback, &user, &errMessage);
+
+    }
 
     if (res != SQLITE_OK)   // Check if the command was executed
     {
@@ -101,13 +115,24 @@ int SqliteDatabase::addNewUser(std::string username, std::string password, std::
 
     std::string sqlQuery = "INSERT INTO USERS(ID, NAME, PASSWORD, EMAIL, ADDRESS, PHONE_NUMBER, BIRTHDAY) VALUES(NULL, '" + username + "', " + "'" + password + "', " + "'" + email + "', '" + address + "', '" + phoneNumber + "', '" + birthday + "' ); ";
     char* errMessage = nullptr;
-    bool res = sqlite3_exec(this->_db, sqlQuery.c_str(), nullptr, nullptr, &errMessage);
+    bool res;
+
+    {
+        std::unique_lock<std::shared_mutex> lock(this->_mtx);
+        res = sqlite3_exec(this->_db, sqlQuery.c_str(), nullptr, nullptr, &errMessage);
+    }
 
     if (res != SQLITE_OK)   // Check if the command was executed
     {
         throw(AuthorizationException(std::string("Couldnt execute db query")));
     }
     return 0;
+}
+
+SqliteDatabase& SqliteDatabase::getDB()
+{
+    static SqliteDatabase db = SqliteDatabase();
+    return db;
 }
 
 int SqliteDatabase::userCallback(void* ptr, int argc, char** argv, char** azColName)

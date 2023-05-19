@@ -24,7 +24,7 @@ public:
 
 	~Comunicator();
 	void startHandleRequests();
-	static Comunicator getComunicator(RequestHandlerFactory& handler);
+	static Comunicator& getComunicator(RequestHandlerFactory& handler);
 private:
 	void bindAndListen();
 	void handleNewClient(SOCKET socket);
@@ -36,5 +36,4 @@ private:
 	SOCKET m_serverSocket;
 	std::map<SOCKET, IRequestHandler*> m_clients;
 	RequestHandlerFactory& m_handlerFactory;
-	static bool is_exsit;
 };

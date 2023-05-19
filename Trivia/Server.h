@@ -7,7 +7,7 @@
 class Server
 {
 public:
-	static Server getServer(IDatabase* db);
+	static Server& getServer(IDatabase* db);
 	void run();
 	~Server();
 
@@ -17,5 +17,4 @@ private:
 	Comunicator m_comunicator;
 	IDatabase* m_database;
 	RequestHandlerFactory m_handlerFactory;
-	static bool is_exsit;
 };
