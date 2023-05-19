@@ -64,18 +64,13 @@ int SqliteDatabase::doesUserExist(std::string username)
     char* errMessage = nullptr;
 
     std::string user;
-<<<<<<< HEAD
-    bool res = sqlite3_exec(this->_db, sqlQuery.c_str(), SqliteDatabase::userCallback, &user, &errMessage);
- 
-=======
     bool res;
 
     {
         std::shared_lock<std::shared_mutex> lock(this->_mtx);
-        bool res = sqlite3_exec(this->_db, sqlQuery.c_str(), SqliteDatabase::userCallback, &user, &errMessage);
+        res = sqlite3_exec(this->_db, sqlQuery.c_str(), SqliteDatabase::userCallback, &user, &errMessage);
     }
 
->>>>>>> v1.0.4
     if (res != SQLITE_OK)   // Check if the command was executed
     {
         throw(AuthorizationException(std::string("Couldnt execute db query")));
@@ -131,7 +126,7 @@ int SqliteDatabase::addNewUser(std::string username, std::string password, std::
 
 SqliteDatabase& SqliteDatabase::getDB()
 {
-    static SqliteDatabase db = SqliteDatabase();
+    static SqliteDatabase db;
     return db;
 }
 
