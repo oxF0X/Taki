@@ -14,6 +14,7 @@ typedef struct RoomData
 	unsigned int isActive;
 	std::string name;
 
+	NLOHMANN_DEFINE_TYPE_INTRUSIVE(RoomData, id, maxPlayers, numOfCards, timePerMove, isActive, name)
 }RoomData;
 
 
