@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include "LoggedUser.h"
+#include "json.hpp"
 
 typedef struct RoomData
 {
