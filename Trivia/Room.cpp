@@ -5,6 +5,11 @@ Room::Room(RoomData data, LoggedUser owner) : m_metatdata(data)
 	this->m_users.push_back(owner);
 }
 
+Room::Room()
+{
+
+}
+
 void Room::addUser(LoggedUser user)
 {
 	if (std::find_if(this->m_users.begin(), this->m_users.end(),

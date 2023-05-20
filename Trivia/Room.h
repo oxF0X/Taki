@@ -21,6 +21,7 @@ class Room
 {
 public:
 	Room(RoomData data, LoggedUser owner);
+	Room();
 	void addUser(LoggedUser user);
 	void removeUser(LoggedUser user);
 	std::vector<std::string> getAllUsers() const;
