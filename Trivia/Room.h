@@ -24,6 +24,7 @@ public:
 	void addUser(LoggedUser user);
 	void removeUser(LoggedUser user);
 	std::vector<std::string> getAllUsers() const;
+	RoomData getRoomData() const;
 	const unsigned int isActive() const;
 
 private:

@@ -31,6 +31,11 @@ std::vector<std::string> Room::getAllUsers() const
 	return v;
 }
 
+RoomData Room::getRoomData() const
+{
+	return this->m_metatdata;
+}
+
 const unsigned int Room::isActive() const
 {
 	return this->m_metatdata.isActive;
