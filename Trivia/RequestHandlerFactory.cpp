@@ -23,6 +23,11 @@ LoginRequestHandler* RequestHandlerFactory::createLoginRequestHandler()
 	return new LoginRequestHandler(*this);
 }
 
+RoomManager& RequestHandlerFactory::getRoomManager() 
+{
+	return this->m_roomMangager;
+}
+
 RequestHandlerFactory::~RequestHandlerFactory()
 {
 }

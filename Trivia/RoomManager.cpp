@@ -23,3 +23,18 @@ const unsigned int RoomManager::getRoomState(const int& id) const
 	}
 	return this->m_rooms.at(id).isActive();
 }
+
+std::vector<RoomData> RoomManager::getRooms() const
+{
+	std::vector<RoomData> v;
+	for (auto u : this->m_rooms)
+	{
+		v.push_back(u.second.getRoomData());
+	}
+	return v;
+}
+
+const Room& RoomManager::getRoom(const int& id)
+{
+	return this->m_rooms[id];
+}
