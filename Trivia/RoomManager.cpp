@@ -34,7 +34,12 @@ std::vector<RoomData> RoomManager::getRooms() const
 	return v;
 }
 
-const Room& RoomManager::getRoom(const int& id)
+unsigned int RoomManager::getNumbersRooms() const
+{
+	return unsigned int(this->getRooms().size());
+}
+
+ Room& RoomManager::getRoom(const int& id)
 {
 	return this->m_rooms[id];
 }

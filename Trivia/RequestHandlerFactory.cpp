@@ -5,6 +5,7 @@ class LoginRequestHandler;
 
 RequestHandlerFactory::RequestHandlerFactory(IDatabase* db): m_database(db), m_loginManager(LoginManager::getLoginManager(db))
 {
+
 }
 
 RequestHandlerFactory& RequestHandlerFactory::getFactory(IDatabase* db)
@@ -23,7 +24,12 @@ LoginRequestHandler* RequestHandlerFactory::createLoginRequestHandler()
 	return new LoginRequestHandler(*this);
 }
 
-RoomManager& RequestHandlerFactory::getRoomManager() 
+MenuRequestHandler* RequestHandlerFactory::createMenuRequestHandler(LoggedUser user)
+{
+	return new MenuRequestHandler(user, this->m_roomMangager, *this);
+}
+
+RoomManager& RequestHandlerFactory::getRoomManager()
 {
 	return this->m_roomMangager;
 }

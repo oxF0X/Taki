@@ -10,7 +10,8 @@ public:
 	void deleteRoom(const int& id);
 	const unsigned int getRoomState(const int& id) const;
 	std::vector<RoomData> getRooms() const;
-	const Room& getRoom(const int& id);
+	unsigned int getNumbersRooms() const;
+	Room& getRoom(const int& id);
 
 private:
 	std::map<int, Room> m_rooms;

@@ -72,7 +72,6 @@ typedef struct GetPersonalStatsResponse
 
 } GetPersonalStatsResponse;
 
-
 typedef struct JoinRoomResponse
 {
 	unsigned int status;
@@ -86,6 +85,9 @@ typedef struct CreateRoomResponse
 	NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(CreateRoomResponse, status)
 
 } CreateRoomResponse;
+
+
+
 
 class JsonRequestPacketSerializer
 {
