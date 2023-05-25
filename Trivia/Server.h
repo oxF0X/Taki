@@ -14,7 +14,7 @@ public:
 private:
 	Server(IDatabase* db);
 	
-	Comunicator m_comunicator;
+	Comunicator &m_comunicator;
 	IDatabase* m_database;
-	RequestHandlerFactory m_handlerFactory;
+	RequestHandlerFactory &m_handlerFactory;
 };

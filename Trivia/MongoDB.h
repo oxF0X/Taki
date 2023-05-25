@@ -11,6 +11,9 @@
 #include <mongocxx/instance.hpp>
 #include <mongocxx/exception/operation_exception.hpp>
 
+#include <WinSock2.h>
+#include <Windows.h>
+
 #include "IDatabase.h"
 #include "AuthorizationException.h"
 #include <algorithm>

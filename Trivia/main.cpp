@@ -23,6 +23,6 @@
 
 int main()
 {
-    Server s(Server::getServer(&SqliteDatabase::getDB()));
+    Server s(Server::getServer(&(MongoDB::getDB())));
     s.run();
 }

@@ -3,8 +3,13 @@
 
 MongoDB::MongoDB()
 {
-    this->_client = mongocxx::client{ mongocxx::uri{} };
-    mongocxx::database db = this->_client[DB_NAME];
+//    WSADATA wsaData;
+//    int wsaret = WSAStartup(0x0202, &wsaData);
+//    if (wsaret != 0)
+//    {
+//        throw std::exception(std::runtime_error("WSAStartup failed"));
+//    }
+//;
 }
 
 MongoDB::~MongoDB()
@@ -13,6 +18,8 @@ MongoDB::~MongoDB()
 
 bool MongoDB::open()
 {
+    this->_client = mongocxx::client{ mongocxx::uri{} };
+    mongocxx::database db = this->_client[DB_NAME];
     return true;
 }
 
