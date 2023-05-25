@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AutoVisualizer xmlns="http://schemas.microsoft.com/vstudio/debugger/natvis/2010">
+  <Type Name="bsoncxx::v_noabi::builder::core">
+    <Favorites>
+      <Favorite>_impl</Favorite>
+    </Favorites>
+  </Type>
+</AutoVisualizer>

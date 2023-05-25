@@ -14,7 +14,7 @@ LoginManager& LoginManager::getLoginManager(IDatabase* db)
 
 void LoginManager::signup(const std::string username, const std::string password, const std::string email, const std::string address, const std::string phoneNumber, const std::string birthday)
 {
-	this->matchRegex(std::regex("([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-]+)(\.[a-zA-Z]{2,5}){1,2}$"), email, "Invalid email");
+	this->matchRegex(std::regex("([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\-]+)(\.[a-zA-Z]{2,5}){1,2}$"), email, "Invalid email");
     
 	this->matchRegex(std::regex("^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\\W).{8}$"), password, "Invalid password");
 

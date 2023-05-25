@@ -9,18 +9,26 @@
 #include <bsoncxx/json.hpp>
 #include <mongocxx/uri.hpp>
 #include <mongocxx/instance.hpp>
+
 #include <iostream>
+#include <algorithm>
+#include <cstdlib>
 #include "IRequestHandler.h"
 #include "LoginRequestHandler.h"
 #include "RequestHandlerFactory.h"
 #include "Server.h" 
-#include "SqliteDatabase.h" 
+#include "MongoDB.h"
 
 
 
 int main()
 {
-    SqliteDatabase db = SqliteDatabase::getDB();
+    mongocxx::instance instance{};
+    mongocxx::client client{ mongocxx::uri{} };
+    
+
+
+    MongoDB &db = MongoDB::getDB();
     Server s(Server::getServer(&db));
     s.run();
 }
