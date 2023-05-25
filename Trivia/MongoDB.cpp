@@ -3,6 +3,12 @@
 
 MongoDB::MongoDB()
 {
+    WSADATA wsaData;
+    int wsaret = WSAStartup(0x0202, &wsaData);
+    if (wsaret != 0)
+    {
+        throw std::exception(std::runtime_error("WSAStartup failed"));
+    }
     mongocxx::instance instance{};
 }
 

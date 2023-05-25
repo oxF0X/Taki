@@ -2,12 +2,12 @@
 
 Comunicator::Comunicator(RequestHandlerFactory& handler): m_handlerFactory(handler)
 {
-	WSADATA wsaData;
-	int wsaret = WSAStartup(0x0202, &wsaData);
-	if (wsaret != 0)
-	{
-		throw std::exception(std::runtime_error("WSAStartup failed"));
-	}
+	//WSADATA wsaData;
+	//int wsaret = WSAStartup(0x0202, &wsaData);
+	//if (wsaret != 0)
+	//{
+	//	throw std::exception(std::runtime_error("WSAStartup failed"));
+	//}
 
 	this->m_serverSocket = socket(AF_INET, SOCK_STREAM, 0);
 }

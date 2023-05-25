@@ -22,7 +22,7 @@ public:
 private:
 	RequestHandlerFactory(IDatabase* db);
 	RoomManager m_roomMangager;
-	LoginManager m_loginManager;
+	LoginManager& m_loginManager;
 	IDatabase* m_database;
 	static bool is_exsit;
 };
