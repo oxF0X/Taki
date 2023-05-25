@@ -23,12 +23,6 @@
 
 int main()
 {
-    mongocxx::instance instance{};
-    mongocxx::client client{ mongocxx::uri{} };
-    
-
-
-    MongoDB &db = MongoDB::getDB();
-    Server s(Server::getServer(&db));
+    Server s(Server::getServer(&SqliteDatabase::getDB()));
     s.run();
 }
