@@ -3,13 +3,7 @@
 
 MongoDB::MongoDB()
 {
-//    WSADATA wsaData;
-//    int wsaret = WSAStartup(0x0202, &wsaData);
-//    if (wsaret != 0)
-//    {
-//        throw std::exception(std::runtime_error("WSAStartup failed"));
-//    }
-//;
+    mongocxx::instance instance{};
 }
 
 MongoDB::~MongoDB()
@@ -30,6 +24,7 @@ bool MongoDB::close()
 
 int MongoDB::doesUserExist(std::string username)
 {
+
     std::vector<std::string> dbNames = this->_client.list_database_names();
     if (std::find(dbNames.begin(), dbNames.end(), std::string(DB_NAME)) == dbNames.end())
     {
