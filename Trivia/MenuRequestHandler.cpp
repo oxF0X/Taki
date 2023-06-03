@@ -58,7 +58,7 @@ RequestResult MenuRequestHandler::getPlayersInRoom(RequestInfo info)
 	{
 		return RequestResult{ JsonRequestPacketSerializer::serializeResponse(ErrorResponse{std::string(e.what())}), nullptr };
 	}
-	catch (AuthorizationException& e)
+	catch (TriviaException& e)
 	{
 		return RequestResult{ JsonRequestPacketSerializer::serializeResponse(ErrorResponse{std::string(e.what())}), nullptr };
 	}
@@ -78,7 +78,7 @@ RequestResult MenuRequestHandler::joinRoom(RequestInfo info)
 	{
 		return RequestResult{ JsonRequestPacketSerializer::serializeResponse(ErrorResponse{std::string(e.what())}), nullptr };
 	}
-	catch (AuthorizationException& e)
+	catch (TriviaException& e)
 	{
 		return RequestResult{ JsonRequestPacketSerializer::serializeResponse(ErrorResponse{std::string(e.what())}), nullptr };
 	}
@@ -98,7 +98,7 @@ RequestResult MenuRequestHandler::createRoom(RequestInfo info)
 	{
 		return RequestResult{ JsonRequestPacketSerializer::serializeResponse(ErrorResponse{std::string(e.what())}), nullptr };
 	}
-	catch (AuthorizationException& e)
+	catch (TriviaException& e)
 	{
 		return RequestResult{ JsonRequestPacketSerializer::serializeResponse(ErrorResponse{std::string(e.what())}), nullptr };
 	}

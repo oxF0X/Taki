@@ -3,10 +3,10 @@
 #include <exception>
 #include <string>
 
-class AuthorizationException : public std::exception
+class TriviaException : public std::exception
 {
 public:
-	AuthorizationException(std::string err);
+	TriviaException(std::string err);
 	const char* what();
 
 	private:

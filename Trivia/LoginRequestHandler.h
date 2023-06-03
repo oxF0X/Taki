@@ -2,7 +2,7 @@
 
 
 #include "RequestHandlerFactory.h"
-#include "AuthorizationException.h"
+#include "TriviaException.h"
 #include "JsonRequestPacketDeserializer.h"
 #include  "JsonRequestPacketSerializer.h"
 #include "IRequestHandler.h"

@@ -5,6 +5,7 @@
 #include <vector>
 #include "LoggedUser.h"
 #include "json.hpp"
+#include "TriviaException.h"
 
 typedef struct RoomData
 {

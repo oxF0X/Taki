@@ -2,9 +2,14 @@
 
 void RoomManager::createRoom(const LoggedUser& user, const RoomData& data)
 {
+	if (data.maxPlayers <= 1)
+	{
+		throw(TriviaException("The room must cntain atleast 2 palyers"));
+	}
+
 	if (this->m_rooms.find(data.id) != this->m_rooms.end())
 	{
-		throw(std::runtime_error("This room already exists"));
+		throw(TriviaException("This room already exists"));
 	}
 
 	this->m_rooms[data.id] = Room(data, user);
@@ -19,7 +24,7 @@ const unsigned int RoomManager::getRoomState(const int& id) const
 {
 	if (this->m_rooms.find(id) == this->m_rooms.end())
 	{
-		throw(std::runtime_error("This room doesn't exsists"));
+		throw(TriviaException("This room doesn't exsists"));
 	}
 	return this->m_rooms.at(id).isActive();
 }
@@ -39,7 +44,11 @@ unsigned int RoomManager::getNumbersRooms() const
 	return unsigned int(this->getRooms().size());
 }
 
- Room& RoomManager::getRoom(const int& id)
+Room& RoomManager::getRoom(const int& id)
 {
+	if (this->m_rooms.find(id) == this->m_rooms.end())
+	{
+		throw(TriviaException("This room doesn't exsists"));
+	}
 	return this->m_rooms[id];
 }

@@ -103,8 +103,12 @@ void Comunicator::handleNewClient(SOCKET socket)
 	}
 
 	RequestResult r = this->m_clients[socket]->handleRequest(info);
+	if (r.newHandler)
+	{
+		delete this->m_clients[socket];
+		this->m_clients[socket] = r.newHandler;
+	}
 
-	this->m_clients[socket] = r.newHandler ? r.newHandler : this->m_clients[socket];
 	Helper::sendData(socket, r.buffer);
 	closesocket(socket);
 }

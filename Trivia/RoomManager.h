@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Room.h"
+#include "TriviaException.h"
 #include <map>
 
 class RoomManager

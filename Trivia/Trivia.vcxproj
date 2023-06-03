@@ -135,7 +135,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="AuthorizationException.cpp" />
+    <ClCompile Include="sqlite3.c" />
+    <ClCompile Include="TriviaException.cpp" />
     <ClCompile Include="Comunicator.cpp" />
     <ClCompile Include="Helper.cpp" />
     <ClCompile Include="JsonRequestPacketDeserializer.cpp" />
@@ -151,11 +152,10 @@
     <ClCompile Include="Room.cpp" />
     <ClCompile Include="RoomManager.cpp" />
     <ClCompile Include="Server.cpp" />
-    <ClCompile Include="sqlite3.c" />
     <ClCompile Include="SqliteDatabase.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AuthorizationException.h" />
+    <ClInclude Include="TriviaException.h" />
     <ClInclude Include="Comunicator.h" />
     <ClInclude Include="Helper.h" />
     <ClInclude Include="IDatabase.h" />

@@ -15,7 +15,7 @@
 #include <Windows.h>
 
 #include "IDatabase.h"
-#include "AuthorizationException.h"
+#include "TriviaException.h"
 #include <algorithm>
 
 #define DB_NAME "Trivia"
