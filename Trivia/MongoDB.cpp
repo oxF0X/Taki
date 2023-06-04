@@ -108,6 +108,21 @@ int MongoDB::addNewUser(std::string username, std::string password, std::string 
     return 0;
 }
 
+float MongoDB::getPlayerAverageAnswerTime(std::string username)
+{
+    return 0.0f;
+}
+
+int MongoDB::getNumOfWins(std::string username)
+{
+    return 0;
+}
+
+float MongoDB::getPlayerAverageNumOfCardsLeft(std::string username)
+{
+    return 0.0f;
+}
+
 int MongoDB::getNumsOfPlayerGames(std::string username)
 {
     std::vector<std::string> dbNames = this->_client.list_database_names();
@@ -123,9 +138,9 @@ int MongoDB::getNumsOfPlayerGames(std::string username)
 
     auto result = this->_client[DB_NAME][STATISTICS_COLLECTION].find_one(bsoncxx::builder::basic::make_document(bsoncxx::builder::basic::kvp("username", username)));
 
-    if (result) {
-        bsoncxx::document::view d = bsoncxx::to_json(result);
-    }
+    //if (result) {
+    //    bsoncxx::document::view d = bsoncxx::to_json(result);
+    //}
     
 
     

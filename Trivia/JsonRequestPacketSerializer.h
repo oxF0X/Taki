@@ -12,6 +12,14 @@
 #define LOGIN_RES 100
 #define Signup_RES 101
 #define ERROR_RES 102
+#define GetRooms_RES 103
+#define getPlayers_RES 104
+#define JoinRoom_RES 105
+#define CreateRoom_RES 106
+#define CloseRoom_RES 107
+#define StartRoom_RES 108
+#define LeaveRoom_RES 109
+#define GetRoomsStateRoom_RES 110
 
 typedef struct ErrorResponse
 {
@@ -86,7 +94,37 @@ typedef struct CreateRoomResponse
 
 } CreateRoomResponse;
 
+typedef struct CloseRoomResponse
+{
+	unsigned int status;
+	NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(CloseRoomResponse, status)
 
+} CloseRoomResponse;
+
+typedef struct StartRoomResponse
+{
+	unsigned int status;
+	NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(StartRoomResponse, status)
+
+} StartRoomResponse;
+
+typedef struct LeaveRoomResponse
+{
+	unsigned int status;
+	NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(LeaveRoomResponse, status)
+
+} LeaveRoomResponse;
+
+typedef struct GetRoomsStateResponse
+{
+	unsigned int status;
+	bool hasGameBegun;
+	std::vector<std::string> players;
+	std::vector<int> cardsPerPlayer;
+	std::vector<std::string> LastPlayForEachPlayer;
+	NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(GetRoomsStateResponse, status, hasGameBegun, players, cardsPerPlayer, LastPlayForEachPlayer)
+
+} GetRoomsStateResponse;
 
 
 class JsonRequestPacketSerializer
@@ -103,6 +141,11 @@ public:
 	static std::vector<std::uint8_t> serializeResponse(GetPersonalStatsResponse s);
 	static std::vector<std::uint8_t> serializeResponse(JoinRoomResponse s);
 	static std::vector<std::uint8_t> serializeResponse(CreateRoomResponse s);
+
+	static std::vector<std::uint8_t> serializeResponse(CloseRoomResponse s);
+	static std::vector<std::uint8_t> serializeResponse(StartRoomResponse s);
+	static std::vector<std::uint8_t> serializeResponse(LeaveRoomResponse s);
+	static std::vector<std::uint8_t> serializeResponse(GetRoomsStateResponse s);
 
 private:
 	static std::vector<uint8_t> buildMsg(nlohmann::json j, unsigned int id);

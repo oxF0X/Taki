@@ -8,6 +8,11 @@ RequestHandlerFactory::RequestHandlerFactory(IDatabase* db): m_database(db), m_l
 
 }
 
+RequestHandlerFactory::~RequestHandlerFactory()
+{
+}
+
+
 RequestHandlerFactory& RequestHandlerFactory::getFactory(IDatabase* db)
 {
 	static RequestHandlerFactory r(db);
@@ -17,6 +22,11 @@ RequestHandlerFactory& RequestHandlerFactory::getFactory(IDatabase* db)
 LoginManager& RequestHandlerFactory::getLoginManger()
 {
 	return this->m_loginManager;
+}
+
+RoomManager& RequestHandlerFactory::getRoomManager()
+{
+	return this->m_roomMangager;
 }
 
 LoginRequestHandler* RequestHandlerFactory::createLoginRequestHandler()
@@ -29,11 +39,10 @@ MenuRequestHandler* RequestHandlerFactory::createMenuRequestHandler(LoggedUser u
 	return new MenuRequestHandler(user, this->m_roomMangager, *this);
 }
 
-RoomManager& RequestHandlerFactory::getRoomManager()
+RoomMemberRequestHandler* RequestHandlerFactory::createRoomMemberRequestHandler(LoggedUser user, Room room)
 {
-	return this->m_roomMangager;
+	return new RoomMemberRequestHandler(user, room, this->m_roomMangager, *this);
 }
 
-RequestHandlerFactory::~RequestHandlerFactory()
-{
-}
+
+

@@ -135,6 +135,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="RoomAdmibrRequestHandler.cpp" />
+    <ClCompile Include="RoomMemberRequestHandler.cpp" />
     <ClCompile Include="sqlite3.c" />
     <ClCompile Include="TriviaException.cpp" />
     <ClCompile Include="Comunicator.cpp" />
@@ -152,9 +154,10 @@
     <ClCompile Include="Room.cpp" />
     <ClCompile Include="RoomManager.cpp" />
     <ClCompile Include="Server.cpp" />
-    <ClCompile Include="SqliteDatabase.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="RoomAdmibrRequestHandler.h" />
+    <ClInclude Include="RoomMemberRequestHandler.h" />
     <ClInclude Include="TriviaException.h" />
     <ClInclude Include="Comunicator.h" />
     <ClInclude Include="Helper.h" />
@@ -174,7 +177,6 @@
     <ClInclude Include="RoomManager.h" />
     <ClInclude Include="Server.h" />
     <ClInclude Include="sqlite3.h" />
-    <ClInclude Include="SqliteDatabase.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

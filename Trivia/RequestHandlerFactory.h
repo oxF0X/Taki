@@ -3,21 +3,27 @@
 #include "LoginManager.h"
 #include "LoginRequestHandler.h"
 #include "MenuRequestHandler.h"
+#include "RoomMemberRequestHandler.h"
 #include "IDatabase.h"
 #include "RoomManager.h"
 
+
 class LoginRequestHandler;
 class MenuRequestHandler;
+class RoomMemberRequestHandler;
 
 class RequestHandlerFactory
 {
 public:
 	static RequestHandlerFactory& getFactory(IDatabase* db);
 	LoginManager& getLoginManger();
-	LoginRequestHandler* createLoginRequestHandler();
-
-	MenuRequestHandler* createMenuRequestHandler(LoggedUser user);
 	RoomManager& getRoomManager();
+
+	LoginRequestHandler* createLoginRequestHandler();
+	MenuRequestHandler* createMenuRequestHandler(LoggedUser user);
+	RoomMemberRequestHandler* createRoomMemberRequestHandler(LoggedUser user, Room room);
+	
+
 	~RequestHandlerFactory();
 private:
 	RequestHandlerFactory(IDatabase* db);
