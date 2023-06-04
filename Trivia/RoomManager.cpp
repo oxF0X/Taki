@@ -12,7 +12,7 @@ void RoomManager::createRoom(const LoggedUser& user, const RoomData& data)
 		throw(TriviaException("This room already exists"));
 	}
 
-	this->m_rooms[data.id] = Room(data, user);
+	this->m_rooms.insert(std::pair<int,Room>(data.id,Room(data, user)));
 }
 
 void RoomManager::deleteRoom(const int& id)

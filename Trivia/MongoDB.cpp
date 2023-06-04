@@ -108,6 +108,30 @@ int MongoDB::addNewUser(std::string username, std::string password, std::string 
     return 0;
 }
 
+int MongoDB::getNumsOfPlayerGames(std::string username)
+{
+    std::vector<std::string> dbNames = this->_client.list_database_names();
+    if (std::find(dbNames.begin(), dbNames.end(), std::string(DB_NAME)) == dbNames.end())
+    {
+        return false;
+    }
+
+    if (!this->_client[DB_NAME].has_collection(STATISTICS_COLLECTION))
+    {
+        return false;
+    }
+
+    auto result = this->_client[DB_NAME][STATISTICS_COLLECTION].find_one(bsoncxx::builder::basic::make_document(bsoncxx::builder::basic::kvp("username", username)));
+
+    if (result) {
+        bsoncxx::document::view d = bsoncxx::to_json(result);
+    }
+    
+
+    
+
+}
+
 MongoDB& MongoDB::getDB()
 {
     static MongoDB db = MongoDB();

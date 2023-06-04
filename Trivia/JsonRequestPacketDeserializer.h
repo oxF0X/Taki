@@ -40,13 +40,12 @@ typedef struct SignupRequest
 typedef struct CreateRoomRequest
 {
 	std::string roomName;
-	unsigned int maxId;
-	unsigned int turnTime;
-	unsigned int cardsCount;
+	unsigned int maxUsers;
+	unsigned int answerTimeout;
 
-	CreateRoomRequest() : roomName(""), maxId(0), turnTime(0), cardsCount(0){ }
+	CreateRoomRequest() : roomName(""), maxUsers(0), answerTimeout(0){ }
 
-	NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(CreateRoomRequest, roomName, maxId, turnTime, cardsCount)
+	NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(CreateRoomRequest, roomName, maxUsers, answerTimeout)
 } CreateRoomRequest;
 
 typedef struct GetPalayersInRoomRequest

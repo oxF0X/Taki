@@ -91,7 +91,7 @@ RequestResult MenuRequestHandler::createRoom(RequestInfo info)
 	try
 	{
 		room = JsonRequestPacketDeserializer::deserializeCreateRoomRequest(info.buffer);
-		this->m_roomManager.createRoom(this->m_user, RoomData{this->m_roomManager.getNumbersRooms(), room.maxId, room.cardsCount, room.turnTime, false, room.roomName });
+		this->m_roomManager.createRoom(this->m_user, RoomData{this->m_roomManager.getNumbersRooms(), room.maxUsers, room.answerTimeout, false, room.roomName });
 		
 	}
 	catch (ParsingExceprion& e)

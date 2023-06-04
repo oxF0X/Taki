@@ -10,3 +10,4 @@ getPlayers_REQ 14
 JoinRoom_REQ 15
 CreateRoom_REQ 16
  
+mongod -dbpath c:\mongoDBs
