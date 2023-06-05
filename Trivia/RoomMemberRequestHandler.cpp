@@ -26,6 +26,12 @@ RequestResult RoomMemberRequestHandler::handleRequest(RequestInfo info)
 
 RequestResult RoomMemberRequestHandler::leaveRoom(RequestInfo info)
 {
+	this->m_room.removeUser(this->m_user);
+	return RequestResult{ JsonRequestPacketSerializer::serializeResponse(LeaveRoomResponse{1}), nullptr };
+}
+
+RequestResult RoomMemberRequestHandler::getRoomState(RequestInfo info)
+{
 	CreateRoomRequest room;
 	try
 	{
@@ -42,9 +48,4 @@ RequestResult RoomMemberRequestHandler::leaveRoom(RequestInfo info)
 		return RequestResult{ JsonRequestPacketSerializer::serializeResponse(ErrorResponse{std::string(e.what())}), nullptr };
 	}
 	return RequestResult{ JsonRequestPacketSerializer::serializeResponse(CreateRoomResponse{1}), nullptr };
-}
-
-RequestResult RoomMemberRequestHandler::getRoomState(RequestInfo info)
-{
-	return RequestResult();
 }

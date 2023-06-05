@@ -135,7 +135,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="RoomAdmibrRequestHandler.cpp" />
+    <ClCompile Include="RoomAdminRequestHandler.cpp" />
     <ClCompile Include="RoomMemberRequestHandler.cpp" />
     <ClCompile Include="sqlite3.c" />
     <ClCompile Include="TriviaException.cpp" />
@@ -156,7 +156,7 @@
     <ClCompile Include="Server.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="RoomAdmibrRequestHandler.h" />
+    <ClInclude Include="RoomAdminRequestHandler.h" />
     <ClInclude Include="RoomMemberRequestHandler.h" />
     <ClInclude Include="TriviaException.h" />
     <ClInclude Include="Comunicator.h" />

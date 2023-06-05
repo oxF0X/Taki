@@ -1,4 +1,4 @@
-#include "RoomAdmibrRequestHandler.h"
+#include "RoomAdminRequestHandler.h"
 
 RoomAdminRequestHandler::RoomAdminRequestHandler(LoggedUser user, Room room, RoomManager& roomManager, RequestHandlerFactory& handlerFactory) : m_user(user), m_room(room), m_roomManager(roomManager), m_handlerFactory(handlerFactory)
 {
