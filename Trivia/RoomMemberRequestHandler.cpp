@@ -32,20 +32,19 @@ RequestResult RoomMemberRequestHandler::leaveRoom(RequestInfo info)
 
 RequestResult RoomMemberRequestHandler::getRoomState(RequestInfo info)
 {
-	CreateRoomRequest room;
-	try
-	{
-		room = JsonRequestPacketDeserializer::deserializeCreateRoomRequest(info.buffer);
-		this->m_room;
+	unsigned int status;
+	bool hasGameBegun;
+	std::vector<std::string> players;
+	std::vector<int> cardsPerPlayer;
+	std::vector<std::string> LastPlayForEachPlayer;
 
-	}
-	catch (ParsingExceprion& e)
-	{
-		return RequestResult{ JsonRequestPacketSerializer::serializeResponse(ErrorResponse{std::string(e.what())}), nullptr };
-	}
-	catch (TriviaException& e)
-	{
-		return RequestResult{ JsonRequestPacketSerializer::serializeResponse(ErrorResponse{std::string(e.what())}), nullptr };
-	}
-	return RequestResult{ JsonRequestPacketSerializer::serializeResponse(CreateRoomResponse{1}), nullptr };
+	hasGameBegun = this->m_room.isActive();
+	players = this->m_room.getAllUsers();
+
+	return RequestResult{ JsonRequestPacketSerializer::serializeResponse(GetRoomsStateResponse{1,hasGameBegun, players,  }), nullptr };
 }
+//unsigned int status;
+//bool hasGameBegun;
+//std::vector<std::string> players;
+//std::vector<int> cardsPerPlayer;
+//std::vector<std::string> LastPlayForEachPlayer;

@@ -26,17 +26,26 @@ RequestResult RoomAdminRequestHandler::handleRequest(RequestInfo info)
 	}
 }
 
-RequestResult RoomAdminRequestHandler::closeRoom(RequestInfo info)
+RequestResult RoomAdminRequestHandler::startGame(RequestInfo info)
 {
 	return RequestResult();
 }
 
-RequestResult RoomAdminRequestHandler::startGame(RequestInfo info)
+RequestResult RoomAdminRequestHandler::closeRoom(RequestInfo info)
 {
 	return RequestResult();
 }
 
 RequestResult RoomAdminRequestHandler::getRoomState(RequestInfo info)
 {
-	return RequestResult();
+	unsigned int status;
+	bool hasGameBegun;
+	std::vector<std::string> players;
+	std::vector<int> cardsPerPlayer;
+	std::vector<std::string> LastPlayForEachPlayer;
+
+	hasGameBegun = this->m_room.isActive();
+	players = this->m_room.getAllUsers();
+
+	return RequestResult{ JsonRequestPacketSerializer::serializeResponse(GetRoomsStateResponse{1,hasGameBegun, players,  }), nullptr };
 }
