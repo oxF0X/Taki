@@ -8,7 +8,7 @@ SERVER_IP = "127.0.0.1"
 SERVER_PORT = 4444
 
 #l = {"username": "test", "password": "123"}
-l = {"username": "test1", "password": "12aA&as3", "email": "dfsf@gmail.com", "address" : "dd,1,dd", "phoneNumber" : "053-2223-333", "birthday" : "11/02/2023"}
+l = {"username": "test12", "password": "12aA&as3", "email": "dfsf@gmail.com", "address" : "dd,1,dd", "phoneNumber" : "053-2223-333", "birthday" : "11/02/2023"}
 jsonData = json.dumps(l)
 
 binary_string = format(len(jsonData))

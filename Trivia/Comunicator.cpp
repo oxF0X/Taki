@@ -83,9 +83,21 @@ void Comunicator::handleNewClient(SOCKET socket)
 {
 	int msgCode, msgSize;
 	std::vector<uint8_t> msg;
-	msgCode = Helper::getIntPartFromSocket(socket, CODE_SIZE);
-	msgSize = Helper::getIntPartFromSocket(socket, LENGTH_SIZE);
-	msg = Helper::getDataFromSocket(socket, msgSize);
+	try
+	{
+		msgCode = Helper::getIntPartFromSocket(socket, CODE_SIZE);
+		msgSize = Helper::getIntPartFromSocket(socket, LENGTH_SIZE);
+		msg = Helper::getDataFromSocket(socket, msgSize);
+	}
+	catch (...)
+	{
+		std::cout << "User disconected 1" << std::endl;
+		delete(this->m_clients[socket]);
+		this->m_clients.erase(socket);
+		closesocket(socket);
+		return;
+	}
+
 	RequestInfo info{ msgCode, msg };
 	if (!this->m_clients[socket]->isRequestRelevant(info))
 	{
@@ -95,6 +107,7 @@ void Comunicator::handleNewClient(SOCKET socket)
 		}
 		catch (...)
 		{
+			std::cout << "User disconected 2" << std::endl;
 			delete(this->m_clients[socket]);
 			this->m_clients.erase(socket);
 			closesocket(socket);
@@ -109,8 +122,19 @@ void Comunicator::handleNewClient(SOCKET socket)
 		this->m_clients[socket] = r.newHandler;
 	}
 
-	Helper::sendData(socket, r.buffer);
-	closesocket(socket);
+	try
+	{
+		Helper::sendData(socket, r.buffer);
+		closesocket(socket);
+	}
+	catch (...)
+	{
+		std::cout << "User disconected 2" << std::endl;
+		delete(this->m_clients[socket]);
+		this->m_clients.erase(socket);
+		closesocket(socket);
+		return;
+	}
 }
 
 
