@@ -2,7 +2,7 @@
 
 
 
-LoginRequestHandler::LoginRequestHandler(RequestHandlerFactory& handler):m_handlerFactory(handler)
+LoginRequestHandler::LoginRequestHandler(RequestHandlerFactory& handler):m_handlerFactory(RequestHandlerFactory::getFactory(&MongoDB::getDB()))
 {
 }
 
