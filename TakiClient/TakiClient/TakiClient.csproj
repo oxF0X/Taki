@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Images\Email.png" />
+    <None Remove="Images\Lock.png" />
+    <None Remove="Images\StartBackground.jpeg" />
+    <None Remove="Images\username.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\Email.png" />
+    <Resource Include="Images\Lock.png" />
+    <Resource Include="Images\StartBackground.jpeg" />
+    <Resource Include="Images\username.png" />
+  </ItemGroup>
+
+</Project>
