@@ -126,7 +126,7 @@
                         <TextBlock Text="Want to become a Taki guru?" Foreground="DarkGray" FontSize="12"
                                    FontWeight="Medium" FontFamily="Montserrat"/>
                         <TextBlock Text="Sign Up" Foreground="White" FontSize="12" FontWeight="Medium"
-                                   FontFamily="Montserrat" Cursor="Hand" Margin="8,0,0,0"/>
+                                   FontFamily="Montserrat" Cursor="Hand" Margin="8,0,0,0" MouseLeftButtonDown="btnSignup_Click"/>
                     </StackPanel>
                 </StackPanel>
             </Grid>

@@ -16,18 +16,25 @@ using Client;
 
 namespace TakiClient
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
-
     public partial class MainWindow : Window
     {
         private Client.Client clientHandler;
+
+
+        public MainWindow()
+        {
+            this.clientHandler = new Client.Client();
+            InitializeComponent();
+            WindowState = WindowState.Maximized;
+
+            Loaded += MainWindow_Loaded;
+        }
 
         private void btnHide_Click(object sender, RoutedEventArgs e)
         {
             WindowState = WindowState.Minimized;
         }
+
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
@@ -44,7 +51,31 @@ namespace TakiClient
                 WindowState = WindowState.Maximized;
             }
         }
-        private void btnLogin_Click(object sender, RoutedEventArgs e) { }
+
+        private void btnLogin_Click(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtUser.Text) || string.IsNullOrEmpty(txtPass.Password))
+            {
+                return;
+            }
+
+            string response = this.clientHandler.GetLogin(txtUser.Text, txtPass.Password);
+            if (response == "1")
+            {
+                MessageBox.Show("Logegd In");
+            }
+            else
+            {
+                MessageBox.Show(response);
+            }
+        }
+
+        private void btnSignup_Click(object sender, MouseButtonEventArgs e)
+        {
+            RegisterWindow registerWindow = new RegisterWindow();
+            registerWindow.Show();
+        }
+
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
@@ -53,17 +84,6 @@ namespace TakiClient
             }
         }
 
-
-
-
-         public MainWindow()
-         {
-             //this.clientHandler = new Client.Client();
-             InitializeComponent();
-            WindowState = WindowState.Maximized;
-
-            Loaded += MainWindow_Loaded;
-         }
 
         /*
          private void textUsername_MouseDown(object sender, MouseButtonEventArgs e)
@@ -105,22 +125,7 @@ namespace TakiClient
              }
          }
 
-         private void SignInButtonClick(object sender, RoutedEventArgs e)
-         {
-             if(string.IsNullOrEmpty(txtUsername.Text) || string.IsNullOrEmpty(txtPassword.Text))
-             {
-                 return;
-             }
 
-             string response = this.clientHandler.GetLogin(txtUsername.Text, txtPassword.Text);
-             if(response == "1")
-             {
-                 MessageBox.Show("Logegd In");
-             }
-             else
-             {
-                 MessageBox.Show(response);
-             }
          }*/
 
         private void Border_MouseDown(object sender, MouseButtonEventArgs e)
@@ -148,7 +153,6 @@ namespace TakiClient
             Height = screenHeight;
         }
 
-
         private void FullScreenButton_Click(object sender, RoutedEventArgs e)
         {
             ToggleFullScreen();
@@ -173,6 +177,9 @@ namespace TakiClient
             Application.Current.Shutdown();
         }
 
+        private void TextBlock_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
 
+        }
     }
 }

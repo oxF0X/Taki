@@ -2,13 +2,6 @@
 
 Comunicator::Comunicator(RequestHandlerFactory& handler): m_handlerFactory(handler)
 {
-	//WSADATA wsaData;
-	//int wsaret = WSAStartup(0x0202, &wsaData);
-	//if (wsaret != 0)
-	//{
-	//	throw std::exception(std::runtime_error("WSAStartup failed"));
-	//}
-
 	this->m_serverSocket = socket(AF_INET, SOCK_STREAM, 0);
 }
 
@@ -83,58 +76,80 @@ void Comunicator::handleNewClient(SOCKET socket)
 {
 	int msgCode, msgSize;
 	std::vector<uint8_t> msg;
-	try
-	{
-		msgCode = Helper::getIntPartFromSocket(socket, CODE_SIZE);
-		msgSize = Helper::getIntPartFromSocket(socket, LENGTH_SIZE);
-		msg = Helper::getDataFromSocket(socket, msgSize);
-	}
-	catch (...)
-	{
-		std::cout << "User disconected 1" << std::endl;
-		delete(this->m_clients[socket]);
-		this->m_clients.erase(socket);
-		closesocket(socket);
-		return;
-	}
 
-	RequestInfo info{ msgCode, msg };
-	if (!this->m_clients[socket]->isRequestRelevant(info))
+	while (true)
 	{
 		try
 		{
-			Helper::sendData(socket, JsonRequestPacketSerializer::serializeResponse(ErrorResponse{ "ERROR: Irelevant request.\n" }));
+			msgCode = Helper::getIntPartFromSocket(socket, CODE_SIZE);
+			msgSize = Helper::getIntPartFromSocket(socket, LENGTH_SIZE);
+			msg = Helper::getDataFromSocket(socket, msgSize);
 		}
 		catch (...)
 		{
-			std::cout << "User disconected 2" << std::endl;
-			delete(this->m_clients[socket]);
-			this->m_clients.erase(socket);
-			closesocket(socket);
+			std::cout << "User disconected " << this->_username << std::endl;
+			this->disconnectUser(socket);
+			return;
+		}
+
+		RequestInfo info{ msgCode, msg };
+
+		if (!this->m_clients[socket]->isRequestRelevant(info))
+		{
+			try
+			{
+				Helper::sendData(socket, JsonRequestPacketSerializer::serializeResponse(ErrorResponse{ "ERROR: Irelevant request.\n" }));
+				continue;
+			}
+			catch (...)
+			{
+				std::cout << "User disconected " << this->_username << std::endl;
+				this->disconnectUser(socket);
+				return;
+			}
+
+		}
+		
+
+		if (typeid(LoginRequestHandler(this->m_handlerFactory)) == typeid(*(this->m_clients[socket])) && info.requestId == LOGIN_REQ)
+		{
+			this->_username = JsonRequestPacketDeserializer::deserializeLoginRequest(info.buffer).username;
+		}
+		if (typeid(LoginRequestHandler(this->m_handlerFactory)) == typeid(*(this->m_clients[socket])) && info.requestId == Signup_REQ)
+		{
+			this->_username = JsonRequestPacketDeserializer::deserializeSignupRequest(info.buffer).username;
+		}
+
+		RequestResult r = this->m_clients[socket]->handleRequest(info);
+		if (r.newHandler)
+		{
+			delete this->m_clients[socket];
+			this->m_clients[socket] = r.newHandler;
+		}
+
+		try
+		{
+			Helper::sendData(socket, r.buffer);
+		}
+		catch (...)
+		{
+			std::cout << "User disconected " << this->_username << std::endl;
+			this->disconnectUser(socket);
 			return;
 		}
 	}
-
-	RequestResult r = this->m_clients[socket]->handleRequest(info);
-	if (r.newHandler)
-	{
-		delete this->m_clients[socket];
-		this->m_clients[socket] = r.newHandler;
-	}
-
-	try
-	{
-		Helper::sendData(socket, r.buffer);
-		closesocket(socket);
-	}
-	catch (...)
-	{
-		std::cout << "User disconected 2" << std::endl;
-		delete(this->m_clients[socket]);
-		this->m_clients.erase(socket);
-		closesocket(socket);
-		return;
-	}
 }
+
+void Comunicator::disconnectUser(SOCKET socket)
+{
+	if (typeid(LoginRequestHandler(this->m_handlerFactory)) != typeid(*(this->m_clients[socket])) && !this->_username.empty())
+	{
+		this->m_handlerFactory.getLoginManger().logout(this->_username);
+	}
+	delete(this->m_clients[socket]);
+	this->m_clients.erase(socket);
+	closesocket(socket);
+}
+
 
 

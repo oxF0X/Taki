@@ -40,7 +40,7 @@ namespace Client
             }
 
             byte[] buffer = new byte[size];
-            this.clientStream.Read(buffer, 0, size);
+            int bytesNum = this.clientStream.Read(buffer, 0, size);
             string str = System.Text.Encoding.Default.GetString(buffer);
             
             switch(code)
@@ -54,27 +54,23 @@ namespace Client
                 case SIGNUP_RES:
                     return ((JsonRequestPacketDeserializer.JsonRequestPacketDeserializer.DeserializeSignUp(str)).status).ToString();
 
-
                 default:
                     return "Something went wrong";
             }
-
         }
 
         private byte GetCodeFromSocket()
         {
             byte [] buffer = new byte[1];
-            this.clientStream.Read(buffer, 0, 1);
+            int bytesNum = this.clientStream.Read(buffer, 0, 1);
             return buffer[0];
         }
 
         private int GetSizeFromSocket()
         {
             byte[] bytes = new byte[4];
-            this.clientStream.Read(bytes, 0, 4);
+            int bytesNum = this.clientStream.Read(bytes, 0, 4);
             return (int)((bytes[3] << 24) | (bytes[2] << 16) | (bytes[1] << 8) | bytes[0]);
         }
-
-
     }
 }
