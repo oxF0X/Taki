@@ -7,7 +7,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 
 
-namespace JsonRequestPacketDeserializer
+namespace TakiClient.Modules
 {
 
     class SignupResponse
@@ -16,7 +16,7 @@ namespace JsonRequestPacketDeserializer
     }
     class LoginResponse
     {
-        public int status { get; set; }       
+        public int status { get; set; }
     }
     class ErrorResponse
     {

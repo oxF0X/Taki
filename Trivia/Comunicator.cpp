@@ -88,7 +88,10 @@ void Comunicator::handleNewClient(SOCKET socket)
 		catch (...)
 		{
 			std::cout << "User disconected " << this->_username << std::endl;
-			this->disconnectUser(socket);
+			if (this->_username != "")
+			{
+				this->disconnectUser(socket);
+			}
 			return;
 		}
 
@@ -104,7 +107,10 @@ void Comunicator::handleNewClient(SOCKET socket)
 			catch (...)
 			{
 				std::cout << "User disconected " << this->_username << std::endl;
-				this->disconnectUser(socket);
+				if (this->_username != "")
+				{
+					this->disconnectUser(socket);
+				}
 				return;
 			}
 
@@ -134,7 +140,10 @@ void Comunicator::handleNewClient(SOCKET socket)
 		catch (...)
 		{
 			std::cout << "User disconected " << this->_username << std::endl;
-			this->disconnectUser(socket);
+			if (this->_username != "")
+			{
+				this->disconnectUser(socket);
+			}
 			return;
 		}
 	}
@@ -146,6 +155,7 @@ void Comunicator::disconnectUser(SOCKET socket)
 	{
 		this->m_handlerFactory.getLoginManger().logout(this->_username);
 	}
+	this->_username = "";
 	delete(this->m_clients[socket]);
 	this->m_clients.erase(socket);
 	closesocket(socket);

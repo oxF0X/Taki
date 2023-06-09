@@ -12,18 +12,18 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Client;
+using TakiClient.Modules;
 
 namespace TakiClient
 {
     public partial class MainWindow : Window
     {
-        private Client.Client clientHandler;
+        private Client clientHandler;
 
 
         public MainWindow()
         {
-            this.clientHandler = new Client.Client();
+            this.clientHandler = new Client();
             InitializeComponent();
             WindowState = WindowState.Maximized;
 
@@ -52,28 +52,9 @@ namespace TakiClient
             }
         }
 
-        private void btnLogin_Click(object sender, RoutedEventArgs e)
-        {
-            if (string.IsNullOrEmpty(txtUser.Text) || string.IsNullOrEmpty(txtPass.Password))
-            {
-                return;
-            }
-
-            string response = this.clientHandler.GetLogin(txtUser.Text, txtPass.Password);
-            if (response == "1")
-            {
-                MessageBox.Show("Logegd In");
-            }
-            else
-            {
-                MessageBox.Show(response);
-            }
-        }
 
         private void btnSignup_Click(object sender, MouseButtonEventArgs e)
         {
-            RegisterWindow registerWindow = new RegisterWindow();
-            registerWindow.Show();
         }
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
@@ -178,6 +159,11 @@ namespace TakiClient
         }
 
         private void TextBlock_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void txtUser_TextChanged(object sender, TextChangedEventArgs e)
         {
 
         }

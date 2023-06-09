@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace JsonRequestPacketSerializer
+namespace TakiClient.Modules
 {
     class LoginRequest
     {
@@ -32,7 +32,7 @@ namespace JsonRequestPacketSerializer
             byte[] sizeBytes = new byte[4];
 
             // Store the size in the byte array
-            sizeBytes[0] = (byte)(size);
+            sizeBytes[0] = (byte)size;
             sizeBytes[1] = (byte)(size >> 8);
             sizeBytes[2] = (byte)(size >> 16);
             sizeBytes[3] = (byte)(size >> 24);

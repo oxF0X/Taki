@@ -12,14 +12,14 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace TakiClient
+namespace TakiClient.Views
 {
     /// <summary>
-    /// Interaction logic for RegisterWindow.xaml
+    /// Interaction logic for MenuView.xaml
     /// </summary>
-    public partial class RegisterWindow : Window
+    public partial class MenuView : Window
     {
-        public RegisterWindow()
+        public MenuView()
         {
             InitializeComponent();
         }
