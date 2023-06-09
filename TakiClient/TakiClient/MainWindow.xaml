@@ -4,74 +4,132 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TakiClient"
-        mc:Ignorable="d" WindowStartupLocation="CenterScreen" WindowStyle="None" AllowsTransparency="True" Background="Transparent"
-        Title="MainWindow" Height="1080" Width="1920">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="1.5*"/>
-        </Grid.ColumnDefinitions>
+        mc:Ignorable="d"
+        Title="LoginView" Height="550" Width="800"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        Background="Transparent"
+        AllowsTransparency="False"
+        MouseDown="Window_MouseDown">
 
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
 
-        <Grid.Background>
-            <ImageBrush Stretch="Fill" ImageSource="Images/StartBackground.jpeg" AlignmentY="Top" AlignmentX="Center"/>
-        </Grid.Background>
+    <Border CornerRadius="12">
+        <Border.Background>
+            <ImageBrush ImageSource="/Images/background.jpg" Stretch="Fill"/>
+        </Border.Background>
 
-        <Border CornerRadius="10 0 0 10">
+        <Border CornerRadius="10" BorderThickness="2" Opacity="0.95">
+            <Border.BorderBrush>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="#462AD8" Offset="0"/>
+                    <GradientStop Color="#4BD180" Offset="0.75"/>
+                    <GradientStop Color="#D1CA18" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.BorderBrush>
+
             <Border.Background>
-                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1"></LinearGradientBrush>
+                <LinearGradientBrush StartPoint="0,1" EndPoint="1,0">
+                    <GradientStop Color="#C3292929" Offset="0"/>
+                </LinearGradientBrush>
             </Border.Background>
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="25"/>
+                        <ColumnDefinition Width="25"/>
+                        <ColumnDefinition Width="25"/>
+                        <ColumnDefinition Width="5"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Text="LOG IN"
+                               Foreground="DarkGray"
+                               FontSize="10"
+                               FontFamily="Montserrat"
+                               Grid.Column="0"
+                               VerticalAlignment="Center"
+                               Margin="10,0,0,0"/>
+
+
+                    <Button x:Name="btnMinimize" Style="{StaticResource MinimizeButtonStyle}"
+                            Grid.Column="1" Click="btnHide_Click">
+                        <TextBlock Text="➖" Foreground="White" FontSize="12" FontWeight="Bold"/>
+                    </Button>
+
+
+                    <Button x:Name="btnMaximize" Style="{StaticResource MinimizeButtonStyle}"
+                            Grid.Column="2" Click="btnMaximize_Click">
+                        <TextBlock Text="🗖" Foreground="White" FontSize="12" FontWeight="Bold"/>
+                    </Button>
+                    
+                    <Button x:Name="btnClose" Style="{StaticResource CloseButtonStyle}"
+                            Grid.Column="3" Click="btnClose_Click">
+                        <TextBlock Text="✖" Foreground="White" FontSize="12" FontWeight="Bold"/>
+                    </Button>
+
+                </Grid>
+                <StackPanel Width="220" Grid.Row="1" Orientation="Vertical" Margin="0,-65,0,0" VerticalAlignment="Center" HorizontalAlignment="Center">
+
+                    <Image Source="/Images/Logo.png" Width="130" Height="70"  VerticalAlignment="Center" HorizontalAlignment="Center"/>
+
+                    <TextBlock Text="Sign In" Foreground="White" FontSize="25" FontWeight="Medium"
+                               Margin="0, 15, 0, 0"  FontFamily="Montserrat" HorizontalAlignment="Center"/>
+
+                    <TextBlock Text="Only the real Taki guru can enter!"
+                               Foreground="LightGray" FontSize="15" FontWeight="Medium"
+                               FontFamily="Montserrat" TextWrapping="Wrap" TextAlignment="Center"
+                               Margin="-4,10,-4,0"/>
+
+                    <TextBlock Text="Username" Foreground="DarkGray" FontSize="15" FontWeight="Medium"
+                               FontFamily="Montserrat" Margin="0,35,0,0"/>
+
+                    <TextBox x:Name="txtUser" FontSize="14" FontWeight="Medium" FontFamily="Montserrat"
+                             Foreground="White" CaretBrush="LightGray" BorderBrush="DarkGray"
+                             BorderThickness="0,0,0,2" Height="28" VerticalContentAlignment="Center"
+                             Margin="0,5,0,0" Padding="20,0,0,0">
+                        <TextBox.Background>
+                            <ImageBrush ImageSource="/Images/user-icon.png" Stretch="None" AlignmentX="Left"/>
+                        </TextBox.Background>
+                    </TextBox>
+
+                    <TextBlock Text="Password" Foreground="DarkGray" FontSize="15" FontWeight="Medium"
+                               FontFamily="Montserrat" Margin="0,15,0,0"/>
+
+                    <PasswordBox x:Name="txtPass" FontSize="14" FontWeight="Medium" FontFamily="Montserrat"
+                                 Foreground="White" CaretBrush="LightGray" BorderBrush="DarkGray"
+                                 BorderThickness="0,0,0,2" Height="28" VerticalContentAlignment="Center"
+                                 Margin="0,5,0,0" Padding="20,0,0,0">
+                        <PasswordBox.Background>
+                            <ImageBrush ImageSource="/Images/key-icon.png" Stretch="None" AlignmentX="Left"/>
+                        </PasswordBox.Background>
+                    </PasswordBox>
+
+                    <Button x:Name="btnLogin" BorderThickness="0" Content="LOG IN" Foreground="White"
+                            FontSize="12" FontFamily="Montserrat" Cursor="Hand" Margin="0,0,0,0"
+                            Click="btnLogin_Click" Style="{StaticResource LoginButtonStyle}"/>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,15,0,0">
+                        <TextBlock Text="Want to become a Taki guru?" Foreground="DarkGray" FontSize="12"
+                                   FontWeight="Medium" FontFamily="Montserrat"/>
+                        <TextBlock Text="Sign Up" Foreground="White" FontSize="12" FontWeight="Medium"
+                                   FontFamily="Montserrat" Cursor="Hand" Margin="8,0,0,0"/>
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
         </Border>
-
-
-        <Border Background="#ffffff" Grid.Column="1" CornerRadius="0 10 10 0" MouseDown="Border_MouseDown"></Border>
-
-        <Grid Grid.Column="1">
-            <Button x:Name="FullScreenButton" Click="FullScreenButton_Click" HorizontalAlignment="Right" VerticalAlignment="Top" Content="Toggle Full-Screen"/>
-            <Canvas>
-                <Polygon Points="0,20 230, 140 0, 270" Fill="#4EB1B6"/>
-                <Polygon Points="100,400 200, 370 180, 470" Fill="#4EB1B6"/>
-                <Ellipse Margin="250 450 0 0" Width="40" Height="40" Fill="#4EB1B6"/>
-                <Ellipse Margin="50 400 0 0" Width="40" Height="40" Fill="#4EB1B6"/>
-            </Canvas>
-
-            <StackPanel Margin="70,0,70,0" VerticalAlignment="Center">
-                <TextBlock Text="Sign In" Style="{StaticResource titleText}" Margin="0,0,0,20" />
-                <TextBlock Text="Only real Taki guru can enter!" Style="{StaticResource normalText}" Opacity="1" Margin="0 10 0 40"/>
-                <Border BorderThickness="1" BorderBrush="#acb0af" Margin="250,0,250,10" CornerRadius="5">
-                    <Grid Margin="7">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Image Source="/Images/username.png" Height="20"/>
-                        <TextBlock x:Name="textUsername" MouseDown="textUsername_MouseDown" Text="Username" Style="{StaticResource textHint}"/>
-                        <TextBox x:Name="txtUsername" TextChanged="txtUsername_TextChanged" Style="{StaticResource textBox}"/>
-                    </Grid>
-                </Border>
-
-                <Border BorderThickness="1" BorderBrush="#acb0af" CornerRadius="5"  Margin="250,0,250,10">
-                    <Grid Margin="7">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Image Source="/Images/Lock.png" Height="20"/>
-                        <TextBlock x:Name="textPassword" MouseDown="textPassword_MouseDown" Text="Password" Style="{StaticResource textHint}"/>
-                        <TextBox x:Name="txtPassword" TextChanged="txtPassword_TextChanged" Grid.Column="1" Style="{StaticResource textBox}"/>
-                    </Grid>
-                </Border>
-
-                <Button Content="Sign In" Click="SignInButtonClick" Style="{StaticResource signInButton}"/>
-            </StackPanel>
-        </Grid>
-        <Grid Grid.Column="0">
-            <StackPanel VerticalAlignment="Center">
-                <TextBlock Text="Sign Up" Style="{StaticResource titleText}"/>
-                <TextBlock Text="Are you ready to become a Taki guru?" Style="{StaticResource normalText}" Opacity="1" Margin="30 10"/>
-                <TextBlock Text="Sign up if your answer is yes!" Style="{StaticResource normalText}" Opacity="16" Margin="30 10"/>
-                <Button Content="Sign Up" Style="{StaticResource button}"/>
-            </StackPanel>
-        </Grid>
-    </Grid>
+    </Border>
 </Window>
