@@ -156,20 +156,40 @@ namespace TakiClient.ViewsModels
 
         private void ExecutedSigninCommand(object obj)
         {
+            /* var loginView = new LoginView();
+             loginView.Show();
+             Application.Current.MainWindow.Close(); // Close the current window
+             */
+
+            /*            var windowsToClose = Application.Current.Windows.OfType<RegisterView>().ToList();
+                        foreach (var window in windowsToClose)
+                        {
+                            window.Close();
+                        }*/
+
             var loginView = new LoginView();
+            Window w = Application.Current.MainWindow;
+            Application.Current.MainWindow = loginView;
             loginView.Show();
-            //Application.Current.MainWindow.Close(); // Close the current window
-            var window = Application.Current.Windows.OfType<RegisterView>().FirstOrDefault();
-            if (window != null)
-            {
-                window.Close();
-            }
-            
+            w.Close();
+
         }
 
         private void ExecutedMaximizeOrMinimizeCommand(object obj)
         {
-
+            /*            foreach (Window window in Application.Current.Windows)
+                        {
+                            if (window.WindowState == WindowState.Maximized)
+                            {
+                                window.WindowState = WindowState.Normal;
+                                window.Width = 600;
+                                window.Height = 500;
+                            }
+                            else
+                            {
+                                window.WindowState = WindowState.Maximized;
+                            }
+                        }*/
             if (Application.Current.MainWindow.WindowState == WindowState.Maximized)
             {
                 Application.Current.MainWindow.WindowState = WindowState.Normal;
@@ -184,6 +204,11 @@ namespace TakiClient.ViewsModels
 
         private void ExecutedHideCommand(object obj)
         {
+            /*            foreach (Window window in Application.Current.Windows)
+                        {
+                            window.WindowState = WindowState.Minimized;
+                        }*/
+
             Application.Current.MainWindow.WindowState = WindowState.Minimized;
         }
 

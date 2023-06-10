@@ -95,18 +95,14 @@ namespace TakiClient.ViewsModels
         private void ExecutedSignupCommand(object obj)
         {
             var registerView = new RegisterView();
+            Window w = Application.Current.MainWindow;
+            Application.Current.MainWindow = registerView;
             registerView.Show();
-            var window = Application.Current.Windows.OfType<LoginView>().FirstOrDefault();
-            if (window != null)
-            {
-                window.Close();
-            }
-           
+            w.Close();
         }
 
         private void ExecutedMaximizeOrMinimizeCommand(object obj)
         {
-
             if (Application.Current.MainWindow.WindowState == WindowState.Maximized)
             {
                 Application.Current.MainWindow.WindowState = WindowState.Normal;
@@ -122,6 +118,7 @@ namespace TakiClient.ViewsModels
         private void ExecutedHideCommand(object obj)
         {
             Application.Current.MainWindow.WindowState = WindowState.Minimized;
+
         }
 
         private void ExecutedCloseCommand(object obj)
