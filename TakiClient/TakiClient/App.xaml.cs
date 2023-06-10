@@ -17,10 +17,10 @@ namespace TakiClient
         {
             base.OnStartup(e);
 
-            var loginView = new LgoinView();
+            var loginView = new LoginView();
             loginView.Show();
 
-            loginView.IsVisibleChanged += (s, ev) =>
+            /*loginView.IsVisibleChanged += (s, ev) =>
             {
                 if (loginView.IsVisible == false && loginView.IsLoaded)
                 {
@@ -28,7 +28,7 @@ namespace TakiClient
                     mainView.Show();
                     loginView.Close();
                 }
-            };
+            };*/
         }
 
     }

@@ -16,10 +16,10 @@ using TakiClient.Modules;
 
 namespace TakiClient
 {
-    public partial class LgoinView : Window
+    public partial class LoginView : Window
     {
 
-        public LgoinView()
+        public LoginView()
         {
             
             InitializeComponent();
