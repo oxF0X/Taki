@@ -27,7 +27,6 @@ namespace TakiClient.ViewsModels
     {
         private string _username;
         private SecureString _password;
-        //private string _email;
         private string _error;
         private bool _isViewVisible = true;
         private Client clientHandler;
@@ -92,12 +91,50 @@ namespace TakiClient.ViewsModels
 
 
         public ICommand LoginCommand { get; }
-        public ICommand ShowPasswordCommand { get; }
+        public ICommand CloseScreenCommand { get; }
+        public ICommand HideScreenCommand { get; }
+        public ICommand MaximizeOrMinimizeCommand { get; }
+        public ICommand SignupCommand { get; }
+        
 
         public LoginViewModel()
         {
-            this.clientHandler = new Client();
+            this.clientHandler = Client.GetClient();
             LoginCommand = new ViewModelCommand(ExecuteLoginCommand, CanExecuteLoginCommand);
+            CloseScreenCommand = new ViewModelCommand(ExecutedCloseCommand);
+            HideScreenCommand = new ViewModelCommand(ExecutedHideCommand);
+            MaximizeOrMinimizeCommand = new ViewModelCommand(ExecutedMaximizeOrMinimizeCommand);
+            SignupCommand = new ViewModelCommand(ExecutedSignupCommand);
+        }
+
+        private void ExecutedSignupCommand(object obj)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void ExecutedMaximizeOrMinimizeCommand(object obj)
+        {
+
+            if (Application.Current.MainWindow.WindowState == WindowState.Maximized)
+            {
+                Application.Current.MainWindow.WindowState = WindowState.Normal;
+                Application.Current.MainWindow.Width = 600;
+                Application.Current.MainWindow.Height = 500;
+            }
+            else
+            {
+                Application.Current.MainWindow.WindowState = WindowState.Maximized;
+            }
+        }
+
+        private void ExecutedHideCommand(object obj)
+        {
+            Application.Current.MainWindow.WindowState = WindowState.Minimized;
+        }
+
+        private void ExecutedCloseCommand(object obj)
+        {
+            Application.Current.Shutdown();
         }
 
         private bool CanExecuteLoginCommand(object obj)

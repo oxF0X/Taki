@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using TakiClient.ViewsModels;
 using TakiClient.Views;
+using TakiClient.Modules;
 
 namespace TakiClient
 {
@@ -16,7 +17,7 @@ namespace TakiClient
         {
             base.OnStartup(e);
 
-            var loginView = new MainWindow();
+            var loginView = new LgoinView();
             loginView.Show();
 
             loginView.IsVisibleChanged += (s, ev) =>

@@ -10,20 +10,30 @@ using System.Net.NetworkInformation;
 
 namespace TakiClient.Modules
 {
-    class Client
+    public class Client
     {
         const int ERROR_CODE = 102;
         const int LOGIN_RES = 100;
         const int SIGNUP_RES = 101;
 
         private TcpClient socket;
+        private static Client instance;
         NetworkStream clientStream;
 
-        public Client()
+        private Client()
         {
             socket = new TcpClient();
             socket.Connect(IPAddress.Parse("127.0.0.1"), 4444);
             clientStream = socket.GetStream();
+        }
+
+        public static Client GetClient()
+        {
+            if (instance == null)
+            {
+                instance = new Client();
+            }
+            return instance;
         }
 
         public string GetLogin(string username, string password)

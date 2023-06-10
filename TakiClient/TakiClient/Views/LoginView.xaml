@@ -1,4 +1,4 @@
-﻿<Window x:Class="TakiClient.MainWindow"
+﻿<Window x:Class="TakiClient.LgoinView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -72,20 +72,29 @@
                                Margin="10,0,0,0"/>
 
 
-                    <Button x:Name="btnMinimize" Style="{StaticResource MinimizeButtonStyle}"
-                            Grid.Column="1" Click="btnHide_Click">
+                    <Button x:Name="btnMinimize"
+                            Style="{StaticResource MinimizeButtonStyle}"
+                            Grid.Column="1" 
+                            Command="{Binding HideScreenCommand}">
                         <TextBlock Text="➖" Foreground="White" FontSize="12" FontWeight="Bold"/>
                     </Button>
 
 
-                    <Button x:Name="btnMaximize" Style="{StaticResource MinimizeButtonStyle}"
-                            Grid.Column="2" Click="btnMaximize_Click">
+                    <Button x:Name="btnMaximize" 
+                            Style="{StaticResource MinimizeButtonStyle}"
+                            Grid.Column="2"
+                            Command="{Binding MaximizeOrMinimizeCommand}">
                         <TextBlock Text="🗖" Foreground="White" FontSize="12" FontWeight="Bold"/>
                     </Button>
-                    
-                    <Button x:Name="btnClose" Style="{StaticResource CloseButtonStyle}"
-                            Grid.Column="3" Click="btnClose_Click">
-                        <TextBlock Text="✖" Foreground="White" FontSize="12" FontWeight="Bold"/>
+
+                    <Button x:Name="btnClose"
+                            Style="{StaticResource CloseButtonStyle}"
+                            Grid.Column="3"
+                            Command="{Binding CloseScreenCommand}">
+                        <TextBlock Text="✖" 
+                                   Foreground="White" 
+                                   FontSize="12" 
+                                   FontWeight="Bold"/>
                     </Button>
 
                 </Grid>
@@ -116,8 +125,7 @@
                              Height="28" 
                              VerticalContentAlignment="Center"
                              Margin="0,5,0,0"
-                             Padding="20,0,0,0" 
-                             TextChanged="txtUser_TextChanged">
+                             Padding="20,0,0,0">
                         <TextBox.Background>
                             <ImageBrush ImageSource="/Images/user-icon.png" Stretch="None" AlignmentX="Left"/>
                         </TextBox.Background>
@@ -158,8 +166,17 @@
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,15,0,0">
                         <TextBlock Text="Want to become a Taki guru?" Foreground="DarkGray" FontSize="12"
                                    FontWeight="Medium" FontFamily="Montserrat"/>
-                        <TextBlock Text="Sign Up" Foreground="White" FontSize="12" FontWeight="Medium"
-                                   FontFamily="Montserrat" Cursor="Hand" Margin="8,0,0,0" MouseLeftButtonDown="btnSignup_Click"/>
+                        <Button Content="Sign Up"
+                                Background="Transparent"
+                                BorderBrush="Transparent"
+                                Foreground="White" 
+                                FontSize="12" 
+                                FontWeight="Medium"
+                                FontFamily="Montserrat" 
+                                Cursor="Hand" 
+                                Margin="8,0,0,0" 
+                                Style="{StaticResource SignupButtonStyle}"
+                                Command="{Binding SignupCommand}"/>
                     </StackPanel>
                 </StackPanel>
             </Grid>
