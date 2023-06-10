@@ -24,10 +24,14 @@ using TakiClient.Views;
 
 namespace TakiClient.ViewsModels
 {
-    public class LoginViewModel : ViewsModelBase
+    public class RegisterViewModel : ViewsModelBase
     {
         private string _username;
         private SecureString _password;
+        private string _email;
+        private string _phoneNumber;
+        private string _address;
+        private string _birthDay;
         private string _error;
         private Client clientHandler;
 
@@ -74,34 +78,93 @@ namespace TakiClient.ViewsModels
             }
         }
 
+        public string Email
+        {
+            get
+            {
+                return _email;
+            }
 
-        public ICommand LoginCommand { get; }
+            set
+            {
+                _email = value;
+                OnPropertyChanged(nameof(Email));
+            }
+        }
+
+        public string Address
+        {
+            get
+            {
+                return _address;
+            }
+
+            set
+            {
+                _address = value;
+                OnPropertyChanged(nameof(Address));
+            }
+        }
+
+        public string PhoneNumber
+        {
+            get
+            {
+                return _phoneNumber;
+            }
+
+            set
+            {
+                _phoneNumber = value;
+                OnPropertyChanged(nameof(PhoneNumber));
+            }
+        }
+
+        public string Birthday
+        {
+            get
+            {
+                return _birthDay;
+            }
+
+            set
+            {
+                _birthDay = value;
+                OnPropertyChanged(nameof(Birthday));
+            }
+        }
+
+
+
+
+        public ICommand RegisterCommand { get; }
         public ICommand CloseScreenCommand { get; }
         public ICommand HideScreenCommand { get; }
         public ICommand MaximizeOrMinimizeCommand { get; }
-        public ICommand SignupCommand { get; }
-        
+        public ICommand SigninCommand { get; }
 
-        public LoginViewModel()
+
+        public RegisterViewModel()
         {
             this.clientHandler = Client.GetClient();
-            LoginCommand = new ViewModelCommand(ExecuteLoginCommand, CanExecuteLoginCommand);
+            RegisterCommand = new ViewModelCommand(ExecuteRegisterCommand, CanExecuteRegisterCommand);
             CloseScreenCommand = new ViewModelCommand(ExecutedCloseCommand);
             HideScreenCommand = new ViewModelCommand(ExecutedHideCommand);
             MaximizeOrMinimizeCommand = new ViewModelCommand(ExecutedMaximizeOrMinimizeCommand);
-            SignupCommand = new ViewModelCommand(ExecutedSignupCommand);
+            SigninCommand = new ViewModelCommand(ExecutedSigninCommand);
         }
 
-        private void ExecutedSignupCommand(object obj)
+        private void ExecutedSigninCommand(object obj)
         {
-            var registerView = new RegisterView();
-            registerView.Show();
-            var window = Application.Current.Windows.OfType<LoginView>().FirstOrDefault();
+            var loginView = new LoginView();
+            loginView.Show();
+            //Application.Current.MainWindow.Close(); // Close the current window
+            var window = Application.Current.Windows.OfType<RegisterView>().FirstOrDefault();
             if (window != null)
             {
                 window.Close();
             }
-           
+            
         }
 
         private void ExecutedMaximizeOrMinimizeCommand(object obj)
@@ -129,16 +192,17 @@ namespace TakiClient.ViewsModels
             Application.Current.Shutdown();
         }
 
-        private bool CanExecuteLoginCommand(object obj)
+        private bool CanExecuteRegisterCommand(object obj)
         {
-            return !(string.IsNullOrWhiteSpace(Username) || Password == null);
+            return !(string.IsNullOrWhiteSpace(Username) || Password == null || string.IsNullOrWhiteSpace(Email) || string.IsNullOrWhiteSpace(Address) ||
+                string.IsNullOrWhiteSpace(Birthday) || string.IsNullOrWhiteSpace(PhoneNumber));
         }
 
-        private void ExecuteLoginCommand(object obj)
+        private void ExecuteRegisterCommand(object obj)
         {
             string password = new System.Net.NetworkCredential(string.Empty, Password).Password;
             string result = clientHandler.GetLogin(Username, password);
-            if(result == "1")
+            if (result == "1")
             {
                 var mainView = new MenuView();
                 mainView.Show();
