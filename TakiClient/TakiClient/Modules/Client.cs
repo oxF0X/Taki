@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Net.Sockets;
 using System.Net.NetworkInformation;
+using System.Runtime.InteropServices;
 
 
 namespace TakiClient.Modules
@@ -38,8 +39,8 @@ namespace TakiClient.Modules
 
         public string GetLogin(string username, string password)
         {
-            string data = JsonRequestPacketSerializer.SerializeLogin(username, password);
-            clientStream.Write(Encoding.UTF8.GetBytes(data), 0, data.Length);
+            byte[] data = JsonRequestPacketSerializer.SerializeLogin(username, password);
+            clientStream.Write(data, 0, data.Length);
             int code = GetCodeFromSocket();
             int size = GetSizeFromSocket();
             if (size <= 0)
@@ -59,8 +60,34 @@ namespace TakiClient.Modules
                 case LOGIN_RES:
                     return JsonRequestPacketDeserializer.DeserializeLogIn(str).status.ToString();
 
+                default:
+                    return "Something went wrong";
+            }
+        }
+
+
+        public string GetSignup(string username, string password, string email, string address, string birthday, string phoneNumber)
+        {
+            byte[] data = JsonRequestPacketSerializer.SerializeSignup(username, password, email, address, birthday, phoneNumber);
+            clientStream.Write(data, 0, data.Length);
+            int code = GetCodeFromSocket();
+            int size = GetSizeFromSocket();
+            if (size <= 0)
+            {
+                return "Something went wrong";
+            }
+
+            byte[] buffer = new byte[size];
+            int bytesNum = clientStream.Read(buffer, 0, size);
+            string str = Encoding.Default.GetString(buffer);
+
+            switch (code)
+            {
+                case ERROR_CODE:
+                    return JsonRequestPacketDeserializer.DeserializeError(str).message;
+
                 case SIGNUP_RES:
-                    return JsonRequestPacketDeserializer.DeserializeSignUp(str).status.ToString();
+                    return JsonRequestPacketDeserializer.DeserializeLogIn(str).status.ToString();
 
                 default:
                     return "Something went wrong";
@@ -80,5 +107,6 @@ namespace TakiClient.Modules
             int bytesNum = clientStream.Read(bytes, 0, 4);
             return bytes[3] << 24 | bytes[2] << 16 | bytes[1] << 8 | bytes[0];
         }
+
     }
 }

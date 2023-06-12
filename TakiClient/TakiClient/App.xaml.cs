@@ -19,16 +19,6 @@ namespace TakiClient
 
             var loginView = new LoginView();
             loginView.Show();
-
-            /*loginView.IsVisibleChanged += (s, ev) =>
-            {
-                if (loginView.IsVisible == false && loginView.IsLoaded)
-                {
-                    var mainView = new MenuView();
-                    mainView.Show();
-                    loginView.Close();
-                }
-            };*/
         }
 
     }

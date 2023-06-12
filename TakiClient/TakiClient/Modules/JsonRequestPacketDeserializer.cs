@@ -10,18 +10,19 @@ using System.Text.Json.Serialization;
 namespace TakiClient.Modules
 {
 
-    class SignupResponse
+    struct SignupResponse
     {
         public int status { get; set; }
     }
-    class LoginResponse
+    struct LoginResponse
     {
         public int status { get; set; }
     }
-    class ErrorResponse
+    struct ErrorResponse
     {
         public string message { get; set; }
     }
+
 
 
     class JsonRequestPacketDeserializer
