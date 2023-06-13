@@ -55,7 +55,8 @@
                         <ColumnDefinition Width="5"/>
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Text="LOG IN"
+
+                        <TextBlock Text="LOG IN"
                                Foreground="DarkGray"
                                FontSize="10"
                                FontFamily="Montserrat"
@@ -90,7 +91,7 @@
                     </Button>
 
                 </Grid>
-                <StackPanel Width="220" Grid.Row="1" Orientation="Vertical" Margin="0,-65,0,0" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <StackPanel Width="220" Grid.Row="1" Orientation="Vertical" Margin="0,-65,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" >
 
                     <Image Source="/Images/Logo.png" Width="130" Height="70"  VerticalAlignment="Center" HorizontalAlignment="Center"/>
 
@@ -156,8 +157,12 @@
                             Style="{StaticResource LoginButtonStyle}"/>
 
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,15,0,0">
-                        <TextBlock Text="Want to become a Taki guru?" Foreground="DarkGray" FontSize="12"
-                                   FontWeight="Medium" FontFamily="Montserrat"/>
+                        <TextBlock Text="Want to become a Taki guru?" 
+                                   Foreground="DarkGray" 
+                                   FontSize="12"
+                                   FontWeight="Medium" 
+                                   FontFamily="Montserrat"/>
+                        
                         <Button Content="Sign Up"
                                 Background="Transparent"
                                 BorderBrush="Transparent"
@@ -170,7 +175,10 @@
                                 Style="{StaticResource SignupButtonStyle}"
                                 Command="{Binding SignupCommand}"/>
                     </StackPanel>
+                    
+                    
                 </StackPanel>
+                
             </Grid>
         </Border>
     </Border>
