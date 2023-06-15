@@ -19,7 +19,7 @@ RequestResult MenuRequestHandler::handleRequest(RequestInfo info)
 	switch (info.requestId)
 	{
 	case Signout_REQ:
-		return this->signout(info);
+		return this->signout();
 	case GetRooms_REQ:
 		return this->getRooms(info);
 	case getPlayers_REQ:
@@ -31,9 +31,11 @@ RequestResult MenuRequestHandler::handleRequest(RequestInfo info)
 	}
 }
 
-RequestResult MenuRequestHandler::signout(RequestInfo info)
+RequestResult MenuRequestHandler::signout()
 {
 	this->m_handlerFactory.getLoginManger().logout(this->m_user.getUsername());
+	std::cout << "User disconected " << this->m_user.getUsername() << std::endl;
+
 	return RequestResult{ JsonRequestPacketSerializer::serializeResponse(LogoutResponse{1}), new LoginRequestHandler(this->m_handlerFactory)};
 }
 

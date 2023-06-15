@@ -32,7 +32,7 @@ public:
 private:
 	void bindAndListen();
 	void handleNewClient(SOCKET socket);
-	void disconnectUser(SOCKET socket, std::string& username);
+	void disconnectUser(SOCKET socket);
 
 	///////////////////////////////
 

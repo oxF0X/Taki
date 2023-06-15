@@ -76,7 +76,6 @@ void Comunicator::handleNewClient(SOCKET socket)
 {
 	int msgCode, msgSize;
 	std::vector<uint8_t> msg;
-	std::string username;
 
 	while (true)
 	{
@@ -88,11 +87,7 @@ void Comunicator::handleNewClient(SOCKET socket)
 		}
 		catch (...)
 		{
-			std::cout << "User disconected " << username << std::endl;
-			if (username != "")
-			{
-				this->disconnectUser(socket, username);
-			}
+			this->disconnectUser(socket);
 			return;
 		}
 
@@ -107,25 +102,12 @@ void Comunicator::handleNewClient(SOCKET socket)
 			}
 			catch (...)
 			{
-				std::cout << "User disconected " << username << std::endl;
-				if (username != "")
-				{
-					this->disconnectUser(socket, username);
-				}
+				this->disconnectUser(socket);
 				return;
 			}
 
 		}
 		
-
-		if (typeid(LoginRequestHandler(this->m_handlerFactory)) == typeid(*(this->m_clients[socket])) && info.requestId == LOGIN_REQ)
-		{
-			username = JsonRequestPacketDeserializer::deserializeLoginRequest(info.buffer).username;
-		}
-		if (typeid(LoginRequestHandler(this->m_handlerFactory)) == typeid(*(this->m_clients[socket])) && info.requestId == Signup_REQ)
-		{
-			username = JsonRequestPacketDeserializer::deserializeSignupRequest(info.buffer).username;
-		}
 
 		RequestResult r = this->m_clients[socket]->handleRequest(info);
 
@@ -138,23 +120,19 @@ void Comunicator::handleNewClient(SOCKET socket)
 		}
 		catch (...)
 		{
-			std::cout << "User disconected " <<username << std::endl;
-			if (username != "")
-			{
-				this->disconnectUser(socket, username);
-			}
+			this->disconnectUser(socket);
 			return;
 		}
 	}
 }
 
-void Comunicator::disconnectUser(SOCKET socket, std::string& username)
+void Comunicator::disconnectUser(SOCKET socket)
 {
-	if (typeid(LoginRequestHandler(this->m_handlerFactory)) != typeid(*(this->m_clients[socket])) && !username.empty())
+	if (typeid(MenuRequestHandler(LoggedUser(""), this->m_handlerFactory.getRoomManager(), (this->m_handlerFactory))) == typeid(*(this->m_clients[socket])))
 	{
-		this->m_handlerFactory.getLoginManger().logout(username);
+
+		((MenuRequestHandler*)this->m_clients[socket])->signout();
 	}
-	username = "";
 	delete(this->m_clients[socket]);
 	this->m_clients.erase(socket);
 	closesocket(socket);

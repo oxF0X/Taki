@@ -7,7 +7,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Net.NetworkInformation;
 using System.Runtime.InteropServices;
-
+using System.Windows.Forms;
 
 namespace TakiClient.Modules
 {
@@ -35,6 +35,11 @@ namespace TakiClient.Modules
             socket = new TcpClient();
             socket.Connect(IPAddress.Parse("127.0.0.1"), 4444);
             clientStream = socket.GetStream();
+        }
+
+        ~Client()
+        {
+            this.socket.Close();
         }
 
         public static Client GetClient()
