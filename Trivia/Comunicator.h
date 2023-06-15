@@ -32,14 +32,13 @@ public:
 private:
 	void bindAndListen();
 	void handleNewClient(SOCKET socket);
-	void disconnectUser(SOCKET socket);
+	void disconnectUser(SOCKET socket, std::string& username);
 
 	///////////////////////////////
 
 	void acceptClient();
 	Comunicator(RequestHandlerFactory& handler);
 	SOCKET m_serverSocket;
-	std::string _username;
 	std::map<SOCKET, IRequestHandler*> m_clients;
 	RequestHandlerFactory& m_handlerFactory;
 };

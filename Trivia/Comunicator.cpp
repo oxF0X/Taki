@@ -76,6 +76,7 @@ void Comunicator::handleNewClient(SOCKET socket)
 {
 	int msgCode, msgSize;
 	std::vector<uint8_t> msg;
+	std::string username;
 
 	while (true)
 	{
@@ -87,10 +88,10 @@ void Comunicator::handleNewClient(SOCKET socket)
 		}
 		catch (...)
 		{
-			std::cout << "User disconected " << this->_username << std::endl;
-			if (this->_username != "")
+			std::cout << "User disconected " << username << std::endl;
+			if (username != "")
 			{
-				this->disconnectUser(socket);
+				this->disconnectUser(socket, username);
 			}
 			return;
 		}
@@ -106,10 +107,10 @@ void Comunicator::handleNewClient(SOCKET socket)
 			}
 			catch (...)
 			{
-				std::cout << "User disconected " << this->_username << std::endl;
-				if (this->_username != "")
+				std::cout << "User disconected " << username << std::endl;
+				if (username != "")
 				{
-					this->disconnectUser(socket);
+					this->disconnectUser(socket, username);
 				}
 				return;
 			}
@@ -119,20 +120,17 @@ void Comunicator::handleNewClient(SOCKET socket)
 
 		if (typeid(LoginRequestHandler(this->m_handlerFactory)) == typeid(*(this->m_clients[socket])) && info.requestId == LOGIN_REQ)
 		{
-			this->_username = JsonRequestPacketDeserializer::deserializeLoginRequest(info.buffer).username;
+			username = JsonRequestPacketDeserializer::deserializeLoginRequest(info.buffer).username;
 		}
 		if (typeid(LoginRequestHandler(this->m_handlerFactory)) == typeid(*(this->m_clients[socket])) && info.requestId == Signup_REQ)
 		{
-			this->_username = JsonRequestPacketDeserializer::deserializeSignupRequest(info.buffer).username;
+			username = JsonRequestPacketDeserializer::deserializeSignupRequest(info.buffer).username;
 		}
 
 		RequestResult r = this->m_clients[socket]->handleRequest(info);
 
-			delete this->m_clients[socket];
-			this->m_clients[socket] = r.newHandler ? r.newHandler : new LoginRequestHandler(this->m_handlerFactory);
-		
-
-
+		delete this->m_clients[socket];
+		this->m_clients[socket] = r.newHandler ? r.newHandler : new LoginRequestHandler(this->m_handlerFactory);
 
 		try
 		{
@@ -140,23 +138,23 @@ void Comunicator::handleNewClient(SOCKET socket)
 		}
 		catch (...)
 		{
-			std::cout << "User disconected " << this->_username << std::endl;
-			if (this->_username != "")
+			std::cout << "User disconected " <<username << std::endl;
+			if (username != "")
 			{
-				this->disconnectUser(socket);
+				this->disconnectUser(socket, username);
 			}
 			return;
 		}
 	}
 }
 
-void Comunicator::disconnectUser(SOCKET socket)
+void Comunicator::disconnectUser(SOCKET socket, std::string& username)
 {
-	if (typeid(LoginRequestHandler(this->m_handlerFactory)) != typeid(*(this->m_clients[socket])) && !this->_username.empty())
+	if (typeid(LoginRequestHandler(this->m_handlerFactory)) != typeid(*(this->m_clients[socket])) && !username.empty())
 	{
-		this->m_handlerFactory.getLoginManger().logout(this->_username);
+		this->m_handlerFactory.getLoginManger().logout(username);
 	}
-	this->_username = "";
+	username = "";
 	delete(this->m_clients[socket]);
 	this->m_clients.erase(socket);
 	closesocket(socket);

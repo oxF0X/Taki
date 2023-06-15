@@ -42,9 +42,16 @@ namespace TakiClient.ViewsModels
             // Handle the join room logic using the provided roomId
         }
 
-        private void ExecuteListRooms(object obj)
+        public RoomData[] GetUpdatedRooms()
         {
-            throw new NotImplementedException();
+            return this.clientHandler.GetRooms();
         }
+
+        public void UpdateRooms(RoomData[] updatedRooms)
+        {
+            Rooms = updatedRooms;
+        }
+
+
     }
 }
