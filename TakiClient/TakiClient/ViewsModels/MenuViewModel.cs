@@ -47,6 +47,12 @@ namespace TakiClient.ViewsModels
 
 
         public ICommand StatisticsCommand { get; }
+        public ICommand JoinRoomCommand { get; }
+        public ICommand CreateRoomCommand { get; }
+        public ICommand LogOutCommand { get; }
+
+
+
         public ICommand GetRoomsCommand { get; }
         public ICommand HideScreenCommand { get; }
         public ICommand MaximizeOrMinimizeCommand { get; }
@@ -55,17 +61,41 @@ namespace TakiClient.ViewsModels
 
 
 
+
         public MenuViewModel()
         {
             this.clientHandler = Client.GetClient();
             StatisticsCommand = new ViewModelCommand(ExecuteShowStatistics);
+            JoinRoomCommand = new ViewModelCommand(ExecuteJoinRoom);
+            CreateRoomCommand = new ViewModelCommand(ExecuteCreateRoom);
+            LogOutCommand = new ViewModelCommand(ExecuteLogOut);
+
+
             GetRoomsCommand = new ViewModelCommand(ExecuteShowRooms);
             CloseScreenCommand = new ViewModelCommand(ExecutedCloseCommand);
             HideScreenCommand = new ViewModelCommand(ExecutedHideCommand);
             MaximizeOrMinimizeCommand = new ViewModelCommand(ExecutedMaximizeOrMinimizeCommand);
         }
 
+        private void ExecuteLogOut(object obj)
+        {
+            this.clientHandler.GetLogout();
+            var loginView = new LoginView();
+            Window w = Application.Current.MainWindow;
+            Application.Current.MainWindow = loginView;
+            loginView.Show();
+            w.Close();
+        }
 
+        private void ExecuteCreateRoom(object obj)
+        {
+            SelectedPage = "CreateRoomPage.xaml";
+        }
+
+        private void ExecuteJoinRoom(object obj)
+        {
+            SelectedPage = "JoinRoom.xaml";
+        }
 
         private void ExecutedSignupCommand(object obj)
         {

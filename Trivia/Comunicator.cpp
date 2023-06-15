@@ -83,7 +83,7 @@ void Comunicator::handleNewClient(SOCKET socket)
 		{
 			msgCode = Helper::getIntPartFromSocket(socket, CODE_SIZE);
 			msgSize = Helper::getIntPartFromSocket(socket, LENGTH_SIZE);
-			msg = Helper::getDataFromSocket(socket, msgSize);
+			msg = msgSize? Helper::getDataFromSocket(socket, msgSize) : std::vector<uint8_t>();
 		}
 		catch (...)
 		{
@@ -127,11 +127,12 @@ void Comunicator::handleNewClient(SOCKET socket)
 		}
 
 		RequestResult r = this->m_clients[socket]->handleRequest(info);
-		if (r.newHandler)
-		{
+
 			delete this->m_clients[socket];
-			this->m_clients[socket] = r.newHandler;
-		}
+			this->m_clients[socket] = r.newHandler ? r.newHandler : new LoginRequestHandler(this->m_handlerFactory);
+		
+
+
 
 		try
 		{

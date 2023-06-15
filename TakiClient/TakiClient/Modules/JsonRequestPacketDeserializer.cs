@@ -23,7 +23,20 @@ namespace TakiClient.Modules
         public string message { get; set; }
     }
 
+    public struct RoomData
+    {
+        public int id { get; set; }
+        public int maxPlayers { get; set; }
+        public int timePerPlay { get; set; }
+        public int isActive { get; set; }
+        public string name { get; set; }
+    }
 
+    struct GetRoomsResponse
+    {
+        public int status { get; set; }
+        public RoomData[] rooms { get; set; }
+    }
 
     class JsonRequestPacketDeserializer
     {
@@ -40,6 +53,11 @@ namespace TakiClient.Modules
         static public SignupResponse DeserializeSignUp(string res)
         {
             return JsonSerializer.Deserialize<SignupResponse>(res);
+        }
+
+        static public GetRoomsResponse DeserializeGetRooms(string res)
+        {
+            return JsonSerializer.Deserialize<GetRoomsResponse>(res);
         }
     }
 }

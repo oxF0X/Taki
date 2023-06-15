@@ -16,6 +16,15 @@ namespace TakiClient.Modules
         const int ERROR_CODE = 102;
         const int LOGIN_RES = 100;
         const int SIGNUP_RES = 101;
+        const int GET_ROOMS_RES = 103;
+        const int CREATE_ROOMS_RES = 106;
+        const int JOIN_ROOMS_RES = 105;
+        const int SIGNOUT_RES = 111;
+
+
+        const int GET_ROOMS_REQ = 13;
+        const int GET_SIGN_OUT = 12;
+
 
         private TcpClient socket;
         private static Client instance;
@@ -65,6 +74,60 @@ namespace TakiClient.Modules
             }
         }
 
+        public RoomData[] GetRooms()
+        {
+            byte [] reqCode = new byte[5] { GET_ROOMS_REQ, 0, 0, 0, 0 };
+            clientStream.Write(reqCode, 0, reqCode.Length);
+            int code = GetCodeFromSocket();
+            int size = GetSizeFromSocket();
+            if (size <= 0)
+            {
+                return null;
+            }
+
+            byte[] buffer = new byte[size];
+            int bytesNum = clientStream.Read(buffer, 0, size);
+            string str = Encoding.Default.GetString(buffer);
+
+            switch (code)
+            {
+                case ERROR_CODE:
+                    return null;
+
+                case GET_ROOMS_RES:
+                    return JsonRequestPacketDeserializer.DeserializeGetRooms(str).rooms;
+
+                default:
+                    return null;
+            }
+        }
+
+        public string CreateRoom(string roomName, int maxUsers, int answerTimeout)
+        {
+            byte[] req = JsonRequestPacketSerializer.SerializeCreateRoom(roomName, maxUsers, answerTimeout);
+            clientStream.Write(req, 0, req.Length);
+            int code = GetCodeFromSocket();
+            int size = GetSizeFromSocket();
+            if (size <= 0)
+            {
+                return "Something went wrong";
+            }
+
+            byte[] buffer = new byte[size];
+            int bytesNum = clientStream.Read(buffer, 0, size);
+            string str = Encoding.Default.GetString(buffer);
+
+            switch (code)
+            {
+                case ERROR_CODE:
+                    return JsonRequestPacketDeserializer.DeserializeError(str).message;
+
+                case CREATE_ROOMS_RES:
+                    return JsonRequestPacketDeserializer.DeserializeLogIn(str).status.ToString();
+                default:
+                    return "Something went wrong";
+            }
+        }
 
         public string GetSignup(string username, string password, string email, string address, string birthday, string phoneNumber)
         {
@@ -90,8 +153,28 @@ namespace TakiClient.Modules
                     return JsonRequestPacketDeserializer.DeserializeLogIn(str).status.ToString();
 
                 default:
+             
                     return "Something went wrong";
             }
+        }
+
+        public bool GetLogout()
+        {
+            byte[] reqCode = new byte[5] { GET_SIGN_OUT, 0, 0, 0, 0 };
+            clientStream.Write(reqCode, 0, reqCode.Length);
+            int code = GetCodeFromSocket();
+            int size = GetSizeFromSocket();
+            if (size <= 0)
+            {
+                return false;
+            }
+
+            byte[] buffer = new byte[size];
+            int bytesNum = clientStream.Read(buffer, 0, size);
+            string str = Encoding.Default.GetString(buffer);
+            
+
+            return code == SIGNOUT_RES;
         }
 
         private byte GetCodeFromSocket()

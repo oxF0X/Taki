@@ -6,6 +6,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace TakiClient.Modules
 {
@@ -25,10 +26,27 @@ namespace TakiClient.Modules
         public string phoneNumber { get; set; }
     }
 
+    struct JoinRoomRequest
+    {
+        public int roomId { get; set; }    
+    }
+
+
+    struct CreateRoomRequest
+    {
+        public string roomName { get; set; }
+        public int maxUsers { get; set; }
+        public int answerTimeout { get; set; }
+    }
+
+
+
     class JsonRequestPacketSerializer
     {
         public const int LOGIN_CODE = 10;
         public const int SIGNUP_CODE = 11;
+        public const int CREATE_ROOM_CODE = 16;
+
 
         public static byte[] SerializeLogin(string username, string password)
         {
@@ -58,6 +76,22 @@ namespace TakiClient.Modules
             string jsonString = JsonSerializer.Serialize(request);
             return buildMsg(jsonString, SIGNUP_CODE);
         }
+
+
+
+        public static byte[] SerializeCreateRoom(string roomName, int maxUsers, int answerTimeout)
+        {
+            CreateRoomRequest request = new CreateRoomRequest()
+            {
+                roomName = roomName,
+                maxUsers = maxUsers,
+                answerTimeout = answerTimeout
+            };
+
+            string jsonString = JsonSerializer.Serialize(request);
+            return buildMsg(jsonString, CREATE_ROOM_CODE);
+        }
+
 
         public static byte[] buildMsg(string json, int code)
         {
