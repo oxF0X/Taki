@@ -201,9 +201,11 @@ namespace TakiClient.ViewsModels
             string result = clientHandler.GetSignup(Username, password, Email, Address, Birthday, PhoneNumber);
             if (result == "1")
             {
-                var mainView = new MenuView();
-                mainView.Show();
-                Application.Current.MainWindow.Close();
+                var menuView = new MenuView();
+                Window w = Application.Current.MainWindow;
+                Application.Current.MainWindow = menuView;
+                menuView.Show();
+                w.Close();
             }
             else
             {

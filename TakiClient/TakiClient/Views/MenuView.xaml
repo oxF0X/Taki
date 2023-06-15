@@ -74,7 +74,6 @@
                 <StackPanel VerticalAlignment="Center" HorizontalAlignment="Right" Orientation="Horizontal">
                     <Button x:Name="btnMinimize"
                             Style="{StaticResource MinimizeButtonStyle}"
-                            Grid.Column="1" 
                             Command="{Binding HideScreenCommand}">
                         <TextBlock Text="➖" Foreground="White" FontSize="12" FontWeight="Bold"/>
                     </Button>
@@ -82,14 +81,12 @@
 
                     <Button x:Name="btnMaximize" 
                             Style="{StaticResource MinimizeButtonStyle}"
-                            Grid.Column="2"
                             Command="{Binding MaximizeOrMinimizeCommand}">
                         <TextBlock Text="🗖" Foreground="White" FontSize="12" FontWeight="Bold"/>
                     </Button>
 
                     <Button x:Name="btnClose"
                             Style="{StaticResource CloseButtonStyle}"
-                            Grid.Column="3"
                             Command="{Binding CloseScreenCommand}">
                         <TextBlock Text="✖" 
                                    Foreground="White" 

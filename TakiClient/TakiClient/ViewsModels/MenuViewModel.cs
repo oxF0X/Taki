@@ -83,7 +83,7 @@ namespace TakiClient.ViewsModels
             var loginView = new LoginView();
             Window w = Application.Current.MainWindow;
             Application.Current.MainWindow = loginView;
-            loginView.Show();
+            Application.Current.MainWindow.Show();
             w.Close();
         }
 
