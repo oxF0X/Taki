@@ -12,14 +12,15 @@
 #define LOGIN_RES 100
 #define Signup_RES 101
 #define ERROR_RES 102
-#define GetRooms_RES 103
-#define getPlayers_RES 104
-#define JoinRoom_RES 105
-#define CreateRoom_RES 106
-#define CloseRoom_RES 107
-#define StartRoom_RES 108
-#define LeaveRoom_RES 109
-#define GetRoomsStateRoom_RES 110
+#define SIGNOUT_RES 111
+#define GET_ROOMS_RES 103
+#define GET_PLAYERS_RES 104
+#define JOIN_ROOM_RES 105
+#define CREATE_ROOM_RES 106
+#define CLOSE_ROOM_RES 107
+#define START_ROOM_RES 108
+#define LEAVE_ROOM_RES 109
+#define GET_ROOM_STATE_RES 110
 
 typedef struct ErrorResponse
 {

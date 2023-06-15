@@ -3,6 +3,7 @@
 
 #pragma comment (lib, "ws2_32.lib")
 
+#include <typeinfo>
 #include <iostream>
 #include <mongocxx/client.hpp>
 #include <mongocxx/instance.hpp>
@@ -31,12 +32,14 @@ public:
 private:
 	void bindAndListen();
 	void handleNewClient(SOCKET socket);
+	void disconnectUser(SOCKET socket);
 
 	///////////////////////////////
 
 	void acceptClient();
 	Comunicator(RequestHandlerFactory& handler);
 	SOCKET m_serverSocket;
+	std::string _username;
 	std::map<SOCKET, IRequestHandler*> m_clients;
 	RequestHandlerFactory& m_handlerFactory;
 };

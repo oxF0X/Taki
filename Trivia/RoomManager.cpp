@@ -1,5 +1,15 @@
 #include "RoomManager.h"
 
+RoomManager::RoomManager()
+{
+}
+
+RoomManager& RoomManager::getManager()
+{
+	static RoomManager manager = RoomManager();
+	return manager;
+}
+
 void RoomManager::createRoom(const LoggedUser& user, const RoomData& data)
 {
 	if (data.maxPlayers <= 1)

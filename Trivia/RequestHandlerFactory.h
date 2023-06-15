@@ -30,7 +30,7 @@ public:
 	~RequestHandlerFactory();
 private:
 	RequestHandlerFactory(IDatabase* db);
-	RoomManager m_roomMangager;
+	RoomManager& m_roomManager;
 	LoginManager& m_loginManager;
 	IDatabase* m_database;
 	static bool is_exsit;

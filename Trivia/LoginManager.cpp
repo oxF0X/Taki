@@ -18,7 +18,7 @@ void LoginManager::signup(const std::string username, const std::string password
     
 	this->matchRegex(std::regex("^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\\W).{8}$"), password, "Invalid password");
 
-	this->matchRegex(std::regex("^[a-zA-Z\\s]+,\\s*\\d+,\\s*[A-Za-z\\s]+$"), address, "Invalid password");
+	this->matchRegex(std::regex("^[a-zA-Z\\s]+,\\s*\\d+,\\s*[A-Za-z\\s]+$"), address, "Invalid address");
 
 	this->matchRegex(std::regex("0\\d{2}-\\d{4}-\\d{3}$|0\\d{1}-\\d{4}\\d{3}$"), phoneNumber, "Invalid phone number");
 	this->matchRegex(std::regex("\\d{2}.\\d{2}.\\d{4}$|\\d{2}/\\d{3}/\\d{4}$"), birthday, "Invalid birthday");

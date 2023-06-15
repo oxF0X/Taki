@@ -12,6 +12,11 @@ using std::string;
 int Helper::getIntPartFromSocket(const SOCKET sc, const int bytesNum)
 {
 	std::string data(getPartFromSocket(sc, bytesNum));
+	if (data == "")
+	{
+		return 0;
+	}
+
 	if (bytesNum == 1)
 	{
 		return (int)data[0];

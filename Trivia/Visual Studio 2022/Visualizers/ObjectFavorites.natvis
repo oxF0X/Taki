@@ -5,4 +5,9 @@
       <Favorite>_impl</Favorite>
     </Favorites>
   </Type>
+  <Type Name="RequestHandlerFactory">
+    <Favorites>
+      <Favorite>m_roomMangager</Favorite>
+    </Favorites>
+  </Type>
 </AutoVisualizer>
