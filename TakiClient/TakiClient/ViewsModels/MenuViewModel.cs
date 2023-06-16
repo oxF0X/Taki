@@ -64,7 +64,7 @@ namespace TakiClient.ViewsModels
 
         public MenuViewModel()
         {
-            this.clientHandler = Client.GetClient();
+            this.clientHandler = Manager.GetManager().getClient();
             StatisticsCommand = new ViewModelCommand(ExecuteShowStatistics);
             JoinRoomCommand = new ViewModelCommand(ExecuteJoinRoom);
             CreateRoomCommand = new ViewModelCommand(ExecuteCreateRoom);

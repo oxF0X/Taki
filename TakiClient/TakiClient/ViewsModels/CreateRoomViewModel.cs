@@ -57,7 +57,7 @@ namespace TakiClient.ViewsModels
 
         public CreateRoomViewModel()
         {
-            this.clientHandler = Client.GetClient();
+            this.clientHandler = Manager.GetManager().getClient();
             CreateRoomCommand = new ViewModelCommand(ExecuteCreateRooms, CanExecuteCreateRoom);
         }
 

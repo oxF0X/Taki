@@ -20,6 +20,7 @@ namespace TakiClient.Modules
         const int CREATE_ROOMS_RES = 106;
         const int JOIN_ROOMS_RES = 105;
         const int SIGNOUT_RES = 111;
+        const int GET_PLAYERS_RES = 104;
 
 
         const int GET_ROOMS_REQ = 13;
@@ -30,7 +31,7 @@ namespace TakiClient.Modules
         private static Client instance;
         NetworkStream clientStream;
 
-        private Client()
+        public Client()
         {
             socket = new TcpClient();
             socket.Connect(IPAddress.Parse("127.0.0.1"), 4444);
@@ -42,14 +43,6 @@ namespace TakiClient.Modules
             this.socket.Close();
         }
 
-        public static Client GetClient()
-        {
-            if (instance == null)
-            {
-                instance = new Client();
-            }
-            return instance;
-        }
 
         public string GetLogin(string username, string password)
         {
@@ -180,6 +173,54 @@ namespace TakiClient.Modules
             
 
             return code == SIGNOUT_RES;
+        }
+
+
+        public string[] GetPlayersInRoom(int roomId)
+        {
+            byte[] data = JsonRequestPacketSerializer.SerializeGetPalayersInRoom(roomId);
+            clientStream.Write(data, 0, data.Length);
+            int code = GetCodeFromSocket();
+            int size = GetSizeFromSocket();
+
+
+            byte[] buffer = new byte[size];
+            int bytesNum = clientStream.Read(buffer, 0, size);
+            string str = Encoding.Default.GetString(buffer);
+
+
+            if (code != GET_PLAYERS_RES)
+            {
+                return new String[1] { JsonRequestPacketDeserializer.DeserializeError(str).message };
+            }
+
+            return JsonRequestPacketDeserializer.DeserializeGetPalyersInRoom(str).players;
+
+        }
+
+        public string GetJoinRoom(int roomId)
+        {
+            byte[] data = JsonRequestPacketSerializer.SerializeJoinRoom(roomId);
+            clientStream.Write(data, 0, data.Length);
+            int code = GetCodeFromSocket();
+            int size = GetSizeFromSocket();
+            if (size <= 0)
+            {
+                return "Something went wrong";
+            }
+
+            byte[] buffer = new byte[size];
+            int bytesNum = clientStream.Read(buffer, 0, size);
+            string str = Encoding.Default.GetString(buffer);
+
+
+            if (code != JOIN_ROOMS_RES)
+            {
+                return JsonRequestPacketDeserializer.DeserializeError(str).message;
+            }
+
+            return JsonRequestPacketDeserializer.DeserializeLogIn(str).status.ToString();
+
         }
 
         private byte GetCodeFromSocket()

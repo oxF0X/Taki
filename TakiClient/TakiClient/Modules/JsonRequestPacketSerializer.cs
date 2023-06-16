@@ -31,6 +31,10 @@ namespace TakiClient.Modules
         public int roomId { get; set; }    
     }
 
+    struct GetPalayersInRoomRequest
+    {
+        public int roomId { get; set; }
+    }
 
     struct CreateRoomRequest
     {
@@ -46,6 +50,8 @@ namespace TakiClient.Modules
         public const int LOGIN_CODE = 10;
         public const int SIGNUP_CODE = 11;
         public const int CREATE_ROOM_CODE = 16;
+        public const int JOIN_ROOM_CODE = 15;
+        public const int GET_PLAYERS_CODE = 14;
 
 
         public static byte[] SerializeLogin(string username, string password)
@@ -77,6 +83,28 @@ namespace TakiClient.Modules
             return buildMsg(jsonString, SIGNUP_CODE);
         }
 
+        public static byte[] SerializeJoinRoom(int roomId)
+        {
+            JoinRoomRequest request = new JoinRoomRequest()
+            {
+                roomId = roomId
+            };
+
+            string jsonString = JsonSerializer.Serialize(request);
+            return buildMsg(jsonString, JOIN_ROOM_CODE);
+        }
+
+
+        public static byte[] SerializeGetPalayersInRoom(int roomId)
+        {
+            GetPalayersInRoomRequest request = new GetPalayersInRoomRequest()
+            {
+                roomId = roomId
+            };
+
+            string jsonString = JsonSerializer.Serialize(request);
+            return buildMsg(jsonString, GET_PLAYERS_CODE);
+        }
 
 
         public static byte[] SerializeCreateRoom(string roomName, int maxUsers, int answerTimeout)
@@ -95,22 +123,6 @@ namespace TakiClient.Modules
 
         public static byte[] buildMsg(string json, int code)
         {
-            /*            string msg = ((char)code).ToString();
-                        int size = json.Length;
-
-                        byte[] sizeBytes = new byte[4];
-
-                        // Store the size in the byte array
-                        sizeBytes[0] = (byte)size;
-                        sizeBytes[1] = (byte)(size >> 8);
-                        sizeBytes[2] = (byte)(size >> 16);
-                        sizeBytes[3] = (byte)(size >> 24);
-
-                        // Append the size bytes to the message
-                        msg += Encoding.ASCII.GetString(sizeBytes) + json;
-
-                        return msg;*/
-
             string msg = ((char)code).ToString();
             int size = json.Length;
 

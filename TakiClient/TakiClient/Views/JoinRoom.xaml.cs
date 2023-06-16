@@ -1,33 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using TakiClient.Modules;
 using TakiClient.ViewsModels;
-using System.Threading;
-using System.Windows.Controls;
 
 namespace TakiClient.Views
 {
-    /// <summary>
-    /// Interaction logic for JoinRoom.xaml
-    /// </summary>
     public partial class JoinRoom : Page
     {
         private JoinRoomViewModel viewModel;
-        private Thread roomUpdateThread;
-        private bool isThreadRunning;
+        private Task roomUpdateTask;
+        private CancellationTokenSource cancellationTokenSource;
 
         public JoinRoom()
         {
@@ -36,35 +20,30 @@ namespace TakiClient.Views
             viewModel = new JoinRoomViewModel();
             DataContext = viewModel;
 
-            // Create and start the thread for room updates
-            isThreadRunning = true;
-            roomUpdateThread = new Thread(RoomUpdateThreadMethod);
-            roomUpdateThread.Start();
-
+            // Create and start the task for room updates
+            cancellationTokenSource = new CancellationTokenSource();
+            roomUpdateTask = Task.Run(() => RoomUpdateThreadMethod(cancellationTokenSource.Token));
 
             Unloaded += JoinRoom_Unloaded;
         }
 
-
-        private void JoinRoom_Unloaded(object sender, System.Windows.RoutedEventArgs e)
+        private void JoinRoom_Unloaded(object sender, RoutedEventArgs e)
         {
-            // Stop the thread when the page is unloaded
-            isThreadRunning = false;
-            roomUpdateThread.Join();
+            // Stop the task when the page is unloaded
+            cancellationTokenSource.Cancel();
         }
 
-        private void RoomUpdateThreadMethod()
+        private async Task RoomUpdateThreadMethod(CancellationToken cancellationToken)
         {
-            while (isThreadRunning)
+            while (!cancellationToken.IsCancellationRequested && IsLoaded && Manager.GetManager().IsThreading())
             {
-                // Get the updated rooms from the client handler
-                RoomData[] updatedRooms = viewModel.GetUpdatedRooms();
+                RoomData[] updatedRooms = await Task.Run(() => viewModel.GetUpdatedRooms());
 
-                // Update the Rooms property on the UI thread
-                Dispatcher.Invoke(() => viewModel.UpdateRooms(updatedRooms));
+                // Update the Rooms property on the UI thread if the page is still loaded
+                if (IsLoaded)
+                    viewModel.UpdateRooms(updatedRooms);
 
-                // Sleep for a certain duration before updating again
-                Thread.Sleep(5);
+                await Task.Delay(5);
             }
         }
     }

@@ -146,7 +146,7 @@ namespace TakiClient.ViewsModels
 
         public RegisterViewModel()
         {
-            this.clientHandler = Client.GetClient();
+            this.clientHandler = Manager.GetManager().getClient();
             RegisterCommand = new ViewModelCommand(ExecuteRegisterCommand, CanExecuteRegisterCommand);
             CloseScreenCommand = new ViewModelCommand(ExecutedCloseCommand);
             HideScreenCommand = new ViewModelCommand(ExecutedHideCommand);

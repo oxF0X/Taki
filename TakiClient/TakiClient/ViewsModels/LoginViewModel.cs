@@ -84,7 +84,7 @@ namespace TakiClient.ViewsModels
 
         public LoginViewModel()
         {
-            this.clientHandler = Client.GetClient();
+            this.clientHandler = Manager.GetManager().getClient();
             LoginCommand = new ViewModelCommand(ExecuteLoginCommand, CanExecuteLoginCommand);
             CloseScreenCommand = new ViewModelCommand(ExecutedCloseCommand);
             HideScreenCommand = new ViewModelCommand(ExecutedHideCommand);

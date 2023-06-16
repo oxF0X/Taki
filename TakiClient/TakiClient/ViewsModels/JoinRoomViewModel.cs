@@ -11,12 +11,25 @@ using TakiClient.Modules;
 namespace TakiClient.ViewsModels
 {
 
+
     public class JoinRoomViewModel : ViewsModelBase
     {
         private RoomData[] _rooms;
         private Client clientHandler;
         private string _roomName;
         private int _roomId;
+        public bool _isThreading;
+
+        public int Id 
+        { 
+
+            get { return _roomId; }
+            set
+            {
+                _roomId = value;
+                OnPropertyChanged(nameof(Id));
+            }
+        }
 
         public RoomData[] Rooms
         {
@@ -28,18 +41,17 @@ namespace TakiClient.ViewsModels
             }
         }
 
-        public ICommand JoinRoomCommand { get; }
+        public ICommand JoinRoomCommand { get; set; }
 
         public JoinRoomViewModel()
         {
-            this.clientHandler = Client.GetClient();
-            JoinRoomCommand = new ViewModelCommand(ExecuteJoinRoom);
-            _rooms = this.clientHandler.GetRooms();
+            this.clientHandler = Manager.GetManager().getClient();
+            JoinRoomCommand = new ViewModelCommand(ExecuteJoinRoom);            
         }
 
-        private void ExecuteJoinRoom(object roomId)
+        private void ExecuteJoinRoom(object obj)
         {
-            // Handle the join room logic using the provided roomId
+            this.clientHandler.GetJoinRoom(Convert.ToInt32(Id.ToString()));
         }
 
         public RoomData[] GetUpdatedRooms()
@@ -49,7 +61,8 @@ namespace TakiClient.ViewsModels
 
         public void UpdateRooms(RoomData[] updatedRooms)
         {
-            Rooms = updatedRooms;
+            RoomData[] _rooms = this.clientHandler.GetRooms();           
+            Rooms = _rooms;
         }
 
 

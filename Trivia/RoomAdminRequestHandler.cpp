@@ -33,8 +33,8 @@ RequestResult RoomAdminRequestHandler::startGame(RequestInfo info)
 
 RequestResult RoomAdminRequestHandler::closeRoom(RequestInfo info)
 {
-
-	return RequestResult();
+	this->m_roomManager.deleteRoom(this->m_room.getRoomData().id);
+	return RequestResult{ JsonRequestPacketSerializer::serializeResponse(CloseRoomResponse{1}), new MenuRequestHandler(this->m_user, this->m_roomManager, this->m_handlerFactory)};
 }
 
 RequestResult RoomAdminRequestHandler::getRoomState(RequestInfo info)
