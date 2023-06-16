@@ -21,6 +21,7 @@ namespace TakiClient.Views
             DataContext = viewModel;
 
             // Create and start the task for room updates
+            Manager.GetManager().SetThreading(true);
             cancellationTokenSource = new CancellationTokenSource();
             roomUpdateTask = Task.Run(() => RoomUpdateThreadMethod(cancellationTokenSource.Token));
 
@@ -35,12 +36,12 @@ namespace TakiClient.Views
 
         private async Task RoomUpdateThreadMethod(CancellationToken cancellationToken)
         {
-            while (!cancellationToken.IsCancellationRequested && IsLoaded && Manager.GetManager().IsThreading())
+            while (!cancellationToken.IsCancellationRequested  && Manager.GetManager().IsThreading())
             {
                 RoomData[] updatedRooms = await Task.Run(() => viewModel.GetUpdatedRooms());
 
                 // Update the Rooms property on the UI thread if the page is still loaded
-                if (IsLoaded)
+
                     viewModel.UpdateRooms(updatedRooms);
 
                 await Task.Delay(5);
