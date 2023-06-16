@@ -60,7 +60,7 @@ std::vector<std::uint8_t> JsonRequestPacketSerializer::serializeResponse(JoinRoo
 {
     nlohmann::json j;
     s.to_json(j, s);
-    return buildMsg(j, Signup_RES);
+    return buildMsg(j, JOIN_ROOM_RES);
 }
 
 std::vector<std::uint8_t> JsonRequestPacketSerializer::serializeResponse(CreateRoomResponse s)

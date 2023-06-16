@@ -52,7 +52,7 @@ namespace TakiClient.Modules
         public const int CREATE_ROOM_CODE = 16;
         public const int JOIN_ROOM_CODE = 15;
         public const int GET_PLAYERS_CODE = 14;
-
+        public const int GET_ROOM_STATE_REQ = 20;
 
         public static byte[] SerializeLogin(string username, string password)
         {

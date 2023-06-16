@@ -30,27 +30,34 @@ namespace TakiClient.ViewsModels
             }
         }
 
-        public ICommand CreateRoomCommand { get; }
+        public ICommand LeaveRoomCommand { get; }
 
 
 
         public JoinedRoomViewModel()
         {
             this.clientHandler = Manager.GetManager().getClient();
-            CreateRoomCommand = new ViewModelCommand(ExecuteCreateRooms, CanExecuteCreateRoom);
+            LeaveRoomCommand = new ViewModelCommand(ExecuteLeaveRoom);
             //this._users = clientHandler.GetPlayersInRoom(Manager.GetManager().getRoomId());
         }
 
-        private bool CanExecuteCreateRoom(object obj)
+        public string[] UpdateUsers()
         {
-            return true;
-           // return !(string.IsNullOrWhiteSpace(RoomName) || MaxUsers == 0 || AnswerTimeOut == 0);
+           GetRoomsStateResponse? state = this.clientHandler.GetRoomState();
+            string[] players = state?.players;
+            return players;
         }
 
-        private void ExecuteCreateRooms(object obj)
+        public void UpdateUsers(string[] arr)
         {
-           // this.clientHandler.CreateRoom(_roomName, _maxUsers, _answerTimeOut);
-            //throw new NotImplementedException();
+            Users = arr;
+            this._users = arr;
+        }
+
+
+        private void ExecuteLeaveRoom(object obj)
+        {
+            this.clientHandler.GetLiveRoom();
         }
     }
 }

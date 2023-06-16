@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 
 namespace TakiClient.Modules
@@ -32,16 +33,25 @@ namespace TakiClient.Modules
         public string name { get; set; }
     }
 
-    struct GetRoomsResponse
+    public struct GetRoomsResponse
     {
         public int status { get; set; }
         public RoomData[] rooms { get; set; }
     }
 
-    struct GetPlayersResponse
+    public struct GetPlayersResponse
     {
         public int status { get; set; }
         public string[] players { get; set; }
+    }
+
+    public struct GetRoomsStateResponse
+    {
+        public int status { get; set; }
+        public bool hasGameBegun { get; set; }
+        public string[] players { get; set; }
+        public int[] cardsPerPlayer { get; set; }
+        public string[] LastPlayForEachPlayer { get; set; }
     }
 
     class JsonRequestPacketDeserializer
@@ -69,6 +79,11 @@ namespace TakiClient.Modules
         static public GetPlayersResponse DeserializeGetPalyersInRoom(string res)
         {
             return JsonSerializer.Deserialize<GetPlayersResponse>(res);
+        }
+
+        static public GetRoomsStateResponse DeserializeGetRoomState(string res)
+        {
+            return JsonSerializer.Deserialize<GetRoomsStateResponse>(res);
         }
     }
 }

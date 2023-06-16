@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows;
 using TakiClient.Modules;
+using TakiClient.Views;
 
 namespace TakiClient.ViewsModels
 {
@@ -51,7 +52,14 @@ namespace TakiClient.ViewsModels
 
         private void ExecuteJoinRoom(object obj)
         {
+            Manager.GetManager().SetThreading(false);
+            Manager.GetManager().SetRoomId(Convert.ToInt32(Id.ToString()));
             this.clientHandler.GetJoinRoom(Convert.ToInt32(Id.ToString()));
+            var view = new JoinedRoomView();
+            Window w = Application.Current.MainWindow;
+            Application.Current.MainWindow = view;
+            view.Show();
+            w.Close();
         }
 
         public RoomData[] GetUpdatedRooms()

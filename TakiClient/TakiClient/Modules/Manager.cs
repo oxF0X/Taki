@@ -11,6 +11,7 @@ namespace TakiClient.Modules
         private Client client;
         private bool _isThreading;
         private static Manager _instanse;
+        int roomId;
 
         private Manager()
         {
@@ -40,6 +41,10 @@ namespace TakiClient.Modules
         public void SetThreading(bool isThreading)
         { _isThreading = isThreading; }
 
+
+        public void SetRoomId(int roomId) {  this.roomId = roomId; }
+
+        public int GetRoomId() { return roomId;}
 
     }
 }

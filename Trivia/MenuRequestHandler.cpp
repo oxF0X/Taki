@@ -64,7 +64,7 @@ RequestResult MenuRequestHandler::getPlayersInRoom(RequestInfo info)
 	{
 		return RequestResult{ JsonRequestPacketSerializer::serializeResponse(ErrorResponse{std::string(e.what())}),  new MenuRequestHandler(this->m_user, this->m_roomManager, this->m_handlerFactory) };
 	}
-	return RequestResult{ JsonRequestPacketSerializer::serializeResponse(GetPlayersInRoomResponse{players}),  new MenuRequestHandler(this->m_user, this->m_roomManager, this->m_handlerFactory) };
+	return RequestResult{ JsonRequestPacketSerializer::serializeResponse(GetPlayersInRoomResponse{players}),  new RoomMemberRequestHandler(this->m_user, this->m_roomManager.getRoom(room.roomId), this->m_roomManager, this->m_handlerFactory)};
 }
 
 RequestResult MenuRequestHandler::joinRoom(RequestInfo info)
@@ -84,7 +84,7 @@ RequestResult MenuRequestHandler::joinRoom(RequestInfo info)
 	{
 		return RequestResult{ JsonRequestPacketSerializer::serializeResponse(ErrorResponse{std::string(e.what())}), new MenuRequestHandler(this->m_user, this->m_roomManager, this->m_handlerFactory) };
 	}
-	return RequestResult{ JsonRequestPacketSerializer::serializeResponse(JoinRoomResponse{1}),  new MenuRequestHandler(this->m_user, this->m_roomManager, this->m_handlerFactory) };
+	return RequestResult{ JsonRequestPacketSerializer::serializeResponse(JoinRoomResponse{1}),  new RoomMemberRequestHandler(this->m_user, this->m_roomManager.getRoom(room.roomId), this->m_roomManager, this->m_handlerFactory)};
 }
 
 RequestResult MenuRequestHandler::createRoom(RequestInfo info)

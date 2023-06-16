@@ -21,10 +21,14 @@ namespace TakiClient.Modules
         const int JOIN_ROOMS_RES = 105;
         const int SIGNOUT_RES = 111;
         const int GET_PLAYERS_RES = 104;
+        const int GET_ROOM_STATE_RES = 110;
+        const int GET_LEAVE_ROM_RES = 119;
+
 
 
         const int GET_ROOMS_REQ = 13;
         const int GET_SIGN_OUT = 12;
+        const int GET_LEAVE_ROOM = 19;
 
 
         private TcpClient socket;
@@ -222,6 +226,46 @@ namespace TakiClient.Modules
             return JsonRequestPacketDeserializer.DeserializeLogIn(str).status.ToString();
 
         }
+
+
+        public GetRoomsStateResponse? GetRoomState()
+        {
+            byte[] reqCode = new byte[5] { JsonRequestPacketSerializer.GET_ROOM_STATE_REQ, 0, 0, 0, 0 };
+            clientStream.Write(reqCode, 0, reqCode.Length);
+            int code = GetCodeFromSocket();
+            int size = GetSizeFromSocket();
+            if (size <= 0)
+            {
+                return null;
+            }
+
+            byte[] buffer = new byte[size];
+            int bytesNum = clientStream.Read(buffer, 0, size);
+            string str = Encoding.Default.GetString(buffer);
+            
+            return code == GET_ROOM_STATE_RES ? JsonRequestPacketDeserializer.DeserializeGetRoomState(str) : null;
+        }
+
+
+        public bool GetLiveRoom()
+        {
+            byte[] reqCode = new byte[5] { GET_LEAVE_ROOM, 0, 0, 0, 0 };
+            clientStream.Write(reqCode, 0, reqCode.Length);
+            int code = GetCodeFromSocket();
+            int size = GetSizeFromSocket();
+            if (size <= 0)
+            {
+                return false;
+            }
+
+            byte[] buffer = new byte[size];
+            int bytesNum = clientStream.Read(buffer, 0, size);
+            string str = Encoding.Default.GetString(buffer);
+
+
+            return code == SIGNOUT_RES;
+        }
+
 
         private byte GetCodeFromSocket()
         {
