@@ -13,8 +13,44 @@
         <viewModel:JoinRoomViewModel/>
     </Page.DataContext>
 
-    <Grid>
-        <ScrollViewer VerticalScrollBarVisibility="Auto">
+    <Grid VerticalAlignment="Top" HorizontalAlignment="Center" Width="400">
+        <TextBox x:Name="txtJoinRoomInput" 
+                             Text="{Binding Id, UpdateSourceTrigger=PropertyChanged}"
+                             FontSize="14"
+                             FontWeight="Medium" 
+                             FontFamily="Montserrat"
+                             Foreground="White"
+                             CaretBrush="LightGray"
+                             BorderBrush="DarkGray"
+                             BorderThickness="0,0,0,2"
+                             Height="28" 
+                             Margin="0,-230,0,0"
+                             Padding="20,0,0,0"
+                             Width="100">
+            <TextBox.Background>
+                <ImageBrush ImageSource="/Images/user-icon.png" Stretch="None" AlignmentX="Left"/>
+            </TextBox.Background>
+        </TextBox>
+        <TextBlock Text="{Binding Error}" 
+                               Foreground="red"
+                                Height="15"
+                               FontSize="15" 
+                               FontWeight="Medium"
+                               FontFamily="Montserrat"
+                               Margin="0,-170,0,0"
+                               TextWrapping="Wrap"/>
+
+        <Button x:Name="btnJoin" 
+                            Command="{Binding JoinRoomCommand}"
+                            BorderThickness="0"
+                            Content="JOIN ROOM"
+                            Foreground="White"
+                            FontSize="12" 
+                            FontFamily="Montserrat" 
+                            Cursor="Hand" 
+                            Margin="0,-150,0,0"
+                            Style="{StaticResource LoginButtonStyle}"/>
+        <ScrollViewer Height="300" Margin="200, 0, 0,0 ">
             <ItemsControl ItemsSource="{Binding Rooms}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
@@ -42,36 +78,6 @@
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
-
-
         </ScrollViewer>
-
-        <TextBox x:Name="txtUser" 
-                             Text="{Binding Id, UpdateSourceTrigger=PropertyChanged}"
-                             FontSize="14"
-                             FontWeight="Medium" 
-                             FontFamily="Montserrat"
-                             Foreground="White"
-                             CaretBrush="LightGray"
-                             BorderBrush="DarkGray"
-                             BorderThickness="0,0,0,2"
-                             Height="28" 
-                             VerticalContentAlignment="Center"
-                             Margin="0,5,0,0"
-                             Padding="20,0,0,0">
-            <TextBox.Background>
-                <ImageBrush ImageSource="/Images/user-icon.png" Stretch="None" AlignmentX="Left"/>
-            </TextBox.Background>
-        </TextBox>
-        <Button x:Name="btnLogin" 
-                            Command="{Binding JoinRoomCommand}"
-                            BorderThickness="0"
-                            Content="JOIN ROOM"
-                            Foreground="White"
-                            FontSize="12" 
-                            FontFamily="Montserrat" 
-                            Cursor="Hand" 
-                            Margin="0,-30,0,0"
-                            Style="{StaticResource LoginButtonStyle}"/>
     </Grid>
 </Page>

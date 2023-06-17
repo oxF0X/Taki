@@ -10,11 +10,15 @@
       Title="CreateRoomPage">
 
     <Page.DataContext>
-            <viewModel:CreateRoomViewModel/>
-        </Page.DataContext>
+        <viewModel:CreateRoomViewModel/>
+    </Page.DataContext>
 
-        <Grid>
-        <StackPanel>
+    <Grid>
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock Text="Create room :D" Foreground="White" FontSize="25" FontWeight="Medium"
+                               Margin="0, 15, 0, 0"  FontFamily="Montserrat" HorizontalAlignment="Center"/>
+            <TextBlock Text="Room name" Foreground="White" FontSize="15" FontWeight="Medium" 
+                               Margin="0, 50, 0, 0"  FontFamily="Montserrat" HorizontalAlignment="Left"/>
             <TextBox x:Name="txtRoomName" 
                              Text="{Binding RoomName, UpdateSourceTrigger=PropertyChanged}"
                              FontSize="14"
@@ -28,11 +32,13 @@
                              VerticalContentAlignment="Center"
                              Margin="0,5,0,0"
                              Padding="20,0,0,0">
-            <TextBox.Background>
-                <ImageBrush ImageSource="/Images/user-icon.png" Stretch="None" AlignmentX="Left"/>
-            </TextBox.Background>
-        </TextBox>
-        <TextBox x:Name="txtMaxPlayers" 
+                <TextBox.Background>
+                    <ImageBrush/>
+                </TextBox.Background>
+            </TextBox>
+            <TextBlock Text="Max users number" Foreground="White" FontSize="15" FontWeight="Medium" 
+                               Margin="0, 10, 0, 0"  FontFamily="Montserrat" HorizontalAlignment="Left"/>
+            <TextBox x:Name="txtMaxPlayers" 
                              Text="{Binding MaxUsers, UpdateSourceTrigger=PropertyChanged}"
                              FontSize="14"
                              FontWeight="Medium" 
@@ -41,15 +47,18 @@
                              CaretBrush="LightGray"
                              BorderBrush="DarkGray"
                              BorderThickness="0,0,0,2"
-                             Height="28" 
+                             Height="28"
+                                Width="400"
                              VerticalContentAlignment="Center"
                              Margin="0,5,0,0"
                              Padding="20,0,0,0">
-            <TextBox.Background>
-                <ImageBrush ImageSource="/Images/user-icon.png" Stretch="None" AlignmentX="Left"/>
-            </TextBox.Background>
-        </TextBox>
-        <TextBox x:Name="txtAnswerTimeOut"
+                <TextBox.Background>
+                    <ImageBrush/>
+                </TextBox.Background>
+            </TextBox>
+            <TextBlock Text="Time per move" Foreground="White" FontSize="15" FontWeight="Medium" 
+                               Margin="0, 10, 0, 0"  FontFamily="Montserrat" HorizontalAlignment="Left"/>
+            <TextBox x:Name="txtAnswerTimeOut"
                             Text="{Binding AnswerTimeOut, UpdateSourceTrigger=PropertyChanged}"
                              FontSize="14"
                              FontWeight="Medium" 
@@ -62,11 +71,11 @@
                              VerticalContentAlignment="Center"
                              Margin="0,5,0,0"
                              Padding="20,0,0,0">
-            <TextBox.Background>
-                <ImageBrush ImageSource="/Images/user-icon.png" Stretch="None" AlignmentX="Left"/>
-            </TextBox.Background>
-        </TextBox>
-             <Button x:Name="btnCreateRoom" 
+                <TextBox.Background>
+                    <ImageBrush/>
+                </TextBox.Background>
+            </TextBox>
+            <Button x:Name="btnCreateRoom" 
                             Command="{Binding CreateRoomCommand}"
                             BorderThickness="0"
                             Content="CREATE ROOM"

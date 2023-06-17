@@ -56,7 +56,7 @@
                     </Grid.ColumnDefinitions>
 
 
-                        <TextBlock Text="LOG IN"
+                    <TextBlock Text="LOG IN"
                                Foreground="DarkGray"
                                FontSize="10"
                                FontFamily="Montserrat"
@@ -162,7 +162,7 @@
                                    FontSize="12"
                                    FontWeight="Medium" 
                                    FontFamily="Montserrat"/>
-                        
+
                         <Button Content="Sign Up"
                                 Background="Transparent"
                                 BorderBrush="Transparent"
@@ -175,10 +175,10 @@
                                 Style="{StaticResource SignupButtonStyle}"
                                 Command="{Binding SignupCommand}"/>
                     </StackPanel>
-                    
-                    
+
+
                 </StackPanel>
-                
+
             </Grid>
         </Border>
     </Border>

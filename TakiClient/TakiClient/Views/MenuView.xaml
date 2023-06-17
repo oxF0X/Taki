@@ -24,7 +24,7 @@
 
     <Border CornerRadius="10" BorderThickness="2" Opacity="0.95">
 
-        
+
         <Border.BorderBrush>
             <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
                 <GradientStop Color="#462AD8" Offset="0"/>
@@ -38,19 +38,19 @@
                 <GradientStop Color="#C3292929" Offset="0"/>
             </LinearGradientBrush>
         </Border.Background>
-       
 
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="250"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
 
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="40"/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
-                
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="250"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
             <Border Grid.Row="0" Grid.Column="1">
                 <Border.Background>
                     <LinearGradientBrush StartPoint="0, 0" EndPoint="1, 0.7">
@@ -135,7 +135,7 @@
                             <TextBlock Text="Join room" Style="{StaticResource menuButtonText}"/>
                         </StackPanel>
                     </RadioButton>
-                    
+
                     <RadioButton Style="{StaticResource menuButton}"
                                  Tag="{StaticResource color2}" 
                                  Command="{Binding StatisticsCommand}">
@@ -164,7 +164,7 @@
                     </RadioButton>
                 </StackPanel>
             </Border>
-                
+
 
             <Border CornerRadius="0,10,10,0" Grid.Column="1"  Grid.Row="1" BorderThickness="1.5">
                 <Border.Background>

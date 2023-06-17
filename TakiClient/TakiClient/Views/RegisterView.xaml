@@ -179,7 +179,7 @@
                             <ImageBrush ImageSource="/Images/user-icon.png" Stretch="None" AlignmentX="Left"/>
                         </TextBox.Background>
                     </TextBox>
-                    
+
                     <TextBlock Text="Phone number" 
                                Foreground="DarkGray" 
                                FontSize="15" 

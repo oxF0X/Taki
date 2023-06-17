@@ -10,7 +10,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              Title="LoginView" Height="550" Width="800">
-            
-        <Image Source="../Images/dashboard-template.png"/>
+
+    <Image Source="../Images/dashboard-template.png"/>
 
 </Page>

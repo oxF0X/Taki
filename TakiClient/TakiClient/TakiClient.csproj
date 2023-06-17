@@ -8,14 +8,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\Amitjakhu-Drip-Plus.512.png" />
     <None Remove="Images\back-image.jpg" />
     <None Remove="Images\background.jpg" />
     <None Remove="Images\close.png" />
     <None Remove="Images\dashboard-template.png" />
     <None Remove="Images\Email.png" />
+    <None Remove="Images\group.png" />
+    <None Remove="Images\groupIcon.png" />
+    <None Remove="Images\iconGroup.png" />
     <None Remove="Images\key-icon.png" />
     <None Remove="Images\Lock.png" />
     <None Remove="Images\logo.png" />
+    <None Remove="Images\name.png" />
     <None Remove="Images\StartBackground.jpeg" />
     <None Remove="Images\user-icon.png" />
     <None Remove="Images\username.png" />
@@ -27,14 +32,19 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Images\Amitjakhu-Drip-Plus.512.png" />
     <Resource Include="Images\back-image.jpg" />
     <Resource Include="Images\background.jpg" />
     <Resource Include="Images\close.png" />
     <Resource Include="Images\dashboard-template.png" />
     <Resource Include="Images\Email.png" />
+    <Resource Include="Images\group.png" />
+    <Resource Include="Images\groupIcon.png" />
+    <Resource Include="Images\iconGroup.png" />
     <Resource Include="Images\key-icon.png" />
     <Resource Include="Images\Lock.png" />
     <Resource Include="Images\logo.png" />
+    <Resource Include="Images\name.png" />
     <Resource Include="Images\StartBackground.jpeg" />
     <Resource Include="Images\user-icon.png" />
     <Resource Include="Images\username.png" />

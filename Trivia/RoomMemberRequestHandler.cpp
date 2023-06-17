@@ -49,7 +49,7 @@ RequestResult RoomMemberRequestHandler::getRoomState(RequestInfo info)
 		str += s;
 	}
 	std::cout << this->m_user.getUsername() << " " << str << std::endl;
-	return RequestResult{ JsonRequestPacketSerializer::serializeResponse(GetRoomsStateResponse{1,hasGameBegun, players,  }), new RoomMemberRequestHandler(this->m_user, this->m_room, this->m_roomManager, this->m_handlerFactory)};
+	return RequestResult{ JsonRequestPacketSerializer::serializeResponse(GetRoomsStateResponse{1,hasGameBegun, players, }), new RoomMemberRequestHandler(this->m_user, this->m_room, this->m_roomManager, this->m_handlerFactory)};
 }
 //unsigned int status;
 //bool hasGameBegun;

@@ -18,10 +18,11 @@ namespace TakiClient.ViewsModels
         private RoomData[] _rooms;
         private Client clientHandler;
         private string _roomName;
-        private int _roomId;
+        private string _roomId;
         public bool _isThreading;
+        private string _error;
 
-        public int Id 
+        public string Id 
         { 
 
             get { return _roomId; }
@@ -42,6 +43,20 @@ namespace TakiClient.ViewsModels
             }
         }
 
+        public string Error
+        {
+            get
+            {
+                return _error;
+            }
+
+            set
+            {
+                _error = value;
+                OnPropertyChanged(nameof(Error));
+            }
+        }
+
         public ICommand JoinRoomCommand { get; set; }
 
         public JoinRoomViewModel()
@@ -54,7 +69,12 @@ namespace TakiClient.ViewsModels
         {
             Manager.GetManager().SetThreading(false);
             Manager.GetManager().SetRoomId(Convert.ToInt32(Id.ToString()));
-            this.clientHandler.GetJoinRoom(Convert.ToInt32(Id.ToString()));
+            string res = this.clientHandler.GetJoinRoom(Convert.ToInt32(Id.ToString()));
+            if(res != "1")
+            {
+                Error = res;
+                return;
+            }
             var view = new JoinedRoomView();
             Window w = Application.Current.MainWindow;
             Application.Current.MainWindow = view;
