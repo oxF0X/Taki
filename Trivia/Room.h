@@ -4,16 +4,18 @@
 #include <string>
 #include <vector>
 #include "LoggedUser.h"
+#include "json.hpp"
+#include "TriviaException.h"
 
 typedef struct RoomData
 {
 	unsigned int id;
 	unsigned int maxPlayers;
-	unsigned int numOfCards;
-	unsigned int timePerMove;
+	unsigned int timePerPlay;
 	unsigned int isActive;
 	std::string name;
 
+	NLOHMANN_DEFINE_TYPE_INTRUSIVE(RoomData, id, maxPlayers, timePerPlay, isActive, name)
 }RoomData;
 
 
