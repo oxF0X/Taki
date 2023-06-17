@@ -1,11 +1,8 @@
 #pragma once
 
-
 #pragma comment (lib, "ws2_32.lib")
 
 #include <iostream>
-#include <mongocxx/client.hpp>
-#include <mongocxx/instance.hpp>
 #include <WinSock2.h>
 #include <Windows.h>
 #include <thread>

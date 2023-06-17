@@ -37,53 +37,11 @@ typedef struct SignupRequest
 } SignupRequest;
 
 
-typedef struct CreateRoomRequest
-{
-	std::string roomName;
-	unsigned int maxUsers;
-	unsigned int answerTimeout;
-
-	CreateRoomRequest() : roomName(""), maxUsers(0), answerTimeout(0){ }
-
-	NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(CreateRoomRequest, roomName, maxUsers, answerTimeout)
-} CreateRoomRequest;
-
-typedef struct GetPalayersInRoomRequest
-{
-	unsigned int roomId;
-
-	GetPalayersInRoomRequest() : roomId(0) { }
-
-	NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(GetPalayersInRoomRequest, roomId)
-} GetPalayersInRoomRequest;
-
-typedef struct JoinRoomRequest
-{
-	unsigned int roomId;
-
-	JoinRoomRequest() : roomId(0) { }
-
-	NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(JoinRoomRequest, roomId)
-} JoinRoomRequest;
-
-typedef struct PlaceCardRequest
-{
-	unsigned int cardId;
-
-	PlaceCardRequest() : cardId(0) { }
-
-	NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(PlaceCardRequest, cardId)
-} PlaceCardRequest;
-
 
 class JsonRequestPacketDeserializer
 {
 public:
 	static LoginRequest deserializeLoginRequest(std::vector<std::uint8_t> l);
 	static SignupRequest deserializeSignupRequest(std::vector<std::uint8_t> s);
-	static CreateRoomRequest deserializeCreateRoomRequest(std::vector<std::uint8_t> data);
-	static GetPalayersInRoomRequest deserializeGetPalayersInRoomRequest(std::vector<std::uint8_t> data);
-	static JoinRoomRequest deserializeJoinRoomRequest(std::vector<std::uint8_t> data);
-	static PlaceCardRequest deserializePlaceCardRequest(std::vector<std::uint8_t> data);
 
 };

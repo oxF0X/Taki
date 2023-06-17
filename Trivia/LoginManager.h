@@ -1,9 +1,9 @@
 #pragma once
 
-#include "MongoDB.h"
+#include "SqliteDatabase.h"
 #include <vector>
 #include "LoggedUser.h"
-#include "TriviaException.h"
+#include "AuthorizationException.h"
 #include <algorithm>
 #include <regex>
 

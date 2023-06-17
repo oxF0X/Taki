@@ -12,15 +12,10 @@ Room::Room()
 
 void Room::addUser(LoggedUser user)
 {
-	if (this->m_users.size() >= this->m_metatdata.maxPlayers)
-	{
-		throw(TriviaException("The room is full"));
-	}
-
 	if (std::find_if(this->m_users.begin(), this->m_users.end(),
 		[&](const LoggedUser& c) { return (c.getUsername() == user.getUsername()); }) != this->m_users.end())
 	{
-		throw(TriviaException("This user already in the room"));
+		throw(std::runtime_error(std::string("This user already in the room")));
 	}
 	this->m_users.push_back(user);
 }

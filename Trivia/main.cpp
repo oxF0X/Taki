@@ -2,18 +2,14 @@
 
 
 #include <iostream>
-#include <algorithm>
-#include <cstdlib>
 #include "IRequestHandler.h"
 #include "LoginRequestHandler.h"
 #include "RequestHandlerFactory.h"
 #include "Server.h" 
-#include "MongoDB.h"
-
-
+#include "SqliteDatabase.h" 
 
 int main()
 {
-    Server s(Server::getServer(&(MongoDB::getDB())));
+    Server s(Server::getServer(&SqliteDatabase::getDB()));
     s.run();
 }

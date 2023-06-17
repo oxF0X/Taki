@@ -38,7 +38,7 @@ bool SqliteDatabase::open()
     if (sqlite3_exec(this->_db, sqlStatement, nullptr, nullptr, &errMessage) != SQLITE_OK)   // Check if the command was executed
     {
         std::cout << "Failed to create tables" << std::endl << "Exiting..." << std::endl;
-        throw(TriviaException(std::string("Couldnt execute db query")));
+        throw(AuthorizationException(std::string("Couldnt execute db query")));
         sqlite3_close(this->_db);
         return false;
     }
@@ -73,7 +73,7 @@ int SqliteDatabase::doesUserExist(std::string username)
 
     if (res != SQLITE_OK)   // Check if the command was executed
     {
-        throw(TriviaException(std::string("Couldnt execute db query")));
+        throw(AuthorizationException(std::string("Couldnt execute db query")));
     }
 
     return user.size() != 0;
@@ -95,7 +95,7 @@ int SqliteDatabase::doesPasswordMatch(std::string username, std::string password
     if (res != SQLITE_OK)   // Check if the command was executed
     {
         std::cout << sqlite3_errmsg(this->_db);
-        throw(TriviaException(std::string("Couldnt execute db query")));
+        throw(AuthorizationException(std::string("Couldnt execute db query")));
     }
 
     return user.size() != 0;
@@ -119,7 +119,7 @@ int SqliteDatabase::addNewUser(std::string username, std::string password, std::
 
     if (res != SQLITE_OK)   // Check if the command was executed
     {
-        throw(TriviaException(std::string("Couldnt execute db query")));
+        throw(AuthorizationException(std::string("Couldnt execute db query")));
     }
     return 0;
 }

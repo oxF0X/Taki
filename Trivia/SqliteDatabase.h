@@ -2,7 +2,7 @@
 
 #include "IDatabase.h"
 #include "sqlite3.h"
-#include "TriviaException.h"
+#include "AuthorizationException.h"
 #include <io.h>
 
 #define DB_NAME ".triviaDB.sqlite"

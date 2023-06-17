@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Room.h"
-#include "TriviaException.h"
 #include <map>
 
 class RoomManager
@@ -11,8 +10,7 @@ public:
 	void deleteRoom(const int& id);
 	const unsigned int getRoomState(const int& id) const;
 	std::vector<RoomData> getRooms() const;
-	unsigned int getNumbersRooms() const;
-	Room& getRoom(const int& id);
+	const Room& getRoom(const int& id);
 
 private:
 	std::map<int, Room> m_rooms;
