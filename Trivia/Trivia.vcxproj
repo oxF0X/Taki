@@ -129,7 +129,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AuthorizationException.cpp" />
+    <ClCompile Include="CardDeck.cpp" />
+    <ClCompile Include="CardsTypes.cpp" />
     <ClCompile Include="Comunicator.cpp" />
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameRequestHandler.cpp" />
     <ClCompile Include="Helper.cpp" />
     <ClCompile Include="JsonRequestPacketDeserializer.cpp" />
     <ClCompile Include="JsonRequestPacketSerializer.cpp" />
@@ -137,17 +141,26 @@
     <ClCompile Include="LoginManager.cpp" />
     <ClCompile Include="LoginRequestHandler.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MenuRequestHandler.cpp" />
+    <ClCompile Include="MongoDB.cpp" />
     <ClCompile Include="ParsingException.cpp" />
     <ClCompile Include="RequestHandlerFactory.cpp" />
     <ClCompile Include="Room.cpp" />
+    <ClCompile Include="RoomAdminRequestHandler.cpp" />
     <ClCompile Include="RoomManager.cpp" />
+    <ClCompile Include="RoomMemberRequestHandler.cpp" />
     <ClCompile Include="Server.cpp" />
-    <ClCompile Include="sqlite3.c" />
-    <ClCompile Include="SqliteDatabase.cpp" />
+    <ClCompile Include="TriviaException.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AuthorizationException.h" />
+    <ClInclude Include="Card.h" />
+    <ClInclude Include="CardDeck.h" />
+    <ClInclude Include="CardsTypes.h" />
     <ClInclude Include="Comunicator.h" />
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="GameManager.h" />
+    <ClInclude Include="GameRequestHandler.h" />
     <ClInclude Include="Helper.h" />
     <ClInclude Include="IDatabase.h" />
     <ClInclude Include="IRequestHandler.h" />
@@ -158,13 +171,16 @@
     <ClInclude Include="LoginManager.h" />
     <ClInclude Include="LoginRequestHandler.h" />
     <ClInclude Include="MenuRequestHandler.h" />
+    <ClInclude Include="MongoDB.h" />
     <ClInclude Include="ParsingException.h" />
+    <ClInclude Include="RequestHandlerFactory.fwd.h" />
     <ClInclude Include="RequestHandlerFactory.h" />
     <ClInclude Include="Room.h" />
+    <ClInclude Include="RoomAdminRequestHandler.h" />
     <ClInclude Include="RoomManager.h" />
+    <ClInclude Include="RoomMemberRequestHandler.h" />
     <ClInclude Include="Server.h" />
-    <ClInclude Include="sqlite3.h" />
-    <ClInclude Include="SqliteDatabase.h" />
+    <ClInclude Include="TriviaException.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

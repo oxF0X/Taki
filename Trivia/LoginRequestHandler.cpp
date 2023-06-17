@@ -38,12 +38,12 @@ RequestResult LoginRequestHandler::login(RequestInfo info)
 	{
 		return RequestResult{ JsonRequestPacketSerializer::serializeResponse(ErrorResponse{std::string(e.what())}), nullptr };
 	}
-	catch (AuthorizationException& e)
+	catch (TriviaException& e)
 	{
 		return RequestResult{ JsonRequestPacketSerializer::serializeResponse(ErrorResponse{std::string(e.what())}), nullptr };
 	}
 	
-	return RequestResult{ JsonRequestPacketSerializer::serializeResponse(LoginResponse{1}), nullptr };
+	return RequestResult{ JsonRequestPacketSerializer::serializeResponse(LoginResponse{1}), this->m_handlerFactory.createMenuRequestHandler(LoggedUser{l.username}) };
 }
 
 RequestResult LoginRequestHandler::signup(RequestInfo info)
@@ -59,9 +59,10 @@ RequestResult LoginRequestHandler::signup(RequestInfo info)
 	{
 		return RequestResult{ JsonRequestPacketSerializer::serializeResponse(ErrorResponse{std::string(e.what())}), nullptr };
 	}
-	catch (AuthorizationException& e)
+	catch (TriviaException& e)
 	{
 		return RequestResult{ JsonRequestPacketSerializer::serializeResponse(ErrorResponse{std::string(e.what())}), nullptr };
 	}
-	return RequestResult{ JsonRequestPacketSerializer::serializeResponse(SignupResponse{1}), nullptr };
+	return RequestResult{ JsonRequestPacketSerializer::serializeResponse(SignupResponse{1}), 
+		this->m_handlerFactory.createMenuRequestHandler(LoggedUser{s.username})};
 }
