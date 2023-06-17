@@ -8,6 +8,7 @@ using System.Windows.Input;
 using System.Windows;
 using TakiClient.Modules;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
+using TakiClient.Views;
 
 namespace TakiClient.ViewsModels
 {
@@ -69,7 +70,12 @@ namespace TakiClient.ViewsModels
         private void ExecuteCreateRooms(object obj)
         {
             this.clientHandler.CreateRoom(_roomName, _maxUsers, _answerTimeOut);
-            //throw new NotImplementedException();
+            var viewModel = new AdminGameJoinViewModel();
+            var view = new AdminGameJoinView(viewModel);
+            Window w = Application.Current.MainWindow;
+            Application.Current.MainWindow = view;
+            view.Show();
+            w.Close();
         }
     }
 }

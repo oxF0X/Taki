@@ -39,21 +39,21 @@ std::vector<std::uint8_t> JsonRequestPacketSerializer::serializeResponse(GetPlay
 {
     nlohmann::json j;
     s.to_json(j, s);
-    return buildMsg(j, Signup_RES);
+    return buildMsg(j, GET_PLAYERS_RES);
 }
 
 std::vector<std::uint8_t> JsonRequestPacketSerializer::serializeResponse(GetHightScoreResponse s)
 {
     nlohmann::json j;
     s.to_json(j, s);
-    return buildMsg(j, Signup_RES);
+    return buildMsg(j, 0);
 }
 
 std::vector<std::uint8_t> JsonRequestPacketSerializer::serializeResponse(GetPersonalStatsResponse s)
 {
     nlohmann::json j;
     s.to_json(j, s);
-    return buildMsg(j, Signup_RES);
+    return buildMsg(j, 0);
 }
 
 std::vector<std::uint8_t> JsonRequestPacketSerializer::serializeResponse(JoinRoomResponse s)
@@ -67,7 +67,7 @@ std::vector<std::uint8_t> JsonRequestPacketSerializer::serializeResponse(CreateR
 {
     nlohmann::json j;
     s.to_json(j, s);
-    return buildMsg(j, Signup_RES);
+    return buildMsg(j, CREATE_ROOM_RES);
 }
 
 std::vector<std::uint8_t> JsonRequestPacketSerializer::serializeResponse(CloseRoomResponse s)

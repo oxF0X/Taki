@@ -48,5 +48,5 @@ RequestResult RoomAdminRequestHandler::getRoomState(RequestInfo info)
 	hasGameBegun = this->m_room.isActive();
 	players = this->m_room.getAllUsers();
 
-	return RequestResult{ JsonRequestPacketSerializer::serializeResponse(GetRoomsStateResponse{1,hasGameBegun, players,  }), nullptr };
+	return RequestResult{ JsonRequestPacketSerializer::serializeResponse(GetRoomsStateResponse{1,hasGameBegun, players,  }),  new RoomAdminRequestHandler(this->m_user, this->m_roomManager.getRoom(this->m_roomManager.getNumbersRooms() - 1), this->m_roomManager, this->m_handlerFactory) };
 }

@@ -104,6 +104,6 @@ RequestResult MenuRequestHandler::createRoom(RequestInfo info)
 	{
 		return RequestResult{ JsonRequestPacketSerializer::serializeResponse(ErrorResponse{std::string(e.what())}),  new MenuRequestHandler(this->m_user, this->m_roomManager, this->m_handlerFactory) };
 	}
-	return RequestResult{ JsonRequestPacketSerializer::serializeResponse(CreateRoomResponse{1}),  new MenuRequestHandler(this->m_user, this->m_roomManager, this->m_handlerFactory) };
+	return RequestResult{ JsonRequestPacketSerializer::serializeResponse(CreateRoomResponse{1}),  new RoomAdminRequestHandler(this->m_user, this->m_roomManager.getRoom(this->m_roomManager.getNumbersRooms() - 1), this->m_roomManager, this->m_handlerFactory)};
 }
 
