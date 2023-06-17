@@ -3,6 +3,7 @@
 #include "Room.h"
 #include "TriviaException.h"
 #include <map>
+#include <mutex>
 
 class RoomManager
 {
@@ -17,5 +18,6 @@ public:
 
 private:
 	RoomManager();
+	std::mutex _rooms_mtx;
 	std::map<int, Room> m_rooms;
 };

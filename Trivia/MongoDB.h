@@ -39,6 +39,7 @@ public:
 	static MongoDB& getDB();
 
 private:
+	std::shared_mutex _mtx;
 	mongocxx::client _client;
 	MongoDB();
 };

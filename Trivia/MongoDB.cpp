@@ -32,21 +32,32 @@ int MongoDB::doesUserExist(std::string username)
 {
     try
     {
-        std::vector<std::string> dbNames = this->_client.list_database_names();
+        std::vector<std::string> dbNames;
+        {
+            std::shared_lock<std::shared_mutex> lock(this->_mtx);
+            dbNames = this->_client.list_database_names();
+        }
         if (std::find(dbNames.begin(), dbNames.end(), std::string(DB_NAME)) == dbNames.end())
         {
             return false;
         }
 
-        if (!this->_client[DB_NAME].has_collection(USERS_COLLECTION))
         {
-            return false;
+            std::shared_lock<std::shared_mutex> lock(this->_mtx);
+            if (!this->_client[DB_NAME].has_collection(USERS_COLLECTION))
+            {
+                return false;
+            }
         }
 
         bsoncxx::document::value query = bsoncxx::builder::basic::make_document(bsoncxx::builder::basic::kvp("username", username));
 
-        mongocxx::cursor result = this->_client[DB_NAME][USERS_COLLECTION].find(query.view());
-        return std::distance(result.begin(), result.end());
+        {
+            std::shared_lock<std::shared_mutex> lock(this->_mtx);
+            mongocxx::cursor result = this->_client[DB_NAME][USERS_COLLECTION].find(query.view());
+            return std::distance(result.begin(), result.end());
+
+        }
     }
     catch (const mongocxx::operation_exception& ex) {
         std::cerr << "Exception from mongo: " << ex.what() << std::endl;
@@ -57,22 +68,32 @@ int MongoDB::doesPasswordMatch(std::string username, std::string password)
 {
     try
     {
-        std::vector<std::string> dbNames = this->_client.list_database_names();
+        std::vector<std::string> dbNames;
+        {
+            std::shared_lock<std::shared_mutex> lock(this->_mtx);
+            dbNames = this->_client.list_database_names();
+        }
         if (std::find(dbNames.begin(), dbNames.end(), std::string(DB_NAME)) == dbNames.end())
         {
             return false;
         }
 
-        if (!this->_client[DB_NAME].has_collection(USERS_COLLECTION))
         {
-            return false;
+            std::shared_lock<std::shared_mutex> lock(this->_mtx);
+            if (!this->_client[DB_NAME].has_collection(USERS_COLLECTION))
+            {
+                return false;
+            }
         }
 
         bsoncxx::document::value query = bsoncxx::builder::basic::make_document(bsoncxx::builder::basic::kvp("username", username)
             , bsoncxx::builder::basic::kvp("password", password));
 
-        mongocxx::cursor result = this->_client[DB_NAME][USERS_COLLECTION].find(query.view());
-        return std::distance(result.begin(), result.end());
+        {
+            std::shared_lock<std::shared_mutex> lock(this->_mtx);
+            mongocxx::cursor result = this->_client[DB_NAME][USERS_COLLECTION].find(query.view());
+            return std::distance(result.begin(), result.end());
+        }
     }
     catch (const mongocxx::operation_exception& ex) {
         std::cerr << "Exception from mongo: " << ex.what() << std::endl;
@@ -87,8 +108,11 @@ int MongoDB::addNewUser(std::string username, std::string password, std::string 
         {
             return 1;
         }
-
-        mongocxx::collection collection = this->_client[DB_NAME][USERS_COLLECTION];
+        mongocxx::collection collection;
+        {
+            std::shared_lock<std::shared_mutex> lock(this->_mtx);
+            collection = this->_client[DB_NAME][USERS_COLLECTION];
+        }
         bsoncxx::document::value doc_value = bsoncxx::builder::stream::document{}
             << "username" << username
             << "password" << password
@@ -98,7 +122,10 @@ int MongoDB::addNewUser(std::string username, std::string password, std::string 
             << "birthday" << birthday
             << bsoncxx::builder::stream::finalize;
 
-        collection.insert_one(doc_value.view());
+        {
+            std::unique_lock<std::shared_mutex> lock(this->_mtx);
+            collection.insert_one(doc_value.view());
+        }
     }
     catch (const mongocxx::operation_exception& ex)
     {
