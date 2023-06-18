@@ -105,7 +105,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>C:\mongo-c-driver\include\libbson-1.0;C:\mongo-cxx-driver\include\mongocxx\v_noabi;C:\mongo-c-driver\include\libmongoc-1.0;C:\mongo-cxx-driver\include\bsoncxx\v_noabi</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\mongo-c-driver\include\libbson-1.0;C:\mongo-cxx-driver\include\mongocxx\v_noabi;C:\mongo-c-driver\include\libmongoc-1.0;C:\mongo-cxx-driver\include\bsoncxx\v_noabi;C:\boost_1_55_0</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -136,6 +136,7 @@
     <ClCompile Include="CardsTypes.cpp" />
     <ClCompile Include="Comunicator.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GameRequestHandler.cpp" />
     <ClCompile Include="Helper.cpp" />
     <ClCompile Include="JsonRequestPacketDeserializer.cpp" />

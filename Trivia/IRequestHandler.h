@@ -18,6 +18,8 @@
 #define LeaveGame_REQ 21
 #define PlayCard_REQ 22
 #define DrawCard_REQ 23
+#define GetGameState_REQ 24
+#define GetGameResult_REQ 25
 
 
 class IRequestHandler;

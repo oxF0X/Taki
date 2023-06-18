@@ -68,9 +68,9 @@ typedef struct JoinRoomRequest
 
 typedef struct PlaceCardRequest
 {
-	unsigned int cardId;
+	std::string cardId;
 
-	PlaceCardRequest() : cardId(0) { }
+	PlaceCardRequest() : cardId("") { }
 
 	NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(PlaceCardRequest, cardId)
 } PlaceCardRequest;

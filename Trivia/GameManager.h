@@ -11,6 +11,7 @@ class GameManager
 public:
 	Game createGame(Room r);
 	void deleteGame();
+	
 
 private:
 	IDatabase* m_database;

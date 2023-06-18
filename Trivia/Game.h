@@ -26,6 +26,9 @@ public:
 	Game(std::vector<std::string> players);	
 	void playCard(LoggedUser user, Card* card);
 	void removePlayer(LoggedUser user);
+	bool IsProgress() const;
+	std::vector<std::string> getPlayers() const;
+	std::map<std::string, std::vector<std::string>> getCardsByPlayer() const;
 
 private:
 	void moveToNextPlayer();

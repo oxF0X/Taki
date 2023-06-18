@@ -25,7 +25,7 @@ Game::Game(std::vector<std::string> players)
 		this->m_gameDeck.addCard(new NormalCard(cards[random_index]));
 		this->removeCard(cards, size, random_index);
 	}
-	
+	this->isProgress = true;
 }
 
 void Game::playCard(LoggedUser user, Card* card)
@@ -58,6 +58,39 @@ void Game::removePlayer(LoggedUser user)
 		throw(TriviaException(std::string("User not exsit")));
 	}
 }
+
+bool Game::IsProgress() const
+{
+	return this->isProgress;
+}
+
+std::vector<std::string> Game::getPlayers() const
+{
+	std::vector<std::string> v;
+	for ( auto it: this->m_players)
+	{
+		v.push_back((*it.first).getUsername());
+	}
+	return v;
+}
+
+std::map<std::string, std::vector<std::string>> Game::getCardsByPlayer() const
+{
+	std::map<std::string ,std::vector<std::string>> players;
+	
+
+	for (auto it : this->m_players)
+	{
+		std::vector<std::string> cards;
+		for (auto card: it.second.m_PlayerDeck.getCards())
+		{
+			cards.push_back(((NormalCard*)card)->code);
+		}
+		players[(*it.first).getUsername()] = cards;	
+	}
+}
+
+
 
 void Game::moveToNextPlayer()
 {
