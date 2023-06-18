@@ -13,8 +13,9 @@
         <viewModel:JoinRoomViewModel/>
     </Page.DataContext>
 
-    <Grid VerticalAlignment="Top" HorizontalAlignment="Center" Width="400">
-        <TextBox x:Name="txtJoinRoomInput" 
+    <Grid VerticalAlignment="Top" HorizontalAlignment="Center" Width="900">
+        <StackPanel>
+            <TextBox x:Name="txtJoinRoomInput" 
                              Text="{Binding Id, UpdateSourceTrigger=PropertyChanged}"
                              FontSize="14"
                              FontWeight="Medium" 
@@ -27,11 +28,11 @@
                              Margin="0,-230,0,0"
                              Padding="20,0,0,0"
                              Width="100">
-            <TextBox.Background>
-                <ImageBrush ImageSource="/Images/user-icon.png" Stretch="None" AlignmentX="Left"/>
-            </TextBox.Background>
-        </TextBox>
-        <TextBlock Text="{Binding Error}" 
+                <TextBox.Background>
+                    <ImageBrush ImageSource="/Images/user-icon.png" Stretch="None" AlignmentX="Left"/>
+                </TextBox.Background>
+            </TextBox>
+            <TextBlock Text="{Binding Error}" 
                                Foreground="red"
                                 Height="15"
                                FontSize="15" 
@@ -40,7 +41,7 @@
                                Margin="0,-170,0,0"
                                TextWrapping="Wrap"/>
 
-        <Button x:Name="btnJoin" 
+            <Button x:Name="btnJoin" 
                             Command="{Binding JoinRoomCommand}"
                             BorderThickness="0"
                             Content="JOIN ROOM"
@@ -50,34 +51,35 @@
                             Cursor="Hand" 
                             Margin="0,-150,0,0"
                             Style="{StaticResource LoginButtonStyle}"/>
-        <ScrollViewer Height="300" Margin="200, 0, 0,0 ">
-            <ItemsControl ItemsSource="{Binding Rooms}">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <Border BorderBrush="Gray" BorderThickness="1" Margin="5" Padding="5">
-                            <StackPanel>
-                                <TextBlock Text="{Binding name}" FontSize="16" FontWeight="Bold" />
-                                <StackPanel Orientation="Horizontal" Margin="0,5">
-                                    <TextBlock Text="ID: " FontWeight="Bold" />
-                                    <TextBlock Text="{Binding id}" />
+            <ScrollViewer Height="300" Margin="200, 0, 0,0 ">
+                <ItemsControl ItemsSource="{Binding Rooms}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border BorderBrush="Gray" BorderThickness="1" Margin="5" Padding="5">
+                                <StackPanel>
+                                    <TextBlock Text="{Binding name}" FontSize="16" FontWeight="Bold" />
+                                    <StackPanel Orientation="Horizontal" Margin="0,5">
+                                        <TextBlock Text="ID: " FontWeight="Bold" />
+                                        <TextBlock Text="{Binding id}" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="0,5">
+                                        <TextBlock Text="Max Players: " FontWeight="Bold" />
+                                        <TextBlock Text="{Binding maxPlayers}" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="0,5">
+                                        <TextBlock Text="Time per Play: " FontWeight="Bold" />
+                                        <TextBlock Text="{Binding timePerPlay}" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="0,5">
+                                        <TextBlock Text="Is Active: " FontWeight="Bold" />
+                                        <TextBlock Text="{Binding isActive}" />
+                                    </StackPanel>
                                 </StackPanel>
-                                <StackPanel Orientation="Horizontal" Margin="0,5">
-                                    <TextBlock Text="Max Players: " FontWeight="Bold" />
-                                    <TextBlock Text="{Binding maxPlayers}" />
-                                </StackPanel>
-                                <StackPanel Orientation="Horizontal" Margin="0,5">
-                                    <TextBlock Text="Time per Play: " FontWeight="Bold" />
-                                    <TextBlock Text="{Binding timePerPlay}" />
-                                </StackPanel>
-                                <StackPanel Orientation="Horizontal" Margin="0,5">
-                                    <TextBlock Text="Is Active: " FontWeight="Bold" />
-                                    <TextBlock Text="{Binding isActive}" />
-                                </StackPanel>
-                            </StackPanel>
-                        </Border>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-        </ScrollViewer>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </StackPanel>
     </Grid>
 </Page>

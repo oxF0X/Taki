@@ -12,7 +12,7 @@ RoomManager& RoomManager::getManager()
 
 void RoomManager::createRoom(const LoggedUser& user, const RoomData& data)
 {
-	if (data.maxPlayers <= 1)
+	if (data.maxPlayers < 2 || data.maxPlayers > 4)
 	{
 		throw(TriviaException("The room must cntain atleast 2 palyers"));
 	}
