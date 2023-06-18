@@ -46,7 +46,7 @@ RequestResult GameRequestHandler::getGameSate(RequestInfo info)
 	std::vector<int> cardsPerPlayer;
 	std::vector<std::string> LastPlayForEachPlayer;
 
-	hasGameBegun = this->m_room.isActive();
+	hasGameBegun = this->m_game.isActive();
 	players = this->m_room.getAllUsers();
 
 	return RequestResult{ JsonRequestPacketSerializer::serializeResponse(GetRoomsStateResponse{1,hasGameBegun, players,  }), nullptr };
