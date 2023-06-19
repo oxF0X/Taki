@@ -6,6 +6,11 @@ LoginRequestHandler::LoginRequestHandler(RequestHandlerFactory& handler):m_handl
 {
 }
 
+void LoginRequestHandler::exitUser()
+{
+
+}
+
 bool LoginRequestHandler::isRequestRelevant(RequestInfo info)
 {
 	if (info.requestId == LOGIN_REQ || info.requestId == Signup_REQ)

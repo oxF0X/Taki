@@ -14,6 +14,8 @@ public:
 	bool isRequestRelevant(RequestInfo info) override;
 	RequestResult handleRequest(RequestInfo info) override;
 	RequestResult signout();
+	void exitUser() override;
+
 
 
 private:

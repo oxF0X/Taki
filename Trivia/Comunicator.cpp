@@ -130,11 +130,7 @@ void Comunicator::handleNewClient(SOCKET socket)
 
 void Comunicator::disconnectUser(SOCKET socket)
 {
-	if (typeid(MenuRequestHandler(LoggedUser(""), this->m_handlerFactory.getRoomManager(), (this->m_handlerFactory))) == typeid(*(this->m_clients[socket])))
-	{
-
-		((MenuRequestHandler*)this->m_clients[socket])->signout();
-	}
+	this->m_clients[socket]->exitUser();
 	delete(this->m_clients[socket]);
 	this->m_clients.erase(socket);
 	closesocket(socket);

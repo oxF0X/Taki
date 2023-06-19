@@ -17,6 +17,8 @@ private:
 	RequestHandlerFactory& m_handlerFactory;
 	RequestResult login(RequestInfo info);
 	RequestResult signup(RequestInfo info);
+	void exitUser() override;
+
 
 public:
 

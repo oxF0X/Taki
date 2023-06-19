@@ -16,6 +16,8 @@ public:
 	RoomMemberRequestHandler(LoggedUser user, Room& room, RoomManager& roomManager, RequestHandlerFactory& handlerFactory);
 	bool isRequestRelevant(RequestInfo info) override;
 	RequestResult handleRequest(RequestInfo info) override;
+	void exitUser() override;
+
 
 private:
 	RequestResult leaveRoom(RequestInfo info);

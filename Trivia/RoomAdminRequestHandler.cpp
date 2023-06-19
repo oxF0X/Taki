@@ -4,6 +4,15 @@ RoomAdminRequestHandler::RoomAdminRequestHandler(LoggedUser user, Room& room, Ro
 {
 }
 
+
+void RoomAdminRequestHandler::exitUser()
+{
+	this->closeRoom(RequestInfo());
+	MenuRequestHandler *r = this->m_handlerFactory.createMenuRequestHandler(this->m_user);
+	r->signout();
+	delete r;
+}
+
 bool RoomAdminRequestHandler::isRequestRelevant(RequestInfo info)
 {
 	if (info.requestId == CloseRoom_REQ || info.requestId == StartGame_REQ	|| info.requestId == GetRoomsStateRoom_REQ)

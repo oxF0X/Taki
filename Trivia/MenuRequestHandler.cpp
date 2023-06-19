@@ -5,6 +5,11 @@ MenuRequestHandler::MenuRequestHandler(LoggedUser user, RoomManager& roomManager
 
 }
 
+void MenuRequestHandler::exitUser()
+{
+	this->signout();
+}
+
 bool MenuRequestHandler::isRequestRelevant(RequestInfo info)
 {
 	if (info.requestId == Signout_REQ || info.requestId == GetRooms_REQ || info.requestId == getPlayers_REQ || info.requestId == JoinRoom_REQ || info.requestId == CreateRoom_REQ)

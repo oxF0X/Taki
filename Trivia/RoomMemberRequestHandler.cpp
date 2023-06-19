@@ -4,6 +4,14 @@ RoomMemberRequestHandler::RoomMemberRequestHandler(LoggedUser user, Room& room, 
 {
 }
 
+void RoomMemberRequestHandler::exitUser()
+{
+	this->leaveRoom(RequestInfo());
+	MenuRequestHandler *r = this->m_handlerFactory.createMenuRequestHandler(this->m_user);
+	r->signout();
+	delete r;
+}
+
 bool RoomMemberRequestHandler::isRequestRelevant(RequestInfo info)
 {
 	if ( info.requestId == LeaveRoom_REQ || info.requestId == GetRoomsStateRoom_REQ )
