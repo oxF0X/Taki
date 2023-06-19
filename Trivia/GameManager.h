@@ -10,7 +10,7 @@ class GameManager
 
 public:
 	Game createGame(Room r);
-	void deleteGame();
+	void deleteGame(Game g);
 	
 
 private:
