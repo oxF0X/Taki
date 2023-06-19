@@ -27,7 +27,7 @@ RequestResult RoomMemberRequestHandler::handleRequest(RequestInfo info)
 RequestResult RoomMemberRequestHandler::leaveRoom(RequestInfo info)
 {
 	this->m_room.removeUser(this->m_user);
-	return RequestResult{ JsonRequestPacketSerializer::serializeResponse(LeaveRoomResponse{1}), new MenuRequestHandler(this->m_user, this->m_handlerFactory.getRoomManager(), this->m_handlerFactory)};
+	return RequestResult{ JsonRequestPacketSerializer::serializeResponse(LeaveRoomResponse{1}), this->m_handlerFactory.createMenuRequestHandler(this->m_user)};
 }
 
 RequestResult RoomMemberRequestHandler::getRoomState(RequestInfo info)
@@ -49,10 +49,5 @@ RequestResult RoomMemberRequestHandler::getRoomState(RequestInfo info)
 		str += s;
 	}
 	std::cout << this->m_user.getUsername() << " " << str << std::endl;
-	return RequestResult{ JsonRequestPacketSerializer::serializeResponse(GetRoomsStateResponse{1,hasGameBegun, players, }), new RoomMemberRequestHandler(this->m_user, this->m_room, this->m_roomManager, this->m_handlerFactory)};
+	return RequestResult{ JsonRequestPacketSerializer::serializeResponse(GetRoomsStateResponse{1,hasGameBegun, players, }), nullptr};
 }
-//unsigned int status;
-//bool hasGameBegun;
-//std::vector<std::string> players;
-//std::vector<int> cardsPerPlayer;
-//std::vector<std::string> LastPlayForEachPlayer;

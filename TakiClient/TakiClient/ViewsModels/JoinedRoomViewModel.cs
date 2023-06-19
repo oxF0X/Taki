@@ -38,7 +38,6 @@ namespace TakiClient.ViewsModels
         {
             this.clientHandler = Manager.GetManager().getClient();
             LeaveRoomCommand = new ViewModelCommand(ExecuteLeaveRoom);
-            //this._users = clientHandler.GetPlayersInRoom(Manager.GetManager().getRoomId());
         }
 
         public string[] UpdateUsers()

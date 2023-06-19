@@ -33,7 +33,8 @@ namespace TakiClient.ViewsModels
         {
             this.clientHandler = Manager.GetManager().getClient();
             CloseRoomCommand = new ViewModelCommand(ExecuteCloseRoom);
-            //this._users = clientHandler.GetPlayersInRoom(Manager.GetManager().getRoomId());
+            //this._users = clientHandler.
+            //(Manager.GetManager().getRoomId());
         }
 
         public string[] UpdateUsers()

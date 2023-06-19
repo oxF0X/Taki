@@ -36,14 +36,14 @@ RequestResult MenuRequestHandler::signout()
 	this->m_handlerFactory.getLoginManger().logout(this->m_user.getUsername());
 	std::cout << "User disconected " << this->m_user.getUsername() << std::endl;
 
-	return RequestResult{ JsonRequestPacketSerializer::serializeResponse(LogoutResponse{1}), new LoginRequestHandler(this->m_handlerFactory)};
+	return RequestResult{ JsonRequestPacketSerializer::serializeResponse(LogoutResponse{1}), this->m_handlerFactory.createLoginRequestHandler()};
 }
 
 RequestResult MenuRequestHandler::getRooms(RequestInfo info)
 {
 	std::vector<RoomData> rooms;
 	rooms = this->m_roomManager.getRooms();
-	return RequestResult{ JsonRequestPacketSerializer::serializeResponse(GetRoomsResponse{1, rooms}), new MenuRequestHandler(this->m_user, this->m_roomManager, this->m_handlerFactory) };
+	return RequestResult{ JsonRequestPacketSerializer::serializeResponse(GetRoomsResponse{1, rooms}), nullptr};
 }
 
 RequestResult MenuRequestHandler::getPlayersInRoom(RequestInfo info)
@@ -58,13 +58,13 @@ RequestResult MenuRequestHandler::getPlayersInRoom(RequestInfo info)
 	}
 	catch (ParsingExceprion& e)
 	{
-		return RequestResult{ JsonRequestPacketSerializer::serializeResponse(ErrorResponse{std::string(e.what())}), new MenuRequestHandler(this->m_user, this->m_roomManager, this->m_handlerFactory)};
+		return RequestResult{ JsonRequestPacketSerializer::serializeResponse(ErrorResponse{std::string(e.what())}), nullptr};
 	}
 	catch (TriviaException& e)
 	{
-		return RequestResult{ JsonRequestPacketSerializer::serializeResponse(ErrorResponse{std::string(e.what())}),  new MenuRequestHandler(this->m_user, this->m_roomManager, this->m_handlerFactory) };
+		return RequestResult{ JsonRequestPacketSerializer::serializeResponse(ErrorResponse{std::string(e.what())}),  nullptr };
 	}
-	return RequestResult{ JsonRequestPacketSerializer::serializeResponse(GetPlayersInRoomResponse{players}),  new RoomMemberRequestHandler(this->m_user, this->m_roomManager.getRoom(room.roomId), this->m_roomManager, this->m_handlerFactory)};
+	return RequestResult{ JsonRequestPacketSerializer::serializeResponse(GetPlayersInRoomResponse{players}), nullptr};
 }
 
 RequestResult MenuRequestHandler::joinRoom(RequestInfo info)
@@ -78,13 +78,13 @@ RequestResult MenuRequestHandler::joinRoom(RequestInfo info)
 	}
 	catch (ParsingExceprion& e)
 	{
-		return RequestResult{ JsonRequestPacketSerializer::serializeResponse(ErrorResponse{std::string(e.what())}),  new MenuRequestHandler(this->m_user, this->m_roomManager, this->m_handlerFactory) };
+		return RequestResult{ JsonRequestPacketSerializer::serializeResponse(ErrorResponse{std::string(e.what())}),  nullptr };
 	}
 	catch (TriviaException& e)
 	{
-		return RequestResult{ JsonRequestPacketSerializer::serializeResponse(ErrorResponse{std::string(e.what())}), new MenuRequestHandler(this->m_user, this->m_roomManager, this->m_handlerFactory) };
+		return RequestResult{ JsonRequestPacketSerializer::serializeResponse(ErrorResponse{std::string(e.what())}), nullptr};
 	}
-	return RequestResult{ JsonRequestPacketSerializer::serializeResponse(JoinRoomResponse{1}),  new RoomMemberRequestHandler(this->m_user, this->m_roomManager.getRoom(room.roomId), this->m_roomManager, this->m_handlerFactory)};
+	return RequestResult{ JsonRequestPacketSerializer::serializeResponse(JoinRoomResponse{1}), this->m_handlerFactory.createRoomMemberRequestHandler(this->m_user, this->m_roomManager.getRoom(room.roomId))};
 }
 
 RequestResult MenuRequestHandler::createRoom(RequestInfo info)
@@ -98,12 +98,12 @@ RequestResult MenuRequestHandler::createRoom(RequestInfo info)
 	}
 	catch (ParsingExceprion& e)
 	{
-		return RequestResult{ JsonRequestPacketSerializer::serializeResponse(ErrorResponse{std::string(e.what())}),  new MenuRequestHandler(this->m_user, this->m_roomManager, this->m_handlerFactory) };
+		return RequestResult{ JsonRequestPacketSerializer::serializeResponse(ErrorResponse{std::string(e.what())}),  nullptr};
 	}
 	catch (TriviaException& e)
 	{
-		return RequestResult{ JsonRequestPacketSerializer::serializeResponse(ErrorResponse{std::string(e.what())}),  new MenuRequestHandler(this->m_user, this->m_roomManager, this->m_handlerFactory) };
+		return RequestResult{ JsonRequestPacketSerializer::serializeResponse(ErrorResponse{std::string(e.what())}), nullptr};
 	}
-	return RequestResult{ JsonRequestPacketSerializer::serializeResponse(CreateRoomResponse{1}),  new RoomAdminRequestHandler(this->m_user, this->m_roomManager.getRoom(this->m_roomManager.getNumbersRooms() - 1), this->m_roomManager, this->m_handlerFactory)};
+	return RequestResult{ JsonRequestPacketSerializer::serializeResponse(CreateRoomResponse{1}),  this->m_handlerFactory.createRoomAdminRequestHandler(this->m_user, this->m_roomManager.getRoom(this->m_roomManager.getNumbersRooms() - 1))};
 }
 
