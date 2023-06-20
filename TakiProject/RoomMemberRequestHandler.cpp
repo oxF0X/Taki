@@ -1,20 +1,20 @@
 #include "RoomMemberRequestHandler.h"
 
-RoomMemberRequestHandler::RoomMemberRequestHandler(LoggedUser user, Room& room, RoomManager& roomManager, RequestHandlerFactory& handlerFactory) : m_user(user),m_room(room), m_roomManager(roomManager), m_handlerFactory(handlerFactory)
+RoomMemberRequestHandler::RoomMemberRequestHandler(LoggedUser user, Room& room, RoomManager& roomManager, RequestHandlerFactory& handlerFactory) : m_user(user), m_room(room), m_roomManager(roomManager), m_handlerFactory(handlerFactory)
 {
 }
 
 void RoomMemberRequestHandler::exitUser()
 {
 	this->leaveRoom(RequestInfo());
-	MenuRequestHandler *r = this->m_handlerFactory.createMenuRequestHandler(this->m_user);
+	MenuRequestHandler* r = this->m_handlerFactory.createMenuRequestHandler(this->m_user);
 	r->signout();
 	delete r;
 }
 
 bool RoomMemberRequestHandler::isRequestRelevant(RequestInfo info)
 {
-	if ( info.requestId == LeaveRoom_REQ || info.requestId == GetRoomsStateRoom_REQ )
+	if (info.requestId == LeaveRoom_REQ || info.requestId == GetRoomsStateRoom_REQ)
 	{
 		return true;
 	}
@@ -35,7 +35,7 @@ RequestResult RoomMemberRequestHandler::handleRequest(RequestInfo info)
 RequestResult RoomMemberRequestHandler::leaveRoom(RequestInfo info)
 {
 	this->m_room.removeUser(this->m_user);
-	return RequestResult{ JsonRequestPacketSerializer::serializeResponse(LeaveRoomResponse{1}), this->m_handlerFactory.createMenuRequestHandler(this->m_user)};
+	return RequestResult{ JsonRequestPacketSerializer::serializeResponse(LeaveRoomResponse{1}), this->m_handlerFactory.createMenuRequestHandler(this->m_user) };
 }
 
 RequestResult RoomMemberRequestHandler::getRoomState(RequestInfo info)
@@ -57,5 +57,5 @@ RequestResult RoomMemberRequestHandler::getRoomState(RequestInfo info)
 		str += s;
 	}
 	std::cout << this->m_user.getUsername() << " " << str << std::endl;
-	return RequestResult{ JsonRequestPacketSerializer::serializeResponse(GetRoomsStateResponse{1,hasGameBegun, players, }), nullptr};
+	return RequestResult{ JsonRequestPacketSerializer::serializeResponse(GetRoomsStateResponse{1,hasGameBegun, players, }), nullptr };
 }

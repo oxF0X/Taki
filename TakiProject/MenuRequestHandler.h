@@ -7,7 +7,7 @@
 
 class RequestHandlerFactory;
 
-class MenuRequestHandler: public IRequestHandler
+class MenuRequestHandler : public IRequestHandler
 {
 public:
 	MenuRequestHandler(LoggedUser user, RoomManager& roomManager, RequestHandlerFactory& handlerFactory);
@@ -24,7 +24,7 @@ private:
 	RequestResult joinRoom(RequestInfo info);
 	RequestResult createRoom(RequestInfo info);
 
-	
+
 	LoggedUser m_user;
 	RoomManager& m_roomManager;
 	RequestHandlerFactory& m_handlerFactory;

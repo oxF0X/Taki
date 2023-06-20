@@ -34,7 +34,7 @@ void Game::playCard(LoggedUser user, Card* card)
 	{
 		throw(TriviaException(std::string("Wrong player")));
 	}
-	if (card == nullptr)
+	if (!card)
 	{
 		this->DrawCards(1);
 
@@ -43,7 +43,9 @@ void Game::playCard(LoggedUser user, Card* card)
 	{
 		throw(TriviaException(std::string("Ileagal move")));
 	}
-	if (std::find(this->m_players[&user].m_PlayerDeck.getCards().begin(), this->m_players[&user].m_PlayerDeck.getCards().end(), card) == this->m_players[&user].m_PlayerDeck.getCards().end())
+	if (std::find(this->m_players[&user].m_PlayerDeck.getCards().begin(), 
+		this->m_players[&user].m_PlayerDeck.getCards().end(), card) 
+		== this->m_players[&user].m_PlayerDeck.getCards().end())
 	{
 		throw(TriviaException(std::string("Card not exsit")));
 	}
@@ -88,16 +90,18 @@ std::map<std::string, std::vector<std::string>> Game::getCardsByPlayer() const
 		}
 		players[(*it.first).getUsername()] = cards;	
 	}
+	return players;
 }
 
 
 
 void Game::moveToNextPlayer()
 {
-	auto it = std::find(this->m_players.begin(), this->m_players.end(), this->m_currentPlayer);
+	//auto it = std::find(this->m_players.begin(), this->m_players.end(), this->m_currentPlayer);
+	auto it = this->m_players.begin();
 	if (it != this->m_players.end())
 	{
-		this->m_currentPlayer == (it++)->first;
+		this->m_currentPlayer = (it++)->first;
 	}
 }
 

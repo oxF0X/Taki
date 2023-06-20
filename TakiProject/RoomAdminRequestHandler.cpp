@@ -8,14 +8,14 @@ RoomAdminRequestHandler::RoomAdminRequestHandler(LoggedUser user, Room& room, Ro
 void RoomAdminRequestHandler::exitUser()
 {
 	this->closeRoom(RequestInfo());
-	MenuRequestHandler *r = this->m_handlerFactory.createMenuRequestHandler(this->m_user);
+	MenuRequestHandler* r = this->m_handlerFactory.createMenuRequestHandler(this->m_user);
 	r->signout();
 	delete r;
 }
 
 bool RoomAdminRequestHandler::isRequestRelevant(RequestInfo info)
 {
-	if (info.requestId == CloseRoom_REQ || info.requestId == StartGame_REQ	|| info.requestId == GetRoomsStateRoom_REQ)
+	if (info.requestId == CloseRoom_REQ || info.requestId == StartGame_REQ || info.requestId == GetRoomsStateRoom_REQ)
 	{
 		return true;
 	}
@@ -43,7 +43,7 @@ RequestResult RoomAdminRequestHandler::startGame(RequestInfo info)
 RequestResult RoomAdminRequestHandler::closeRoom(RequestInfo info)
 {
 	this->m_roomManager.deleteRoom(this->m_room.getRoomData().id);
-	return RequestResult{ JsonRequestPacketSerializer::serializeResponse(CloseRoomResponse{1}), this->m_handlerFactory.createMenuRequestHandler(this->m_user)};
+	return RequestResult{ JsonRequestPacketSerializer::serializeResponse(CloseRoomResponse{1}), this->m_handlerFactory.createMenuRequestHandler(this->m_user) };
 }
 
 RequestResult RoomAdminRequestHandler::getRoomState(RequestInfo info)

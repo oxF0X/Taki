@@ -110,8 +110,8 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\mongo-cxx-driver\lib;C:\mongo-c-driver\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>bson-1.0.lib;mongoc-1.0.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\mongo-cxx-driver\lib;C:\mongo-c-driver\lib;</AdditionalLibraryDirectories>
+      <AdditionalDependencies>bson-1.0.lib;mongoc-1.0.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -122,12 +122,15 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>C:\mongo-c-driver\include\libbson-1.0;C:\mongo-cxx-driver\include\mongocxx\v_noabi;C:\mongo-c-driver\include\libmongoc-1.0;C:\mongo-cxx-driver\include\bsoncxx\v_noabi</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>bson-1.0.lib;mongoc-1.0.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\mongo-cxx-driver\lib;C:\mongo-c-driver\lib;</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
