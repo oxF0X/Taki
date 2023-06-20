@@ -105,13 +105,13 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>C:\mongo-c-driver\include\libbson-1.0;C:\mongo-cxx-driver\include\mongocxx\v_noabi;C:\mongo-c-driver\include\libmongoc-1.0;C:\mongo-cxx-driver\include\bsoncxx\v_noabi;C:\boost_1_55_0</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\mongo-c-driver\include\libbson-1.0;C:\mongo-cxx-driver\include\mongocxx\v_noabi;C:\mongo-c-driver\include\libmongoc-1.0;C:\mongo-cxx-driver\include\bsoncxx\v_noabi</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>bson-1.0.lib;mongoc-1.0.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>C:\mongo-cxx-driver\lib;C:\mongo-c-driver\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>bson-1.0.lib;mongoc-1.0.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -135,13 +135,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="AuthorizationException.cpp" />
-    <ClCompile Include="CardDeck.cpp" />
-    <ClCompile Include="CardsTypes.cpp" />
+    <ClCompile Include="RoomAdminRequestHandler.cpp" />
+    <ClCompile Include="RoomMemberRequestHandler.cpp" />
+    <ClCompile Include="sqlite3.c" />
+    <ClCompile Include="TriviaException.cpp" />
     <ClCompile Include="Comunicator.cpp" />
-    <ClCompile Include="Game.cpp" />
-    <ClCompile Include="GameManager.cpp" />
-    <ClCompile Include="GameRequestHandler.cpp" />
     <ClCompile Include="Helper.cpp" />
     <ClCompile Include="JsonRequestPacketDeserializer.cpp" />
     <ClCompile Include="JsonRequestPacketSerializer.cpp" />
@@ -154,21 +152,14 @@
     <ClCompile Include="ParsingException.cpp" />
     <ClCompile Include="RequestHandlerFactory.cpp" />
     <ClCompile Include="Room.cpp" />
-    <ClCompile Include="RoomAdminRequestHandler.cpp" />
     <ClCompile Include="RoomManager.cpp" />
-    <ClCompile Include="RoomMemberRequestHandler.cpp" />
     <ClCompile Include="Server.cpp" />
-    <ClCompile Include="TriviaException.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AuthorizationException.h" />
-    <ClInclude Include="Card.h" />
-    <ClInclude Include="CardDeck.h" />
-    <ClInclude Include="CardsTypes.h" />
+    <ClInclude Include="RoomAdminRequestHandler.h" />
+    <ClInclude Include="RoomMemberRequestHandler.h" />
+    <ClInclude Include="TriviaException.h" />
     <ClInclude Include="Comunicator.h" />
-    <ClInclude Include="Game.h" />
-    <ClInclude Include="GameManager.h" />
-    <ClInclude Include="GameRequestHandler.h" />
     <ClInclude Include="Helper.h" />
     <ClInclude Include="IDatabase.h" />
     <ClInclude Include="IRequestHandler.h" />
@@ -181,14 +172,11 @@
     <ClInclude Include="MenuRequestHandler.h" />
     <ClInclude Include="MongoDB.h" />
     <ClInclude Include="ParsingException.h" />
-    <ClInclude Include="RequestHandlerFactory.fwd.h" />
     <ClInclude Include="RequestHandlerFactory.h" />
     <ClInclude Include="Room.h" />
-    <ClInclude Include="RoomAdminRequestHandler.h" />
     <ClInclude Include="RoomManager.h" />
-    <ClInclude Include="RoomMemberRequestHandler.h" />
     <ClInclude Include="Server.h" />
-    <ClInclude Include="TriviaException.h" />
+    <ClInclude Include="sqlite3.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

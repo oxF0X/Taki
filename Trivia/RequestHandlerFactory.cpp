@@ -2,19 +2,11 @@
 
 class LoginRequestHandler;
 
-RequestHandlerFactory::RequestHandlerFactory(IDatabase* db): m_database(db), m_roomManager(RoomManager::getManager()), m_loginManager(LoginManager::getLoginManager(db))
+RequestHandlerFactory::RequestHandlerFactory(IDatabase* db) : m_database(db), m_roomManager(RoomManager::getManager()), m_loginManager(LoginManager::getLoginManager(db)), m_gameManager(GameManager::getGame())
 {
 
 }
 
-RequestHandlerFactory::~RequestHandlerFactory()
-{
-
-}
-
-RequestHandlerFactory::~RequestHandlerFactory()
-{
-}
 
 
 RequestHandlerFactory& RequestHandlerFactory::getFactory(IDatabase* db)
@@ -30,7 +22,7 @@ LoginManager& RequestHandlerFactory::getLoginManger()
 
 RoomManager& RequestHandlerFactory::getRoomManager()
 {
-	return this->m_roomMangager;
+	return this->m_roomManager;
 }
 
 GameManager& RequestHandlerFactory::getGameManger()
@@ -45,23 +37,28 @@ LoginRequestHandler* RequestHandlerFactory::createLoginRequestHandler()
 
 MenuRequestHandler* RequestHandlerFactory::createMenuRequestHandler(LoggedUser user)
 {
-	return new MenuRequestHandler(user, this->m_roomMangager, *this);
+	return new MenuRequestHandler(user, this->m_roomManager, *this);
 }
 
-RoomMemberRequestHandler* RequestHandlerFactory::createRoomMemberRequestHandler(LoggedUser user, Room room)
+RoomMemberRequestHandler* RequestHandlerFactory::createRoomMemberRequestHandler(LoggedUser& user, Room& room)
 {
-	return new RoomMemberRequestHandler(user, room, this->m_roomMangager, *this);
+	return new RoomMemberRequestHandler(user, room, this->m_roomManager, *this);
 }
 
-RoomAdminRequestHandler* RequestHandlerFactory::createRoomAdminRequestHandler(LoggedUser user, Room room)
+RoomAdminRequestHandler* RequestHandlerFactory::createRoomAdminRequestHandler(LoggedUser& user, Room& room)
 {
-	return new RoomAdminRequestHandler(user, room, this->m_roomMangager, *this);
+	return new RoomAdminRequestHandler(user, room, this->m_roomManager, *this);
 }
 
-GameRequestHandler* RequestHandlerFactory::createGameRequestHandler(LoggedUser user, Room room)
+
+GameRequestHandler* RequestHandlerFactory::createGameRequestHandler(LoggedUser user, Room& room)
 {
 	//return new GameRequestHandler();
 	return nullptr;
+}
+
+RequestHandlerFactory::~RequestHandlerFactory()
+{
 }
 
 

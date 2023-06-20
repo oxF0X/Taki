@@ -1,13 +1,25 @@
 #include "GameManager.h"
 
-Game GameManager::createGame(Room r)
+
+GameManager& GameManager::getGame()
+{
+	static GameManager manager = GameManager();
+	return manager;
+}
+
+GameManager::GameManager(IDatabase* db) : m_database(&MongoDB::getDB())
+{
+
+}
+
+Game GameManager::createGame(Room& r)
 {
     Game new_room(r.getAllUsers());
     this->m_games.push_back(new_room);
     return new_room;
 }
 
-void GameManager::deleteGame(Game g)
+void GameManager::deleteGame(Game& g)
 {
 	for (int i = 0; i < this->m_games.size(); i++)
 	{

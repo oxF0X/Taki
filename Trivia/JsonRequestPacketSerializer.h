@@ -128,15 +128,6 @@ typedef struct GetRoomsStateResponse
 
 } GetRoomsStateResponse;
 
-typedef struct GetRoomsStateResponse
-{
-	unsigned int status;
-	bool hasGameBegun;
-	std::vector<std::string> players;
-	std::vector<int> cardsPerPlayer;
-	NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(GetRoomsStateResponse, status, hasGameBegun, players, cardsPerPlayer)
-
-} GetRoomsStateResponse;
 
 typedef struct LeaveGameResponse
 {

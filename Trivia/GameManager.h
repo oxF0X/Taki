@@ -9,11 +9,14 @@ class GameManager
 {
 
 public:
-	Game createGame(Room r);
-	void deleteGame(Game g);
+	static GameManager& getGame();
+	Game createGame(Room& r);
+	void deleteGame(Game& g);
 	
 
 private:
+	GameManager() = delete;
+	GameManager(IDatabase* db);
 	IDatabase* m_database;
 	std::vector<Game> m_games;
 };

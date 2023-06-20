@@ -26,16 +26,16 @@ public:
 
 	LoginRequestHandler* createLoginRequestHandler();
 	MenuRequestHandler* createMenuRequestHandler(LoggedUser user);
-	RoomMemberRequestHandler* createRoomMemberRequestHandler(LoggedUser user, Room& room);
-	RoomAdminRequestHandler* createRoomAdminRequestHandler(LoggedUser user, Room& room);
+	RoomMemberRequestHandler* createRoomMemberRequestHandler(LoggedUser& user, Room& room);
+	RoomAdminRequestHandler* createRoomAdminRequestHandler(LoggedUser& user, Room& room);
 	GameRequestHandler* createGameRequestHandler(LoggedUser user, Room& room);
 	
 
 	~RequestHandlerFactory();
 private:
 	RequestHandlerFactory(IDatabase* db);
+	RoomManager& m_roomManager;
 	LoginManager& m_loginManager;
-	RoomManager& m_roomMangager;
 	GameManager& m_gameManager;
 	IDatabase* m_database;
 	static bool is_exsit;
