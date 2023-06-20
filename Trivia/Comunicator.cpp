@@ -2,13 +2,6 @@
 
 Comunicator::Comunicator(RequestHandlerFactory& handler): m_handlerFactory(handler)
 {
-	//WSADATA wsaData;
-	//int wsaret = WSAStartup(0x0202, &wsaData);
-	//if (wsaret != 0)
-	//{
-	//	throw std::exception(std::runtime_error("WSAStartup failed"));
-	//}
-
 	this->m_serverSocket = socket(AF_INET, SOCK_STREAM, 0);
 }
 
@@ -83,34 +76,65 @@ void Comunicator::handleNewClient(SOCKET socket)
 {
 	int msgCode, msgSize;
 	std::vector<uint8_t> msg;
-	msgCode = Helper::getIntPartFromSocket(socket, CODE_SIZE);
-	msgSize = Helper::getIntPartFromSocket(socket, LENGTH_SIZE);
-	msg = Helper::getDataFromSocket(socket, msgSize);
-	RequestInfo info{ msgCode, msg };
-	if (!this->m_clients[socket]->isRequestRelevant(info))
+
+	while (true)
 	{
 		try
 		{
-			Helper::sendData(socket, JsonRequestPacketSerializer::serializeResponse(ErrorResponse{ "ERROR: Irelevant request.\n" }));
+			msgCode = Helper::getIntPartFromSocket(socket, CODE_SIZE);
+			msgSize = Helper::getIntPartFromSocket(socket, LENGTH_SIZE);
+			msg = msgSize? Helper::getDataFromSocket(socket, msgSize) : std::vector<uint8_t>();
 		}
 		catch (...)
 		{
-			delete(this->m_clients[socket]);
-			this->m_clients.erase(socket);
-			closesocket(socket);
+			this->disconnectUser(socket);
+			return;
+		}
+
+		RequestInfo info{ msgCode, msg };
+
+		if (!this->m_clients[socket]->isRequestRelevant(info))
+		{
+			try
+			{
+				Helper::sendData(socket, JsonRequestPacketSerializer::serializeResponse(ErrorResponse{ "ERROR: Irelevant request.\n" }));
+				continue;
+			}
+			catch (...)
+			{
+				this->disconnectUser(socket);
+				return;
+			}
+
+		}
+		
+
+		RequestResult r = this->m_clients[socket]->handleRequest(info);
+		if (r.newHandler)
+		{
+			delete this->m_clients[socket];
+			this->m_clients[socket] = r.newHandler;
+		}
+
+		try
+		{
+			Helper::sendData(socket, r.buffer);
+		}
+		catch (...)
+		{
+			this->disconnectUser(socket);
 			return;
 		}
 	}
+}
 
-	RequestResult r = this->m_clients[socket]->handleRequest(info);
-	if (r.newHandler)
-	{
-		delete this->m_clients[socket];
-		this->m_clients[socket] = r.newHandler;
-	}
-
-	Helper::sendData(socket, r.buffer);
+void Comunicator::disconnectUser(SOCKET socket)
+{
+	this->m_clients[socket]->exitUser();
+	delete(this->m_clients[socket]);
+	this->m_clients.erase(socket);
 	closesocket(socket);
 }
+
 
 

@@ -1,7 +1,16 @@
 #include "RoomAdminRequestHandler.h"
 
-RoomAdminRequestHandler::RoomAdminRequestHandler(LoggedUser user, Room room, RoomManager& roomManager, RequestHandlerFactory& handlerFactory) : m_user(user), m_room(room), m_roomManager(roomManager), m_handlerFactory(handlerFactory)
+RoomAdminRequestHandler::RoomAdminRequestHandler(LoggedUser user, Room& room, RoomManager& roomManager, RequestHandlerFactory& handlerFactory) : m_user(user), m_room(room), m_roomManager(roomManager), m_handlerFactory(handlerFactory)
 {
+}
+
+
+void RoomAdminRequestHandler::exitUser()
+{
+	this->closeRoom(RequestInfo());
+	MenuRequestHandler *r = this->m_handlerFactory.createMenuRequestHandler(this->m_user);
+	r->signout();
+	delete r;
 }
 
 bool RoomAdminRequestHandler::isRequestRelevant(RequestInfo info)
@@ -33,7 +42,8 @@ RequestResult RoomAdminRequestHandler::startGame(RequestInfo info)
 
 RequestResult RoomAdminRequestHandler::closeRoom(RequestInfo info)
 {
-	return RequestResult();
+	this->m_roomManager.deleteRoom(this->m_room.getRoomData().id);
+	return RequestResult{ JsonRequestPacketSerializer::serializeResponse(CloseRoomResponse{1}), this->m_handlerFactory.createMenuRequestHandler(this->m_user)};
 }
 
 RequestResult RoomAdminRequestHandler::getRoomState(RequestInfo info)
@@ -47,5 +57,5 @@ RequestResult RoomAdminRequestHandler::getRoomState(RequestInfo info)
 	hasGameBegun = this->m_room.isActive();
 	players = this->m_room.getAllUsers();
 
-	return RequestResult{ JsonRequestPacketSerializer::serializeResponse(GetRoomsStateResponse{1,hasGameBegun, players,  }), nullptr };
+	return RequestResult{ JsonRequestPacketSerializer::serializeResponse(GetRoomsStateResponse{1,hasGameBegun, players,  }),  nullptr };
 }

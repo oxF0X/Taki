@@ -2,8 +2,13 @@
 
 
 
-LoginRequestHandler::LoginRequestHandler(RequestHandlerFactory& handler):m_handlerFactory(handler)
+LoginRequestHandler::LoginRequestHandler(RequestHandlerFactory& handler):m_handlerFactory(RequestHandlerFactory::getFactory(&MongoDB::getDB()))
 {
+}
+
+void LoginRequestHandler::exitUser()
+{
+
 }
 
 bool LoginRequestHandler::isRequestRelevant(RequestInfo info)

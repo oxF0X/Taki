@@ -76,6 +76,28 @@ typedef struct PlaceCardRequest
 } PlaceCardRequest;
 
 
+	NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(CreateRoomRequest, roomName, maxUsers, answerTimeout)
+} CreateRoomRequest;
+
+typedef struct GetPalayersInRoomRequest
+{
+	unsigned int roomId;
+
+	GetPalayersInRoomRequest() : roomId(0) { }
+
+	NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(GetPalayersInRoomRequest, roomId)
+} GetPalayersInRoomRequest;
+
+typedef struct JoinRoomRequest
+{
+	unsigned int roomId;
+
+	JoinRoomRequest() : roomId(0) { }
+
+	NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(JoinRoomRequest, roomId)
+} JoinRoomRequest;
+
+
 class JsonRequestPacketDeserializer
 {
 public:

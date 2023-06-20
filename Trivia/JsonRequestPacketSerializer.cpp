@@ -25,77 +25,77 @@ std::vector<std::uint8_t> JsonRequestPacketSerializer::serializeResponse(LogoutR
 {
     nlohmann::json j;
     s.to_json(j, s);
-    return buildMsg(j, Signup_RES);
+    return buildMsg(j, SIGNOUT_RES);
 }
 
 std::vector<std::uint8_t> JsonRequestPacketSerializer::serializeResponse(GetRoomsResponse s)
 {
     nlohmann::json j;
     s.to_json(j, s);
-    return buildMsg(j, Signup_RES);
+    return buildMsg(j, GET_ROOMS_RES);
 }
 
 std::vector<std::uint8_t> JsonRequestPacketSerializer::serializeResponse(GetPlayersInRoomResponse s)
 {
     nlohmann::json j;
     s.to_json(j, s);
-    return buildMsg(j, Signup_RES);
+    return buildMsg(j, GET_PLAYERS_RES);
 }
 
 std::vector<std::uint8_t> JsonRequestPacketSerializer::serializeResponse(GetHightScoreResponse s)
 {
     nlohmann::json j;
     s.to_json(j, s);
-    return buildMsg(j, Signup_RES);
+    return buildMsg(j, 0);
 }
 
 std::vector<std::uint8_t> JsonRequestPacketSerializer::serializeResponse(GetPersonalStatsResponse s)
 {
     nlohmann::json j;
     s.to_json(j, s);
-    return buildMsg(j, Signup_RES);
+    return buildMsg(j, 0);
 }
 
 std::vector<std::uint8_t> JsonRequestPacketSerializer::serializeResponse(JoinRoomResponse s)
 {
     nlohmann::json j;
     s.to_json(j, s);
-    return buildMsg(j, Signup_RES);
+    return buildMsg(j, JOIN_ROOM_RES);
 }
 
 std::vector<std::uint8_t> JsonRequestPacketSerializer::serializeResponse(CreateRoomResponse s)
 {
     nlohmann::json j;
     s.to_json(j, s);
-    return buildMsg(j, Signup_RES);
+    return buildMsg(j, CREATE_ROOM_RES);
 }
 
 std::vector<std::uint8_t> JsonRequestPacketSerializer::serializeResponse(CloseRoomResponse s)
 {
     nlohmann::json j;
     s.to_json(j, s);
-    return buildMsg(j, CloseRoom_RES);
+    return buildMsg(j, CLOSE_ROOM_RES);
 }
 
 std::vector<std::uint8_t> JsonRequestPacketSerializer::serializeResponse(StartRoomResponse s)
 {
     nlohmann::json j;
     s.to_json(j, s);
-    return buildMsg(j, StartRoom_RES);
+    return buildMsg(j, START_ROOM_RES);
 }
 
 std::vector<std::uint8_t> JsonRequestPacketSerializer::serializeResponse(LeaveRoomResponse s)
 {
     nlohmann::json j;
     s.to_json(j, s);
-    return buildMsg(j, LeaveRoom_RES);
+    return buildMsg(j, LEAVE_ROOM_RES);
 }
 
 std::vector<std::uint8_t> JsonRequestPacketSerializer::serializeResponse(GetRoomsStateResponse s)
 {
     nlohmann::json j;
     s.to_json(j, s);
-    return buildMsg(j, GetRoomsStateRoom_RES);
+    return buildMsg(j, GET_ROOM_STATE_RES);
 }
 
 std::vector<std::uint8_t> JsonRequestPacketSerializer::serializeResponse(GetGameResultsResponse s)
@@ -131,8 +131,6 @@ std::vector<std::uint8_t> JsonRequestPacketSerializer::serializeResponse(GetGame
     nlohmann::json j;
     s.to_json(j, s);
     return buildMsg(j, GetGameStateRoom_RES);
-}
-
 
 std::vector<uint8_t> JsonRequestPacketSerializer::buildMsg(nlohmann::json j, unsigned int id)
 {

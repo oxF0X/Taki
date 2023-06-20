@@ -34,7 +34,7 @@ CreateRoomRequest JsonRequestPacketDeserializer::deserializeCreateRoomRequest(st
 	CreateRoomRequest request;
 	nlohmann::json j = nlohmann::json::parse(data);
 
-	if (!(j.is_object() && j.contains("roomName") && j.contains("maxId") && j.contains("turnTime") && j.contains("cardsCount")))
+	if (!(j.is_object() && j.contains("roomName") && j.contains("maxUsers") && j.contains("answerTimeout")))
 	{
 		throw(ParsingExceprion(std::string("Missing necessary fields")));
 	}
@@ -84,5 +84,4 @@ PlaceCardRequest JsonRequestPacketDeserializer::deserializePlaceCardRequest(std:
 	request.from_json(j, request);
 	return request;
 }
-
 

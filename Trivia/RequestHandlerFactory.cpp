@@ -2,8 +2,12 @@
 
 class LoginRequestHandler;
 
+RequestHandlerFactory::RequestHandlerFactory(IDatabase* db): m_database(db), m_roomManager(RoomManager::getManager()), m_loginManager(LoginManager::getLoginManager(db))
+{
 
-RequestHandlerFactory::RequestHandlerFactory(IDatabase* db): m_database(db), m_loginManager(LoginManager::getLoginManager(db))
+}
+
+RequestHandlerFactory::~RequestHandlerFactory()
 {
 
 }

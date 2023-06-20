@@ -3,6 +3,7 @@
 
 #pragma comment (lib, "ws2_32.lib")
 
+#include <typeinfo>
 #include <iostream>
 #include <mongocxx/client.hpp>
 #include <mongocxx/instance.hpp>
@@ -31,6 +32,7 @@ public:
 private:
 	void bindAndListen();
 	void handleNewClient(SOCKET socket);
+	void disconnectUser(SOCKET socket);
 
 	///////////////////////////////
 

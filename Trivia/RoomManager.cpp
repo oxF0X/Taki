@@ -1,8 +1,18 @@
 #include "RoomManager.h"
 
+RoomManager::RoomManager()
+{
+}
+
+RoomManager& RoomManager::getManager()
+{
+	static RoomManager manager = RoomManager();
+	return manager;
+}
+
 void RoomManager::createRoom(const LoggedUser& user, const RoomData& data)
 {
-	if (data.maxPlayers <= 1)
+	if (data.maxPlayers < 2 || data.maxPlayers > 4)
 	{
 		throw(TriviaException("The room must cntain atleast 2 palyers"));
 	}
@@ -12,12 +22,18 @@ void RoomManager::createRoom(const LoggedUser& user, const RoomData& data)
 		throw(TriviaException("This room already exists"));
 	}
 
-	this->m_rooms.insert(std::pair<int,Room>(data.id,Room(data, user)));
+	{
+		std::lock_guard(this->_rooms_mtx);
+		this->m_rooms.insert(std::pair<int, Room>(data.id, Room(data, user)));
+	}
 }
 
 void RoomManager::deleteRoom(const int& id)
 {
-	this->m_rooms.erase(id);
+	{
+		std::lock_guard(this->_rooms_mtx);
+		this->m_rooms.erase(id);
+	}
 }
 
 const unsigned int RoomManager::getRoomState(const int& id) const
