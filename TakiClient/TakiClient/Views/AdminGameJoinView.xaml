@@ -42,8 +42,10 @@
 
 
                 </Grid.RowDefinitions>
-
-                <Button Grid.Row="1" Style="{StaticResource LoginButtonStyle}" Content="Leave room :(" Command="{Binding CloseRoomCommand}"/>
+                <StackPanel Grid.Row="1">
+                    <Button Style="{StaticResource LoginButtonStyle}" Content="Leave room D:" Command="{Binding CloseRoomCommand}"/>
+                    <Button Style="{StaticResource LoginButtonStyle}" Content="Statet game :D" Command="{Binding StartGameCommand}"/>
+                </StackPanel>
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
                     <ItemsControl ItemsSource="{Binding Users}">
                         <ItemsControl.ItemTemplate>

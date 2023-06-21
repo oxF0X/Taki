@@ -8,7 +8,7 @@ using System.Windows.Input;
 using System.Windows;
 using TakiClient.Modules;
 using TakiClient.ViewsModels;
-
+using TakiClient.Views;
 
 namespace TakiClient.ViewsModels
 {
@@ -57,6 +57,11 @@ namespace TakiClient.ViewsModels
         private void ExecuteLeaveRoom(object obj)
         {
             this.clientHandler.GetLiveRoom();
+            var view = new MenuView();
+            Window w = Application.Current.MainWindow;
+            Application.Current.MainWindow = view;
+            view.Show();
+            w.Close();
         }
     }
 }

@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Windows;
 using TakiClient.Modules;
+using TakiClient.ViewsModels;
+using TakiClient.Views;
 
 namespace TakiClient.ViewsModels
 {
@@ -26,6 +30,7 @@ namespace TakiClient.ViewsModels
         }
 
         public ICommand CloseRoomCommand { get; }
+        public ICommand StartGameCommand { get; }
 
 
 
@@ -33,8 +38,18 @@ namespace TakiClient.ViewsModels
         {
             this.clientHandler = Manager.GetManager().getClient();
             CloseRoomCommand = new ViewModelCommand(ExecuteCloseRoom);
+            StartGameCommand = new ViewModelCommand(ExecuteStartGame);
             //this._users = clientHandler.
             //(Manager.GetManager().getRoomId());
+        }
+
+        private void ExecuteStartGame(object obj)
+        {
+            var view = new TakiGameView();
+            Window w = Application.Current.MainWindow;
+            Application.Current.MainWindow = view;
+            view.Show();
+            w.Close();
         }
 
         public string[] UpdateUsers()
@@ -54,6 +69,11 @@ namespace TakiClient.ViewsModels
         private void ExecuteCloseRoom(object obj)
         {
             this.clientHandler.GetCloseRoom();
+            var view = new MenuView();
+            Window w = Application.Current.MainWindow;
+            Application.Current.MainWindow = view;
+            view.Show();
+            w.Close();
         }
     }
 }

@@ -9,7 +9,9 @@
 
   <ItemGroup>
     <None Remove="Images\Amitjakhu-Drip-Plus.512.png" />
+    <None Remove="Images\B1.png" />
     <None Remove="Images\back-image.jpg" />
+    <None Remove="Images\Back.png" />
     <None Remove="Images\background.jpg" />
     <None Remove="Images\close.png" />
     <None Remove="Images\dashboard-template.png" />
@@ -33,7 +35,9 @@
 
   <ItemGroup>
     <Resource Include="Images\Amitjakhu-Drip-Plus.512.png" />
+    <Resource Include="Images\B1.png" />
     <Resource Include="Images\back-image.jpg" />
+    <Resource Include="Images\Back.png" />
     <Resource Include="Images\background.jpg" />
     <Resource Include="Images\close.png" />
     <Resource Include="Images\dashboard-template.png" />

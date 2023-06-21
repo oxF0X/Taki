@@ -1,0 +1,43 @@
+﻿<Window x:Class="TakiClient.Views.TakiGameView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TakiClient.Views"
+        xmlns:viewModel="clr-namespace:TakiClient.ViewsModels"
+        xmlns:customcontrols="clr-namespace:TakiClient.CustomControls"
+        mc:Ignorable="d"
+        Title="TakiGameView" Height="450" Width="800">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Side 1: Top Left -->
+        <StackPanel x:Name="side1" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <!-- Images will be dynamically added here -->
+        </StackPanel>
+
+        <!-- Side 2: Top Right -->
+        <StackPanel x:Name="side2" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Top">
+            <!-- Images will be dynamically added here -->
+        </StackPanel>
+
+        <!-- Side 3: Bottom Left -->
+        <StackPanel x:Name="side3" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Bottom">
+            <!-- Images will be dynamically added here -->
+        </StackPanel>
+
+        <!-- Side 4: Bottom Right -->
+        <StackPanel x:Name="side4" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+            <!-- Images will be dynamically added here -->
+        </StackPanel>
+    </Grid>
+
+
+</Window>
