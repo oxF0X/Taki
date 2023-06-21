@@ -97,8 +97,8 @@ std::map<std::string, std::vector<std::string>> Game::getCardsByPlayer() const
 
 void Game::moveToNextPlayer()
 {
-	//auto it = std::find(this->m_players.begin(), this->m_players.end(), this->m_currentPlayer);
-	auto it = this->m_players.begin();
+	auto it = this->m_players.upper_bound(this->m_currentPlayer);
+	
 	if (it != this->m_players.end())
 	{
 		this->m_currentPlayer = (it++)->first;
