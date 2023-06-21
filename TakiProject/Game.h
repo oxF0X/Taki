@@ -36,14 +36,14 @@ private:
 	void removeCard(std::string cards[], int& size, int index);
 	
 	//void changeColor();
-	//void changeDirection();
-	//void stopPlayer();
+	void changeDirection();
+	void stopPlayer();
 
 	LoggedUser* m_currentPlayer;
 	CardDeck m_gameDeck;	
 	Card* m_currentCard;
 	bool isProgress;
-	//int m_currentDirection;
+	int m_currentDirection;
 	std::map<LoggedUser*, GameData> m_players;
 
 };

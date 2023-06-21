@@ -11,8 +11,10 @@ void CardDeck::removeCard(Card* c)
 	{
 		if (this->m_cards[i] == c)
 		{
-			auto it = this->m_cards.begin() + i;
+			std::vector<Card*>::iterator it = this->m_cards.begin() + i;
 			this->m_cards.erase(it);
+			delete this->m_cards[i];
+			break;
 		}
 	}
 }

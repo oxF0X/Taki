@@ -26,6 +26,7 @@ Game::Game(std::vector<std::string> players)
 		this->removeCard(cards, size, random_index);
 	}
 	this->isProgress = true;
+	this->m_currentDirection = 1;
 }
 
 void Game::playCard(LoggedUser user, Card* card)
@@ -37,6 +38,7 @@ void Game::playCard(LoggedUser user, Card* card)
 	if (!card)
 	{
 		this->DrawCards(1);
+		this->moveToNextPlayer();
 
 	}
 	if (!((NormalCard*)card)->isLegalToPlay(this->m_currentCard))
@@ -51,6 +53,7 @@ void Game::playCard(LoggedUser user, Card* card)
 	}
 	this->m_players[&user].m_PlayerDeck.removeCard(card);
 	this->m_currentCard = card;
+	this->moveToNextPlayer();
 }
 
 void Game::removePlayer(LoggedUser user)
@@ -98,7 +101,9 @@ std::map<std::string, std::vector<std::string>> Game::getCardsByPlayer() const
 void Game::moveToNextPlayer()
 {
 	auto it = this->m_players.upper_bound(this->m_currentPlayer);
-	
+	if (this->m_currentDirection == -1) {
+		auto it = this->m_players.lower_bound(this->m_currentPlayer);
+	}
 	if (it != this->m_players.end())
 	{
 		this->m_currentPlayer = (it)->first;
@@ -118,9 +123,29 @@ void Game::DrawCards(int numOfCards)
 
 void Game::removeCard(std::string cards[],int& size ,int index)
 {
+	
 	for (int i = index; i < size - 1; i++) {
 		cards[i] = cards[i + 1];
 	}
 	cards[size - 1] = nullptr;
 	size--;
+}
+
+
+void Game::changeDirection()
+{
+	if (this->m_currentDirection == 1)
+	{
+		this->m_currentDirection = -1;
+	}
+	else
+	{
+		this->m_currentDirection = 1;
+	}
+}
+
+void Game::stopPlayer()
+{
+	this->moveToNextPlayer();
+	this->moveToNextPlayer();
 }
