@@ -101,7 +101,7 @@ void Game::moveToNextPlayer()
 	
 	if (it != this->m_players.end())
 	{
-		this->m_currentPlayer = (it++)->first;
+		this->m_currentPlayer = (it)->first;
 	}
 }
 
