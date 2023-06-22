@@ -11,33 +11,38 @@
 
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="105"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="105"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="200"/>
         </Grid.ColumnDefinitions>
 
         <!-- Side 1: Top Left -->
-        <StackPanel x:Name="side1" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top">
+        <StackPanel x:Name="side1" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Top" Orientation="Horizontal">
             <!-- Images will be dynamically added here -->
         </StackPanel>
 
         <!-- Side 2: Top Right -->
-        <StackPanel x:Name="side2" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Top">
+        <StackPanel x:Name="side2" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center">
             <!-- Images will be dynamically added here -->
         </StackPanel>
 
         <!-- Side 3: Bottom Left -->
-        <StackPanel x:Name="side3" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Bottom">
+        <StackPanel x:Name="side3" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Bottom"  Orientation="Horizontal">
             <!-- Images will be dynamically added here -->
         </StackPanel>
 
         <!-- Side 4: Bottom Right -->
-        <StackPanel x:Name="side4" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+        <StackPanel x:Name="side4" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center">
             <!-- Images will be dynamically added here -->
         </StackPanel>
-    </Grid>
+        
+        <Image x:Name="centerImage" Width="100" Height="100" Grid.Row="1" Grid.Column="1" />
 
+    </Grid>
 
 </Window>
