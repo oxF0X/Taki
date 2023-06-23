@@ -300,7 +300,7 @@ namespace TakiClient.Modules
             byte[] reqCode = new byte[5] { GET_START_GAME_REQ, 0, 0, 0, 0 };
             clientStream.Write(reqCode, 0, reqCode.Length);
             int code = GetCodeFromSocket();
-/*            int size = GetSizeFromSocket();
+            int size = GetSizeFromSocket();
             if (size <= 0)
             {
                 return false;
@@ -310,7 +310,7 @@ namespace TakiClient.Modules
             int bytesNum = clientStream.Read(buffer, 0, size);
             
             //string str = Encoding.Default.GetString(buffer);
-*/
+
 
             return code == GET_START_GAME_RES;
         }
@@ -319,6 +319,7 @@ namespace TakiClient.Modules
         public GetGameStateResponse? GetGameState()
         {
             byte[] reqCode = new byte[5] { GET_GAME_STATE_REQ, 0, 0, 0, 0 };
+
             clientStream.Write(reqCode, 0, reqCode.Length);
             int code = GetCodeFromSocket();
             int size = GetSizeFromSocket();
