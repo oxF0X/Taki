@@ -13,7 +13,7 @@ class GameRequestHandler: public IRequestHandler
 public:
 	bool isRequestRelevant(RequestInfo info) override;
 	RequestResult handleRequest(RequestInfo info) override;
-	GameRequestHandler(LoggedUser user, GameManager& gameManager, RequestHandlerFactory& handlerFactory, Game& game);
+	GameRequestHandler(LoggedUser user, Game& game);
 	void exitUser() override;
 private:
 	RequestResult PlayCard(RequestInfo info);
