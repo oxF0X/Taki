@@ -44,6 +44,7 @@ namespace TakiClient.ViewsModels
         {
            GetRoomsStateResponse? state = this.clientHandler.GetRoomState();
             string[] players = state?.players;
+            players[0] += " (admin)";
             return players;
         }
 
@@ -56,7 +57,7 @@ namespace TakiClient.ViewsModels
 
         private void ExecuteLeaveRoom(object obj)
         {
-            this.clientHandler.GetLiveRoom();
+            this.clientHandler.GetLeaveRoom();
             var view = new MenuView();
             Window w = Application.Current.MainWindow;
             Application.Current.MainWindow = view;

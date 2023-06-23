@@ -24,6 +24,8 @@ namespace TakiClient.Modules
         const int GET_ROOM_STATE_RES = 110;
         const int GET_LEAVE_ROOM_RES = 119;
         const int GET_CLOSE_ROOM_RES = 117;
+        const int GET_START_GAME_RES = 18;
+        const int GET_GAME_STATE_RES = 124;
 
 
 
@@ -32,6 +34,10 @@ namespace TakiClient.Modules
         const int GET_SIGN_OUT = 12;
         const int GET_LEAVE_ROOM = 19;
         const int GET_CLOSE_ROOM = 17;
+        const int GET_START_GAME_REQ = 18;
+        const int GET_GAME_STATE_REQ = 24;
+
+
 
 
 
@@ -251,7 +257,7 @@ namespace TakiClient.Modules
         }
 
 
-        public bool GetLiveRoom()
+        public bool GetLeaveRoom()
         {
             byte[] reqCode = new byte[5] { GET_LEAVE_ROOM, 0, 0, 0, 0 };
             clientStream.Write(reqCode, 0, reqCode.Length);
@@ -288,6 +294,45 @@ namespace TakiClient.Modules
 
             return code == GET_CLOSE_ROOM_RES;
         }
+
+        public bool GetStartGame()
+        {
+            byte[] reqCode = new byte[5] { GET_START_GAME_REQ, 0, 0, 0, 0 };
+            clientStream.Write(reqCode, 0, reqCode.Length);
+            int code = GetCodeFromSocket();
+            int size = GetSizeFromSocket();
+            if (size <= 0)
+            {
+                return false;
+            }
+
+            byte[] buffer = new byte[size];
+            int bytesNum = clientStream.Read(buffer, 0, size);
+            string str = Encoding.Default.GetString(buffer);
+
+
+            return code == GET_START_GAME_RES;
+        }
+
+
+        public GetGameStateResponse? GetGameState()
+        {
+            byte[] reqCode = new byte[5] { GET_GAME_STATE_REQ, 0, 0, 0, 0 };
+            clientStream.Write(reqCode, 0, reqCode.Length);
+            int code = GetCodeFromSocket();
+            int size = GetSizeFromSocket();
+            if (size <= 0)
+            {
+                return null;
+            }
+
+            byte[] buffer = new byte[size];
+            int bytesNum = clientStream.Read(buffer, 0, size);
+            string str = Encoding.Default.GetString(buffer);
+
+            return code == GET_GAME_STATE_RES ? JsonRequestPacketDeserializer.DeserializeGetGameState(str) : null;
+        }
+
 
 
         private byte GetCodeFromSocket()

@@ -45,6 +45,7 @@ namespace TakiClient.ViewsModels
 
         private void ExecuteStartGame(object obj)
         {
+            this.clientHandler.GetStartGame();
             var view = new TakiGameView();
             Window w = Application.Current.MainWindow;
             Application.Current.MainWindow = view;
@@ -56,6 +57,7 @@ namespace TakiClient.ViewsModels
         {
             GetRoomsStateResponse? state = this.clientHandler.GetRoomState();
             string[] players = state?.players;
+            players[0] += " (admin)";
             return players;
         }
 

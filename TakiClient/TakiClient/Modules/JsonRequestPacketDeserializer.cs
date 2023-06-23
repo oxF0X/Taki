@@ -50,8 +50,16 @@ namespace TakiClient.Modules
         public int status { get; set; }
         public bool hasGameBegun { get; set; }
         public string[] players { get; set; }
-        public int[] cardsPerPlayer { get; set; }
-        public string[] LastPlayForEachPlayer { get; set; }
+    }
+
+
+    public struct GetGameStateResponse
+    {
+        public int status { get; set; }
+        public bool hasGameBegun { get; set; }
+        public string[] players { get; set; }
+        public int[] cardsPerPlayer;
+        public string[] cards;
     }
 
     class JsonRequestPacketDeserializer
@@ -84,6 +92,11 @@ namespace TakiClient.Modules
         static public GetRoomsStateResponse DeserializeGetRoomState(string res)
         {
             return JsonSerializer.Deserialize<GetRoomsStateResponse>(res);
+        }
+
+        static public GetGameStateResponse DeserializeGetGameState(string res)
+        {
+            return JsonSerializer.Deserialize<GetGameStateResponse>(res);
         }
     }
 }
