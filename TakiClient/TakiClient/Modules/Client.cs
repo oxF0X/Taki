@@ -22,10 +22,10 @@ namespace TakiClient.Modules
         const int SIGNOUT_RES = 111;
         const int GET_PLAYERS_RES = 104;
         const int GET_ROOM_STATE_RES = 110;
-        const int GET_LEAVE_ROOM_RES = 119;
-        const int GET_CLOSE_ROOM_RES = 117;
-        const int GET_START_GAME_RES = 18;
-        const int GET_GAME_STATE_RES = 124;
+        const int GET_LEAVE_ROOM_RES = 109;
+        const int GET_CLOSE_ROOM_RES = 107;
+        const int GET_START_GAME_RES = 108;
+        const int GET_GAME_STATE_RES = 112;
 
 
 
@@ -50,7 +50,6 @@ namespace TakiClient.Modules
             socket = new TcpClient();
             socket.Connect(IPAddress.Parse("127.0.0.1"), 4444);
             clientStream = socket.GetStream();
-            socket.SendTimeout = 9999;
         }
 
         ~Client()
@@ -327,7 +326,7 @@ namespace TakiClient.Modules
             {
                 return null;
             }
-            string str = " ";
+            string str = "";
 
             byte[] buffer = new byte[size];
             int bytesNum = clientStream.Read(buffer, 0, size);

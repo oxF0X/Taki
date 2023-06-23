@@ -24,10 +24,10 @@ RequestResult GameRequestHandler::handleRequest(RequestInfo info)
 		this->m_game.playCard(this->m_user, nullptr);
 		return RequestResult{ JsonRequestPacketSerializer::serializeResponse(DrawCardFromDeckResponse{1, }), this };
 	case GetGameState_REQ:
-		this->getGameSate(info);
+		return this->getGameSate(info);
 		break;
 	case GetGameResult_REQ:
-		this->getGameResults(info);
+		return this->getGameResults(info);
 		break;
 	}
 }
@@ -85,7 +85,6 @@ RequestResult GameRequestHandler::getGameResults(RequestInfo info)
 
 RequestResult GameRequestHandler::getGameSate(RequestInfo info)
 {
-	unsigned int status;
 	bool hasGameEnd;
 	std::vector<std::string> players;
 	std::vector<int> cardsPerPlayer;

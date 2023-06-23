@@ -21,7 +21,7 @@
 #define START_ROOM_RES 108
 #define LEAVE_ROOM_RES 109
 #define GET_ROOM_STATE_RES 110
-#define GetGameStateRoom_RES 111
+#define GetGameStateRoom_RES 112
 
 typedef struct ErrorResponse
 {
