@@ -12,7 +12,7 @@ public:
 	static GameManager& getGameManager();
 	Game& createGame(Room& r);
 	void deleteGame(Game& g);
-	
+	Game& getGame(std::string name);
 
 private:
 	

@@ -29,3 +29,18 @@ void GameManager::deleteGame(Game& g)
 		}
 	}
 }
+
+Game& GameManager::getGame(std::string name)
+{
+	for (int i = 0; i < this->m_games.size(); i++)
+	{
+		for (int j = 0; j < this->m_games[i].getPlayers().size(); j++)
+		{
+			if (this->m_games[i].getPlayers()[j] == name)
+			{
+				return this->m_games[i];
+			}
+		}
+	}
+	throw TriviaException(std::string("Room not found"));
+}

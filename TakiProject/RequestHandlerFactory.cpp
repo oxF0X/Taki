@@ -2,7 +2,7 @@
 
 class LoginRequestHandler;
 
-RequestHandlerFactory::RequestHandlerFactory(IDatabase* db) : m_database(db), m_roomManager(RoomManager::getManager()), m_loginManager(LoginManager::getLoginManager(db)), m_gameManager(GameManager::getGame())
+RequestHandlerFactory::RequestHandlerFactory(IDatabase* db) : m_database(db), m_roomManager(RoomManager::getManager()), m_loginManager(LoginManager::getLoginManager(db)), m_gameManager(GameManager::getGameManager())
 {
 
 }
@@ -51,9 +51,9 @@ RoomAdminRequestHandler* RequestHandlerFactory::createRoomAdminRequestHandler(Lo
 }
 
 
-GameRequestHandler* RequestHandlerFactory::createGameRequestHandler(LoggedUser user, Room& room)
+GameRequestHandler* RequestHandlerFactory::createGameRequestHandler(LoggedUser user, Game& game)
 {
-	return new GameRequestHandler()
+	return new GameRequestHandler(user, this->m_gameManager, *this, game);
 }
 
 RequestHandlerFactory::~RequestHandlerFactory()

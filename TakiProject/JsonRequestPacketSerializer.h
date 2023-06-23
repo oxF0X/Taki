@@ -122,9 +122,8 @@ typedef struct GetRoomsStateResponse
 	unsigned int status;
 	bool hasGameBegun;
 	std::vector<std::string> players;
-	std::vector<int> cardsPerPlayer;
-	std::vector<std::string> LastPlayForEachPlayer;
-	NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(GetRoomsStateResponse, status, hasGameBegun, players, cardsPerPlayer, LastPlayForEachPlayer)
+
+	NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(GetRoomsStateResponse, status, hasGameBegun, players)
 
 } GetRoomsStateResponse;
 

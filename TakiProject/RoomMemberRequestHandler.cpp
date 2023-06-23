@@ -57,5 +57,11 @@ RequestResult RoomMemberRequestHandler::getRoomState(RequestInfo info)
 		str += s;
 	}
 	std::cout << this->m_user.getUsername() << " " << str << std::endl;
-	return RequestResult{ JsonRequestPacketSerializer::serializeResponse(GetRoomsStateResponse{1,hasGameBegun, players, }), nullptr };
+	if (!hasGameBegun)
+	{
+		return RequestResult{ JsonRequestPacketSerializer::serializeResponse(GetRoomsStateResponse{1,hasGameBegun, players }), nullptr };
+	}
+	Game& game(this->m_handlerFactory.getGameManger().getGame(this->m_user.getUsername()));
+
+	return RequestResult{ JsonRequestPacketSerializer::serializeResponse(StartRoomResponse{ 1 }), this->m_handlerFactory.createGameRequestHandler(this->m_user,game)};
 }

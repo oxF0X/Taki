@@ -37,9 +37,11 @@ RequestResult RoomAdminRequestHandler::handleRequest(RequestInfo info)
 
 RequestResult RoomAdminRequestHandler::startGame(RequestInfo info)
 {
+	Game& game(this->m_handlerFactory.getGameManger().createGame(this->m_room));
 	this->m_room.setState(true);
-	return RequestResult{ JsonRequestPacketSerializer::serializeResponse(CloseRoomResponse{1}), this->m_handlerFactory.createGameRequestHandler(this->m_user, this->m_room)};
+	return RequestResult{ JsonRequestPacketSerializer::serializeResponse(StartRoomResponse{ 1 }), this->m_handlerFactory.createGameRequestHandler(this->m_user,game)};
 }
+
 
 RequestResult RoomAdminRequestHandler::closeRoom(RequestInfo info)
 {
