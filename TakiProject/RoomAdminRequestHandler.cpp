@@ -55,7 +55,7 @@ RequestResult RoomAdminRequestHandler::getRoomState(RequestInfo info)
 	bool hasGameBegun;
 	std::vector<std::string> players;
 	std::vector<int> cardsPerPlayer;
-	std::vector<std::string> LastPlayForEachPlayer;
+	
 
 	hasGameBegun = this->m_room.isActive();
 	players = this->m_room.getAllUsers();
