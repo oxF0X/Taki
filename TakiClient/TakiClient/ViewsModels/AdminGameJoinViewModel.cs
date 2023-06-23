@@ -55,9 +55,13 @@ namespace TakiClient.ViewsModels
 
         public string[] UpdateUsers()
         {
+            
             GetRoomsStateResponse? state = this.clientHandler.GetRoomState();
             string[] players = state?.players;
-            players[0] += " (admin)";
+            if (players.Length > 0)
+            {
+                players[0] += " (admin)";
+            }
             return players;
         }
 

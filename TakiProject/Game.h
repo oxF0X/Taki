@@ -33,7 +33,7 @@ public:
 private:
 	void moveToNextPlayer();
 	void DrawCards(int numOfCards);
-	void removeCard(std::string cards[], int& size, int index);
+	
 	
 	//void changeColor();
 	void changeDirection();

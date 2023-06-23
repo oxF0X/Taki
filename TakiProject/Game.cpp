@@ -3,8 +3,8 @@
 Game::Game(std::vector<std::string> players)
 {
 	std::srand(static_cast<unsigned>(std::time(nullptr)));
-	std::string cards[64] = { "Y1", "Y3","Y4" , "Y5", "Y6", "Y7", "Y8", "Y9", "B1", "B3", "B4", "B5", "B6", "B7", "B8", "B9","G1", "G3","G4" , "G5", "G6", "G7", "G8", "G9", "R1", "R3","R4" , "R5", "R6", "R7", "R8", "R9", };
-	int size = cards->size();
+	std::vector<std::string> cards  = { "Y1","Y2" "Y3","Y4" , "Y5", "Y6", "Y7", "Y8", "Y9","YCD","YP","YS","YT", "B1","B2" "B3", "B4", "B5", "B6", "B7", "B8", "B9","BCD","BP","BS","BT", "G1","G3", "G3", "G4", "G5", "G6", "G7", "G8", "G9","GCD","GP","GS","GT", "R1", "R2", "R3","R4" , "R5", "R6", "R7", "R8", "R9","RCD","RP","RS","RT", "Y1","Y2" "Y3","Y4" , "Y5", "Y6", "Y7", "Y8", "Y9","YCD","YP","YS","YT", "B1","B2" "B3", "B4", "B5", "B6", "B7", "B8", "B9","BCD","BP","BS","BT", "G1","G3", "G3", "G4", "G5", "G6", "G7", "G8", "G9","GCD","GP","GS","GT", "R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9","RCD","RP","RS","RT","CC","CC" ,"CC" ,"CC" };
+	int size = cards.size();
 	int random_index;
 
 	for (int i = 0; i < players.size(); i++)
@@ -14,7 +14,8 @@ Game::Game(std::vector<std::string> players)
 		{
 			random_index = std::rand() % size;
 			temp.addCard(new NormalCard(cards[random_index]));
-			this->removeCard(cards, size, random_index);
+			cards.erase(cards.begin() + random_index);
+			size--;
 		}
 		
 		this->m_players[new LoggedUser(players[i])] = GameData{ temp, 0 };
@@ -23,7 +24,8 @@ Game::Game(std::vector<std::string> players)
 	{
 		random_index = std::rand() % size;
 		this->m_gameDeck.addCard(new NormalCard(cards[random_index]));
-		this->removeCard(cards, size, random_index);
+		cards.erase(cards.begin() + random_index);
+		size--;
 	}
 	this->isProgress = true;
 	this->m_currentDirection = 1;
@@ -51,6 +53,7 @@ void Game::playCard(LoggedUser user, Card* card)
 	{
 		throw(TriviaException(std::string("Card not exsit")));
 	}
+	
 	this->m_players[&user].m_PlayerDeck.removeCard(card);
 	this->m_currentCard = card;
 	this->moveToNextPlayer();
@@ -121,15 +124,7 @@ void Game::DrawCards(int numOfCards)
 
 }
 
-void Game::removeCard(std::string cards[],int& size ,int index)
-{
-	
-	for (int i = index; i < size - 1; i++) {
-		cards[i] = cards[i + 1];
-	}
-	cards[size - 1] = nullptr;
-	size--;
-}
+
 
 
 void Game::changeDirection()
