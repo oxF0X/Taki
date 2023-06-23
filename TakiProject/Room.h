@@ -29,6 +29,7 @@ public:
 	std::vector<std::string> getAllUsers() const;
 	RoomData getRoomData() const;
 	const unsigned int isActive() const;
+	const void setState(const bool state);
 
 private:
 	RoomData m_metatdata;

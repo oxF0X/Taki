@@ -53,8 +53,7 @@ RoomAdminRequestHandler* RequestHandlerFactory::createRoomAdminRequestHandler(Lo
 
 GameRequestHandler* RequestHandlerFactory::createGameRequestHandler(LoggedUser user, Room& room)
 {
-	//return new GameRequestHandler();
-	return nullptr;
+	return new GameRequestHandler()
 }
 
 RequestHandlerFactory::~RequestHandlerFactory()

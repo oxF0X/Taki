@@ -9,8 +9,8 @@ class GameManager
 {
 
 public:
-	static GameManager& getGame();
-	Game createGame(Room& r);
+	static GameManager& getGameManager();
+	Game& createGame(Room& r);
 	void deleteGame(Game& g);
 	
 

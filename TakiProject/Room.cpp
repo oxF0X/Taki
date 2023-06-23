@@ -50,3 +50,8 @@ const unsigned int Room::isActive() const
 {
 	return this->m_metatdata.isActive;
 }
+
+const void Room::setState(const bool state)
+{
+	this->m_metatdata.isActive = state;
+}

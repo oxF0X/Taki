@@ -32,6 +32,10 @@ RequestResult GameRequestHandler::handleRequest(RequestInfo info)
 	}
 }
 
+GameRequestHandler::GameRequestHandler(LoggedUser m_user, GameManager& m_gameManager, RequestHandlerFactory& m_handlerFactory): m_gameManager(m_gameManager), m_handlerFactory(m_handlerFactory), m_user(m_user), m_game()
+{
+}
+
 RequestResult GameRequestHandler::PlayCard(RequestInfo info)
 {
 	PlaceCardRequest card;

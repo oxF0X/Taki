@@ -1,7 +1,7 @@
 #include "GameManager.h"
 
 
-GameManager& GameManager::getGame()
+GameManager& GameManager::getGameManager()
 {
 	static GameManager manager = GameManager(&MongoDB::getDB());
 	return manager;
@@ -12,7 +12,7 @@ GameManager::GameManager(IDatabase* db) : m_database(&MongoDB::getDB())
 
 }
 
-Game GameManager::createGame(Room& r)
+Game& GameManager::createGame(Room& r)
 {
     Game new_room(r.getAllUsers());
     this->m_games.push_back(new_room);
