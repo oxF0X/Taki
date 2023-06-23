@@ -75,6 +75,7 @@ namespace TakiClient.ViewsModels
 
         private void ExecuteCloseRoom(object obj)
         {
+            Manager.GetManager().SetThreading(false);
             this.clientHandler.GetCloseRoom();
             var view = new MenuView();
             Window w = Application.Current.MainWindow;

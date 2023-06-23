@@ -57,6 +57,7 @@ namespace TakiClient.ViewsModels
 
         private void ExecuteLeaveRoom(object obj)
         {
+            Manager.GetManager().SetThreading(false);
             this.clientHandler.GetLeaveRoom();
             var view = new MenuView();
             Window w = Application.Current.MainWindow;
