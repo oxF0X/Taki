@@ -7,7 +7,7 @@
 #include <ctime>
 #include "json.hpp"
 #include "CardDeck.h"
-#include "CardsTypes.h"
+#include "Card.h"
 #include "LoggedUser.h"
 #include "TriviaException.h"
 
@@ -24,7 +24,7 @@ class Game
 {
 public:
 	Game(std::vector<std::string> players);	
-	void playCard(LoggedUser user, Card* card);
+	void playCard(LoggedUser user, Card card);
 	void removePlayer(LoggedUser user);
 	bool IsProgress() const;
 	std::vector<std::string> getPlayers() const;
@@ -35,15 +35,16 @@ private:
 	void DrawCards(int numOfCards);
 	
 	
-	//void changeColor();
+	void changeColor();
 	void changeDirection();
 	void stopPlayer();
 
 	LoggedUser* m_currentPlayer;
 	CardDeck m_gameDeck;	
-	Card* m_currentCard;
+	Card m_currentCard;
 	bool isProgress;
 	int m_currentDirection;
+	int plusTwo;
 	std::map<LoggedUser*, GameData> m_players;
 
 };

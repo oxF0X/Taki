@@ -7,5 +7,11 @@
 
 class Card
 {
-	virtual bool isLegalToPlay(Card* lastCard) = 0; 
+public:
+	Card(std::string code);
+	bool isLegalToPlay(Card lastCard);
+	std::string getCode()const;
+	bool operator==(Card other);
+private:
+	std::string code;
 };

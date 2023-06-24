@@ -1,25 +1,23 @@
 #include "CardDeck.h"
 
-void CardDeck::addCard(Card* c)
+void CardDeck::addCard(Card c)
 {
 	this->m_cards.push_back(c);
 }
 
-void CardDeck::removeCard(Card* c)
+void CardDeck::removeCard(Card c)
 {
 	for (int i = 0; i < this->m_cards.size(); i++)
 	{
-		if (this->m_cards[i] == c)
+		if (this->m_cards[i].getCode() == c.getCode())
 		{
-			std::vector<Card*>::iterator it = this->m_cards.begin() + i;
-			this->m_cards.erase(it);
-			delete this->m_cards[i];
+			this->m_cards.erase(this->m_cards.begin() + i);
 			break;
 		}
 	}
 }
 
-std::vector<Card*> CardDeck::getCards() const
+std::vector<Card> CardDeck::getCards() const
 {
 	return this->m_cards;
 }

@@ -11,12 +11,12 @@
 class CardDeck
 {
 public:
-	void addCard(Card* c);
-	void removeCard(Card* c);
-	std::vector<Card*> getCards() const;
+	void addCard(Card c);
+	void removeCard(Card c);
+	std::vector<Card> getCards() const;
 	
 
 private:
-	std::vector<Card*> m_cards;
+	std::vector<Card> m_cards;
 };
 

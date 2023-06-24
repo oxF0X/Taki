@@ -1,9 +1,9 @@
 #include "Game.h"
 
-Game::Game(std::vector<std::string> players)
+Game::Game(std::vector<std::string> players):m_currentCard("00")
 {
 	std::srand(static_cast<unsigned>(std::time(nullptr)));
-	std::vector<std::string> cards  = { "Y1","Y2" "Y3","Y4" , "Y5", "Y6", "Y7", "Y8", "Y9","YCD","YP","YS","YT", "B1","B2" "B3", "B4", "B5", "B6", "B7", "B8", "B9","BCD","BP","BS","BT", "G1","G3", "G3", "G4", "G5", "G6", "G7", "G8", "G9","GCD","GP","GS","GT", "R1", "R2", "R3","R4" , "R5", "R6", "R7", "R8", "R9","RCD","RP","RS","RT", "Y1","Y2" "Y3","Y4" , "Y5", "Y6", "Y7", "Y8", "Y9","YCD","YP","YS","YT", "B1","B2" "B3", "B4", "B5", "B6", "B7", "B8", "B9","BCD","BP","BS","BT", "G1","G3", "G3", "G4", "G5", "G6", "G7", "G8", "G9","GCD","GP","GS","GT", "R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9","RCD","RP","RS","RT","CC","CC" ,"CC" ,"CC" };
+	std::vector<std::string> cards  = { "Y1","Y2" "Y3", "Y4", "Y5", "Y6", "Y7", "Y8", "Y9","YD","YP","YS","YT", "B1","B2" "B3", "B4", "B5", "B6", "B7", "B8", "B9","BD","BP","BS","BT", "G1","G3", "G3", "G4", "G5", "G6", "G7", "G8", "G9","GD","GP","GS","GT", "R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9","RD","RP","RS","RT","Y1","Y2" "Y3", "Y4", "Y5", "Y6", "Y7", "Y8", "Y9","YD","YP","YS","YT", "B1","B2" "B3", "B4", "B5", "B6", "B7", "B8", "B9","BD","BP","BS","BT", "G1","G3", "G3", "G4", "G5", "G6", "G7", "G8", "G9","GD","GP","GS","GT", "R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9","RD","RP","RS","RT","CC","CC" ,"CC" ,"CC" };
 	int size = cards.size();
 	int random_index;
 
@@ -13,7 +13,7 @@ Game::Game(std::vector<std::string> players)
 		for (int j = 0; j < MAX_CARDS; j++)
 		{
 			random_index = std::rand() % size;
-			temp.addCard(new NormalCard(cards[random_index]));
+			temp.addCard( Card(cards[random_index]));
 			cards.erase(cards.begin() + random_index);
 			size--;
 		}
@@ -23,7 +23,7 @@ Game::Game(std::vector<std::string> players)
 	for (int i = 0; i < size; i++)
 	{
 		random_index = std::rand() % size;
-		this->m_gameDeck.addCard(new NormalCard(cards[random_index]));
+		this->m_gameDeck.addCard(Card(cards[random_index]));
 		cards.erase(cards.begin() + random_index);
 		size--;
 	}
@@ -31,27 +31,53 @@ Game::Game(std::vector<std::string> players)
 	this->m_currentDirection = 1;
 }
 
-void Game::playCard(LoggedUser user, Card* card)
+void Game::playCard(LoggedUser user, Card card)
 {
 	if (this->m_currentPlayer != &user)
 	{
 		throw(TriviaException(std::string("Wrong player")));
 	}
-	if (!card)
+	if (card.getCode() == "00")
 	{
-		this->DrawCards(1);
+		if (this->plusTwo == 0)
+		{
+			this->DrawCards(1);
+		}
+		else
+		{
+			this->DrawCards(this->plusTwo);
+			this->plusTwo = 0;
+		}
 		this->moveToNextPlayer();
-
+		return;
 	}
-	if (!((NormalCard*)card)->isLegalToPlay(this->m_currentCard))
+	if (std::find(this->m_players[&user].m_PlayerDeck.getCards().begin(), this->m_players[&user].m_PlayerDeck.getCards().end(), card) == this->m_players[&user].m_PlayerDeck.getCards().end())
+	{
+		throw(TriviaException(std::string("Card not exsit")));
+	}
+
+	if (!card.isLegalToPlay(this->m_currentCard))
 	{
 		throw(TriviaException(std::string("Ileagal move")));
 	}
-	if (std::find(this->m_players[&user].m_PlayerDeck.getCards().begin(), 
-		this->m_players[&user].m_PlayerDeck.getCards().end(), card) 
-		== this->m_players[&user].m_PlayerDeck.getCards().end())
+	if (card.getCode()[1] == 'S')
 	{
-		throw(TriviaException(std::string("Card not exsit")));
+		this->stopPlayer();
+		return;
+	}
+	if (card.getCode()[1] == 'P')
+	{
+		this->m_players[&user].m_PlayerDeck.removeCard(card);
+		this->m_currentCard = card;
+		return;
+	}
+	if (card.getCode()[1] == 'D')
+	{
+		this->changeDirection();
+	}
+	if (card.getCode()[1] == '2')
+	{
+		this->plusTwo += 2;
 	}
 	
 	this->m_players[&user].m_PlayerDeck.removeCard(card);
@@ -92,14 +118,12 @@ std::map<std::string, std::vector<std::string>> Game::getCardsByPlayer() const
 		std::vector<std::string> cards;
 		for (auto card: it.second.m_PlayerDeck.getCards())
 		{
-			cards.push_back(((NormalCard*)card)->code);
+			cards.push_back(card.getCode());
 		}
 		players[(*it.first).getUsername()] = cards;	
 	}
 	return players;
 }
-
-
 
 void Game::moveToNextPlayer()
 {
@@ -117,15 +141,16 @@ void Game::DrawCards(int numOfCards)
 {
 	for (int i = 0;  i < numOfCards;  i++)
 	{
-		Card* temp_card = this->m_gameDeck.getCards().front();
+		Card temp_card = this->m_gameDeck.getCards().front();
 		this->m_players[this->m_currentPlayer].m_PlayerDeck.addCard(temp_card);
 		this->m_gameDeck.removeCard(temp_card);
 	}
 
 }
 
-
-
+void Game::changeColor()
+{
+}
 
 void Game::changeDirection()
 {
@@ -142,5 +167,5 @@ void Game::changeDirection()
 void Game::stopPlayer()
 {
 	this->moveToNextPlayer();
-	this->moveToNextPlayer();
+	
 }

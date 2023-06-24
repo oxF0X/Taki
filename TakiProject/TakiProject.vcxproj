@@ -136,7 +136,6 @@
   <ItemGroup>
     <ClInclude Include="Card.h" />
     <ClInclude Include="CardDeck.h" />
-    <ClInclude Include="CardsTypes.h" />
     <ClInclude Include="Comunicator.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameManager.h" />
@@ -164,8 +163,8 @@
     <ClInclude Include="TriviaException.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Card.cpp" />
     <ClCompile Include="CardDeck.cpp" />
-    <ClCompile Include="CardsTypes.cpp" />
     <ClCompile Include="Comunicator.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameManager.cpp" />

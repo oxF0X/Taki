@@ -21,7 +21,7 @@ RequestResult GameRequestHandler::handleRequest(RequestInfo info)
 		return this->PlayCard(info);
 		break;
 	case DrawCard_REQ:
-		this->m_game.playCard(this->m_user, nullptr);
+		this->m_game.playCard(this->m_user, Card("00"));
 		return RequestResult{ JsonRequestPacketSerializer::serializeResponse(DrawCardFromDeckResponse{1, }), this };
 	case GetGameState_REQ:
 		return this->getGameSate(info);
@@ -46,7 +46,7 @@ RequestResult GameRequestHandler::PlayCard(RequestInfo info)
 	try
 	{
 	card = JsonRequestPacketDeserializer::deserializePlaceCardRequest(info.buffer);
-	this->m_game.playCard(this->m_user, new NormalCard(card.cardId));
+	this->m_game.playCard(this->m_user, Card(card.cardId));
 	}
 	catch (ParsingExceprion& e)
 	{

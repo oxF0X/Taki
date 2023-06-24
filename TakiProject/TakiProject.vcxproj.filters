@@ -30,9 +30,6 @@
     <ClInclude Include="CardDeck.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CardsTypes.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Comunicator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -104,9 +101,6 @@
     <ClCompile Include="CardDeck.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CardsTypes.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Comunicator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -168,6 +162,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="TriviaException.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Card.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
