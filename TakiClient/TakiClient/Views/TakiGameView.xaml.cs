@@ -54,7 +54,7 @@ namespace TakiClient.Views
             side4Images = new string[] { "../Images/back.png" };
 
             // Add images to each side
-            AddImagesToStackPanel(side1, side1Images);
+            AddImagesToStackPanel(side1, Manager.GetManager().getClient().GetGameState().Value.cards);
             AddImagesToStackPanel(side2, side2Images);
             AddImagesToStackPanel(side3, side3Images);
             AddImagesToStackPanel(side4, side4Images);
@@ -68,7 +68,7 @@ namespace TakiClient.Views
             foreach (string imagePath in imagePaths)
             {
                 Image image = new Image();
-                image.Source = new BitmapImage(new Uri(imagePath, UriKind.RelativeOrAbsolute));
+                image.Source = new BitmapImage(new Uri("../Images/" + imagePath + ".png", UriKind.RelativeOrAbsolute));//imagePath, UriKind.RelativeOrAbsolute));
                 image.Width = 100; // Set the desired width
                 image.Height = 100; // Set the desired height
                 //RotateTransform rotateTransform = new RotateTransform(90);
