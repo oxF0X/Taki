@@ -32,7 +32,7 @@ RequestResult GameRequestHandler::handleRequest(RequestInfo info)
 	}
 }
 
-GameRequestHandler::GameRequestHandler(LoggedUser user, Game& game): m_user(m_user), m_game(game), m_gameManager(GameManager::getGameManager()), m_handlerFactory(RequestHandlerFactory::getFactory(&MongoDB::getDB()))
+GameRequestHandler::GameRequestHandler(LoggedUser user, Game& game): m_user(user), m_game(game), m_gameManager(GameManager::getGameManager()), m_handlerFactory(RequestHandlerFactory::getFactory(&MongoDB::getDB()))
 {
 }
 

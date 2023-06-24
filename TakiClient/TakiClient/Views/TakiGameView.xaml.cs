@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using TakiClient.Modules;
+using TakiClient.ViewsModels;
 
 namespace TakiClient.Views
 {
@@ -28,6 +29,8 @@ namespace TakiClient.Views
 
         private Thread updateThread;
         private bool isUpdateThreadRunning;
+        private Task roomUpdateTask;
+        private CancellationTokenSource cancellationTokenSource;
 
 
         public TakiGameView()
@@ -37,11 +40,9 @@ namespace TakiClient.Views
 
             GetGameStateResponse? gameState = Manager.GetManager().getClient().GetGameState();
 
-
             isUpdateThreadRunning = true;
-            updateThread = new Thread(UpdateCardArrays);
-            updateThread.Start();
-                
+            cancellationTokenSource = new CancellationTokenSource();
+            roomUpdateTask = Task.Run(() => UpdateCardArrays(cancellationTokenSource.Token));
         }
 
         private void AddImagesToSides()
@@ -82,18 +83,12 @@ namespace TakiClient.Views
         }
 
 
-        private void UpdateCardArrays()
+        private async Task UpdateCardArrays(CancellationToken cancellationToken)
         {
-            while (isUpdateThreadRunning)
+            while (isUpdateThreadRunning && !cancellationToken.IsCancellationRequested)
             {
-                // Simulating card array updates with random images
-                /*side1Images = GetRandomImageArray(3);
-                side2Images = GetRandomImageArray(2);
-                side3Images = GetRandomImageArray(4);
-                side4Images = GetRandomImageArray(1);*/
-
-                // Update the UI on the main UI thread
                 GetGameStateResponse? gameState = Manager.GetManager().getClient().GetGameState();
+                string[] arr = gameState?.cards;
                 Application.Current.Dispatcher.Invoke(() =>
                 {
                     ClearStackPanelChildren(side1);
@@ -106,8 +101,7 @@ namespace TakiClient.Views
                     AddImagesToStackPanel(side3, side3Images);
                     AddImagesToStackPanel(side4, side4Images);
                 });
-
-                Thread.Sleep(3); // Wait for 2 seconds before the next update
+                await Task.Delay(5);
             }
         }
 
@@ -120,8 +114,6 @@ namespace TakiClient.Views
         protected override void OnClosed(EventArgs e)
         {
             base.OnClosed(e);
-
-            // Stop the update thread when the window is closed
             isUpdateThreadRunning = false;
             updateThread.Join();
         }

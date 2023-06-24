@@ -8,6 +8,7 @@ using System.Net.Sockets;
 using System.Net.NetworkInformation;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using System.Text.Json;
 
 namespace TakiClient.Modules
 {
@@ -327,14 +328,13 @@ namespace TakiClient.Modules
             {
                 return null;
             }
-            string str = "";
 
             byte[] buffer = new byte[size];
-            int bytesNum = clientStream.Read(buffer, 0, size);
-            if (bytesNum > 0)
-            {
-                str = Encoding.Default.GetString(buffer);
-            }
+            clientStream.Read(buffer, 0, size);
+            string str = Encoding.Default.GetString(buffer);
+            GetGameStateResponse r = JsonSerializer.Deserialize<GetGameStateResponse>(str);
+            r.status = 2;
+
             return code == GET_GAME_STATE_RES ? JsonRequestPacketDeserializer.DeserializeGetGameState(str) : null;
         }
 
