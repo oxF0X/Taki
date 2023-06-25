@@ -22,6 +22,7 @@
     <None Remove="Images\Back.png" />
     <None Remove="Images\background.jpg" />
     <None Remove="Images\BCD.png" />
+    <None Remove="Images\BD.png" />
     <None Remove="Images\BP.png" />
     <None Remove="Images\BS.png" />
     <None Remove="Images\BT.png" />
@@ -58,6 +59,7 @@
     <None Remove="Images\R8.png" />
     <None Remove="Images\R9.png" />
     <None Remove="Images\RCD.png" />
+    <None Remove="Images\RD.png" />
     <None Remove="Images\RP.png" />
     <None Remove="Images\RS.png" />
     <None Remove="Images\RT.png" />
@@ -76,9 +78,16 @@
     <None Remove="Images\Y8.png" />
     <None Remove="Images\Y9.png" />
     <None Remove="Images\YCD.png" />
+    <None Remove="Images\YD.png" />
     <None Remove="Images\YP.png" />
     <None Remove="Images\YS.png" />
     <None Remove="Images\YT.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\BD.png" />
+    <Resource Include="Images\RD.png" />
+    <Resource Include="Images\YD.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -100,7 +109,6 @@
     <Resource Include="Images\back-image.jpg" />
     <Resource Include="Images\Back.png" />
     <Resource Include="Images\background.jpg" />
-    <Resource Include="Images\BCD.png" />
     <Resource Include="Images\BP.png" />
     <Resource Include="Images\BS.png" />
     <Resource Include="Images\BT.png" />
@@ -136,7 +144,6 @@
     <Resource Include="Images\R7.png" />
     <Resource Include="Images\R8.png" />
     <Resource Include="Images\R9.png" />
-    <Resource Include="Images\RCD.png" />
     <Resource Include="Images\RP.png" />
     <Resource Include="Images\RS.png" />
     <Resource Include="Images\RT.png" />
@@ -154,7 +161,6 @@
     <Resource Include="Images\Y7.png" />
     <Resource Include="Images\Y8.png" />
     <Resource Include="Images\Y9.png" />
-    <Resource Include="Images\YCD.png" />
     <Resource Include="Images\YP.png" />
     <Resource Include="Images\YS.png" />
     <Resource Include="Images\YT.png" />

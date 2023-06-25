@@ -36,7 +36,7 @@ namespace TakiClient.Views
         public TakiGameView()
         {
             InitializeComponent();
-            AddImagesToSides();
+            //AddImagesToSides();
 
             GetGameStateResponse? gameState = Manager.GetManager().getClient().GetGameState();
 
@@ -96,10 +96,14 @@ namespace TakiClient.Views
                     ClearStackPanelChildren(side3);
                     ClearStackPanelChildren(side4);
 
+                    GetGameStateResponse? gameState = Manager.GetManager().getClient().GetGameState();
+                    int[] cardsCount = gameState.Value.cardsPerPlayer;
+
+                    side1Images = new string[cardsCount[0];
                     AddImagesToStackPanel(side1, side1Images);
                     AddImagesToStackPanel(side2, side2Images);
                     AddImagesToStackPanel(side3, side3Images);
-                    AddImagesToStackPanel(side4, side4Images);
+                    AddImagesToStackPanel(side4, Manager.GetManager().getClient().GetGameState().Value.cards);
                 });
                 await Task.Delay(5);
             }
