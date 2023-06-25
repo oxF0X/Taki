@@ -87,9 +87,15 @@ void Game::playCard(LoggedUser user, Card card)
 
 void Game::removePlayer(LoggedUser user)
 {
-	if (this->m_players.erase(&user) == 0)
-	{
-		throw(TriviaException(std::string("User not exsit")));
+	//this->m_players.erase(std::remove_if(m_players.begin(), m_players.end(), [&](std::pair<LoggedUser*, GameData> u) { return u.first->getUsername() == user.getUsername(); }), m_players.end());
+	auto it = m_players.begin();
+	while (it != m_players.end()) {
+		if (it->first->getUsername() == user.getUsername()) {
+			it = m_players.erase(it);
+		}
+		else {
+			++it;
+		}
 	}
 }
 
