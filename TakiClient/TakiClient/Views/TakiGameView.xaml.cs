@@ -35,6 +35,17 @@ namespace TakiClient.Views
         {
             InitializeComponent();
             this.sideImages = new string[4][];
+
+            WindowState = WindowState.Maximized;
+
+            WindowStyle = WindowStyle.None;
+            WindowState = WindowState.Maximized;
+
+            double screenWidth = SystemParameters.PrimaryScreenWidth;
+            double screenHeight = SystemParameters.PrimaryScreenHeight;
+
+            Width = screenWidth;
+            Height = screenHeight;
             //AddImagesToSides();
 
             GetGameStateResponse? gameState = Manager.GetManager().getClient().GetGameState();
@@ -44,37 +55,35 @@ namespace TakiClient.Views
             roomUpdateTask = Task.Run(() => UpdateCardArrays(cancellationTokenSource.Token));
         }
 
-        private void AddImagesToSides()
-        {
-            // Assuming you have an array of image paths for each side
-            //side1Images = new string[] { "../Images/back.png", "../Images/back.png", "../Images/back.png" };
-/*            side2Images = new string[] { "../Images/back.png", "../Images/back.png" };
-            side3Images = new string[] { "../Images/back.png", "../Images/back.png", "../Images/back.png", "../Images/back.png" };
-            side4Images = new string[] { "../Images/back.png" };
-
-            // Add images to each side
-            AddImagesToStackPanel(side1, Manager.GetManager().getClient().GetGameState().Value.cards);
-            AddImagesToStackPanel(side2, side2Images);
-            AddImagesToStackPanel(side3, side3Images);
-            AddImagesToStackPanel(side4, side4Images);
-
-            this.SetCenterImage("../Images/back.png");*/
-
-        }
-
         private void AddImagesToStackPanel(StackPanel stackPanel, string[] imagePaths)
         {
+            stackPanel.Children.Clear();
+
             foreach (string imagePath in imagePaths)
             {
+                string path = imagePath; 
                 Image image = new Image();
-                image.Source = new BitmapImage(new Uri("../Images/" + imagePath + ".png", UriKind.RelativeOrAbsolute));//imagePath, UriKind.RelativeOrAbsolute));
-                image.Width = 100; // Set the desired width
-                image.Height = 100; // Set the desired height
-                //RotateTransform rotateTransform = new RotateTransform(90);
-                //image.RenderTransform = rotateTransform;
+                image.Source = new BitmapImage(new Uri("../Images/" + imagePath + ".png", UriKind.RelativeOrAbsolute));
+                image.Width = 100;
+                image.Height = 150;
+                image.Margin = new Thickness(0, 0, 0, 0);
+
+                /*Button imageButton = new Button();
+                imageButton.Content = image;
+                imageButton.Click += (sender, e) => OnImageClicked(path); */
+
                 stackPanel.Children.Add(image);
             }
+           //AttachEventHandlers(stackPanel);
         }
+
+/*        private void AttachEventHandlers(StackPanel stackPanel)
+        {
+            foreach (Button button in stackPanel.Children.OfType<Button>())
+            {
+                button.Click += (sender, e) => OnImageClicked(button.Content.ToString());
+            }
+        }*/
 
         private void SetCenterImage(string imagePath)
         {
@@ -86,13 +95,12 @@ namespace TakiClient.Views
         {
             while (isUpdateThreadRunning && !cancellationToken.IsCancellationRequested)
             {
-                GetGameStateResponse? gameState = Manager.GetManager().getClient().GetGameState();
-                string[] arr = gameState?.cards;
                 Application.Current.Dispatcher.Invoke(() =>
                 {
                     ClearStackPanelChildren(side1);
                     ClearStackPanelChildren(side2);
                     ClearStackPanelChildren(side3);
+                    side3.Children.Clear();
                     ClearStackPanelChildren(side4);
 
                     GetGameStateResponse? gameState = Manager.GetManager().getClient().GetGameState();
@@ -104,24 +112,44 @@ namespace TakiClient.Views
                         
                         for(int j = 0; j < cardsCount[i] && cardsCount.Length >= i; j++)
                         {
-                            sideImages[i][j] = "../Images/Back.png";
+                            sideImages[i][j] = "Back";
                         }
                     }
-
 
                     AddImagesToStackPanel(side1, sideImages[0]);
                     AddImagesToStackPanel(side2, sideImages[1]);
                     AddImagesToStackPanel(side3, gameState.Value.cards);
                     AddImagesToStackPanel(side4, sideImages[2]);
                 });
-                await Task.Delay(5);
+                await Task.Delay(3);
             }
         }
 
 
         private void ClearStackPanelChildren(StackPanel stackPanel)
         {
-            stackPanel.Children.Clear();
+            /*foreach (var child in stackPanel.Children)
+            {
+                stackPanel.Children.Remove(child);
+            }*/
+            //stackPanel.Children.Clear();
+            // Create a copy of the current children collection
+            /*            var children = stackPanel.Children.Cast<UIElement>().ToList();
+
+                        // Remove each child element from the stackPanel
+                        foreach (var child in children)
+                        {
+                            stackPanel.Children.Remove(child);
+                        }*/
+            /*            stackPanel.Dispatcher.Invoke(() =>
+                        {
+                            stackPanel.Children.Clear();
+                        });
+            */
+            for(int i = stackPanel.Children.Count - 1; i >= 0; i--)
+            {
+                stackPanel.Children.RemoveAt(i);
+            }
         }
 
         protected override void OnClosed(EventArgs e)
@@ -130,6 +158,14 @@ namespace TakiClient.Views
             isUpdateThreadRunning = false;
             updateThread.Join();
         }
+
+        private void OnImageClicked(string imagePath)
+        {
+            // Do something with the clicked image path
+            // For example, pass it as a parameter to another function
+            string x = imagePath; 
+        }
+
 
     }
 }

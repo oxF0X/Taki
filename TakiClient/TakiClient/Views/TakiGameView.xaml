@@ -16,9 +16,9 @@
             <RowDefinition Height="105"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="50"/>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="50"/>
         </Grid.ColumnDefinitions>
 
         <!-- Side 1: Top Left -->
@@ -33,7 +33,6 @@
 
         <!-- Side 3: Bottom Left -->
         <StackPanel x:Name="side3" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Bottom"  Orientation="Horizontal">
-            <!-- Images will be dynamically added here -->
         </StackPanel>
 
         <!-- Side 4: Bottom Right -->

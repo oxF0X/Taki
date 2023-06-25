@@ -38,6 +38,11 @@ GameRequestHandler::GameRequestHandler(LoggedUser user, Game& game): m_user(user
 
 void GameRequestHandler::exitUser()
 {
+	this->m_game.removePlayer(this->m_user);
+	MenuRequestHandler* r = this->m_handlerFactory.createMenuRequestHandler(this->m_user);
+	r->signout();
+	delete r;
+
 }
 
 RequestResult GameRequestHandler::PlayCard(RequestInfo info)
