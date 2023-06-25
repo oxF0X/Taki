@@ -93,9 +93,12 @@ RequestResult GameRequestHandler::getGameSate(RequestInfo info)
 	hasGameEnd = this->m_game.IsProgress();
 	players = this->m_game.getPlayers();
 	cards = this->m_game.getCardsByPlayer();
-	for (auto it: cards)
+	for (auto it : cards)
 	{
-		cardsPerPlayer.push_back(it.second.size());
+		if (it.first != this->m_user.getUsername())
+		{
+			cardsPerPlayer.push_back(it.second.size());
+		}
 	}
 	return RequestResult{ JsonRequestPacketSerializer::serializeResponse(GetGameStateResponse{1,hasGameEnd, players, cardsPerPlayer, cards[this->m_user.getUsername()]}), nullptr};
 }
