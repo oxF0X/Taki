@@ -22,10 +22,8 @@ namespace TakiClient.Views
     /// </summary>
     public partial class TakiGameView : Window
     {
-        private string[] side1Images;
-        private string[] side2Images;
-        private string[] side3Images;
-        private string[] side4Images;
+        private string[][] sideImages;
+
 
         private Thread updateThread;
         private bool isUpdateThreadRunning;
@@ -36,6 +34,7 @@ namespace TakiClient.Views
         public TakiGameView()
         {
             InitializeComponent();
+            this.sideImages = new string[4][];
             //AddImagesToSides();
 
             GetGameStateResponse? gameState = Manager.GetManager().getClient().GetGameState();
@@ -48,8 +47,8 @@ namespace TakiClient.Views
         private void AddImagesToSides()
         {
             // Assuming you have an array of image paths for each side
-            side1Images = new string[] { "../Images/back.png", "../Images/back.png", "../Images/back.png" };
-            side2Images = new string[] { "../Images/back.png", "../Images/back.png" };
+            //side1Images = new string[] { "../Images/back.png", "../Images/back.png", "../Images/back.png" };
+/*            side2Images = new string[] { "../Images/back.png", "../Images/back.png" };
             side3Images = new string[] { "../Images/back.png", "../Images/back.png", "../Images/back.png", "../Images/back.png" };
             side4Images = new string[] { "../Images/back.png" };
 
@@ -59,7 +58,7 @@ namespace TakiClient.Views
             AddImagesToStackPanel(side3, side3Images);
             AddImagesToStackPanel(side4, side4Images);
 
-            this.SetCenterImage("../Images/back.png");
+            this.SetCenterImage("../Images/back.png");*/
 
         }
 
@@ -99,11 +98,21 @@ namespace TakiClient.Views
                     GetGameStateResponse? gameState = Manager.GetManager().getClient().GetGameState();
                     int[] cardsCount = gameState.Value.cardsPerPlayer;
 
-                    side1Images = new string[cardsCount[0];
-                    AddImagesToStackPanel(side1, side1Images);
-                    AddImagesToStackPanel(side2, side2Images);
-                    AddImagesToStackPanel(side3, side3Images);
-                    AddImagesToStackPanel(side4, Manager.GetManager().getClient().GetGameState().Value.cards);
+                    for (int i = 0; i < sideImages.GetLength(0); i++)
+                    {
+                        this.sideImages[i] = new string[cardsCount.Length >= i ? cardsCount[i] : 0];          
+                        
+                        for(int j = 0; j < cardsCount[i] && cardsCount.Length >= i; j++)
+                        {
+                            sideImages[i][j] = "../Images/Back.png";
+                        }
+                    }
+
+
+                    AddImagesToStackPanel(side1, sideImages[0]);
+                    AddImagesToStackPanel(side2, sideImages[1]);
+                    AddImagesToStackPanel(side3, gameState.Value.cards);
+                    AddImagesToStackPanel(side4, sideImages[2]);
                 });
                 await Task.Delay(5);
             }
