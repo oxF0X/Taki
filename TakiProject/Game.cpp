@@ -29,6 +29,9 @@ Game::Game(std::vector<std::string> players):m_currentCard("00")
 	}
 	this->isProgress = true;
 	this->m_currentDirection = 1;
+	Card temp_card = this->m_gameDeck.getCards().front();
+	this->m_currentCard = temp_card;
+	this->m_gameDeck.removeCard(temp_card);
 }
 
 void Game::playCard(LoggedUser user, Card card)
@@ -51,20 +54,15 @@ void Game::playCard(LoggedUser user, Card card)
 		this->moveToNextPlayer();
 		return;
 	}
-	if (std::find(this->m_players[&user].m_PlayerDeck.getCards().begin(), this->m_players[&user].m_PlayerDeck.getCards().end(), card) == this->m_players[&user].m_PlayerDeck.getCards().end())
-	{
-		throw(TriviaException(std::string("Card not exsit")));
-	}
-
 	if (!card.isLegalToPlay(this->m_currentCard))
 	{
 		throw(TriviaException(std::string("Ileagal move")));
 	}
-	if (card.getCode()[1] == 'S')
+	if (std::find(this->m_players[&user].m_PlayerDeck.getCards().begin(), this->m_players[&user].m_PlayerDeck.getCards().end(), card) == this->m_players[&user].m_PlayerDeck.getCards().end() || card.getCode()[1] == 'C')
 	{
-		this->stopPlayer();
-		return;
+		throw(TriviaException(std::string("Card not exsit")));
 	}
+
 	if (card.getCode()[1] == 'P')
 	{
 		this->m_players[&user].m_PlayerDeck.removeCard(card);
@@ -154,9 +152,7 @@ void Game::DrawCards(int numOfCards)
 
 }
 
-void Game::changeColor()
-{
-}
+
 
 void Game::changeDirection()
 {

@@ -35,7 +35,7 @@ private:
 	void DrawCards(int numOfCards);
 	
 	
-	void changeColor();
+	
 	void changeDirection();
 	void stopPlayer();
 
