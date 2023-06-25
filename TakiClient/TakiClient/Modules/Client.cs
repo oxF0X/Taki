@@ -332,9 +332,6 @@ namespace TakiClient.Modules
             byte[] buffer = new byte[size];
             clientStream.Read(buffer, 0, size);
             string str = Encoding.Default.GetString(buffer);
-            GetGameStateResponse r = JsonSerializer.Deserialize<GetGameStateResponse>(str);
-            r.status = 2;
-
             return code == GET_GAME_STATE_RES ? JsonRequestPacketDeserializer.DeserializeGetGameState(str) : null;
         }
 
