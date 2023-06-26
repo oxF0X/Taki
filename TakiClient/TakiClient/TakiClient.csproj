@@ -39,6 +39,7 @@
     <None Remove="Images\G7.png" />
     <None Remove="Images\G8.png" />
     <None Remove="Images\G9.png" />
+    <None Remove="Images\GD.png" />
     <None Remove="Images\GP.png" />
     <None Remove="Images\group.png" />
     <None Remove="Images\groupIcon.png" />
@@ -86,6 +87,7 @@
 
   <ItemGroup>
     <Resource Include="Images\BD.png" />
+    <Resource Include="Images\GD.png" />
     <Resource Include="Images\RD.png" />
     <Resource Include="Images\YD.png" />
   </ItemGroup>

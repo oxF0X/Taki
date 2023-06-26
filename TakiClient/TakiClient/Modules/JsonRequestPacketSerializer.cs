@@ -43,7 +43,10 @@ namespace TakiClient.Modules
         public int answerTimeout { get; set; }
     }
 
-
+    public struct PlaceCardReq
+    {
+        public string cardId { get; set;}
+    }
 
     class JsonRequestPacketSerializer
     {
@@ -53,6 +56,9 @@ namespace TakiClient.Modules
         public const int JOIN_ROOM_CODE = 15;
         public const int GET_PLAYERS_CODE = 14;
         public const int GET_ROOM_STATE_REQ = 20;
+        const int PLAY_CARD_REQ = 22;
+        const int DRAW_CARD_REQ = 23;
+        const int GET_GAME_RESULT_REQ = 25;
 
         public static byte[] SerializeLogin(string username, string password)
         {
@@ -120,6 +126,17 @@ namespace TakiClient.Modules
             return buildMsg(jsonString, CREATE_ROOM_CODE);
         }
 
+        public static byte[] SerializePlayCard(string cardId)
+        {
+            PlaceCardReq request = new PlaceCardReq()
+            {
+                cardId = cardId,
+            };
+
+
+            string jsonString = JsonSerializer.Serialize(request);
+            return buildMsg(jsonString, PLAY_CARD_REQ);
+        }
 
         public static byte[] buildMsg(string json, int code)
         {

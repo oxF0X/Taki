@@ -37,7 +37,9 @@ namespace TakiClient.Modules
         const int GET_CLOSE_ROOM = 17;
         const int GET_START_GAME_REQ = 18;
         const int GET_GAME_STATE_REQ = 24;
-
+        const int PlayCard_REQ = 22;
+        const int DrawCard_REQ = 23;
+        const int GetGameResult_REQ = 25;
 
 
 
@@ -333,6 +335,26 @@ namespace TakiClient.Modules
             clientStream.Read(buffer, 0, size);
             string str = Encoding.Default.GetString(buffer);
             return code == GET_GAME_STATE_RES ? JsonRequestPacketDeserializer.DeserializeGetGameState(str) : null;
+        }
+
+        public bool GetPlaceCard(string cardId)
+        {
+            byte[] req = JsonRequestPacketSerializer.SerializePlayCard(cardId);
+
+            clientStream.Write(req, 0, req.Length);
+            int code = GetCodeFromSocket();
+            int size = GetSizeFromSocket();
+            if (size <= 0)
+            {
+                return false;
+            }
+
+            byte[] buffer = new byte[size];
+            int bytesNum = clientStream.Read(buffer, 0, size);
+            string str = Encoding.Default.GetString(buffer);
+
+
+            return true;
         }
 
 

@@ -9,11 +9,16 @@
         mc:Ignorable="d"
         Title="TakiGameView" Height="450" Width="800">
 
+
+    <Window.DataContext>
+        <viewModel:TakiGameViewModel/>
+    </Window.DataContext>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="105"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="105"/>
+            <RowDefinition Height="170"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="50"/>
@@ -31,15 +36,29 @@
             <!-- Images will be dynamically added here -->
         </StackPanel>
 
-        <!-- Side 3: Bottom Left -->
-        <StackPanel x:Name="side3" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Bottom"  Orientation="Horizontal">
-        </StackPanel>
+        <ListBox x:Name="buttonListBox" ItemsSource="{Binding ButtonItems}" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Button Content="{Binding}" Height="150" Width="100" Click="Button_Click" CommandParameter="{Binding}">
+                        <Button.Background>
+                            <ImageBrush ImageSource="{Binding}" Stretch="Fill"/>
+                        </Button.Background>
+                    </Button>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
 
         <!-- Side 4: Bottom Right -->
         <StackPanel x:Name="side4" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center">
             <!-- Images will be dynamically added here -->
         </StackPanel>
-        
+
         <Image x:Name="centerImage" Width="100" Height="100" Grid.Row="1" Grid.Column="1" />
 
     </Grid>
