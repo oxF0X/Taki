@@ -55,6 +55,7 @@ void Game::playCard(LoggedUser user, Card card)
 		this->moveToNextPlayer();
 		return;
 	}
+
 	if (!card.isLegalToPlay(this->m_currentCard))
 	{
 		throw(TriviaException(std::string("Ileagal move")));
@@ -137,6 +138,11 @@ std::map<std::string, std::vector<std::string>> Game::getCardsByPlayer() const
 		players[(*it.first).getUsername()] = cards;	
 	}
 	return players;
+}
+
+Card Game::getCurrentCard() const
+{
+	return m_currentCard;
 }
 
 void Game::moveToNextPlayer()

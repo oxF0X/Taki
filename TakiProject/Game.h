@@ -29,6 +29,7 @@ public:
 	bool IsProgress() const;
 	std::vector<std::string> getPlayers() const;
 	std::map<std::string, std::vector<std::string>> getCardsByPlayer() const;
+	Card  getCurrentCard() const;
 
 private:
 	void moveToNextPlayer();

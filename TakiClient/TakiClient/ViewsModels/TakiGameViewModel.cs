@@ -16,6 +16,7 @@ namespace TakiClient.ViewsModels
     public class TakiGameViewModel : ViewsModelBase
     {
         private ObservableCollection<string> buttonItems = new ObservableCollection<string>();
+        private string lastCardPlayed;
 
         public ObservableCollection<string> ButtonItems
         {
@@ -27,11 +28,22 @@ namespace TakiClient.ViewsModels
             }
         }
 
+        public string LastCardPlayed
+        {
+            get { return lastCardPlayed; }
+            set
+            {
+                lastCardPlayed = value;
+                OnPropertyChanged(nameof(LastCardPlayed));
+            }
+        }
+
 
         public TakiGameViewModel()
         {
             //ImageClickedCommand = new RelayCommand<string>(ImageClicked);
             buttonItems = new ObservableCollection<string>();
+            lastCardPlayed = "";
         }
 
         public void setLocationImages(string[] arr)

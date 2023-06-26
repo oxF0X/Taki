@@ -109,5 +109,5 @@ RequestResult GameRequestHandler::getGameSate(RequestInfo info)
 	{
 		cardsPerPlayer.push_back(0);
 	}
-	return RequestResult{ JsonRequestPacketSerializer::serializeResponse(GetGameStateResponse{1,hasGameEnd, players, cardsPerPlayer, cards[this->m_user.getUsername()]}), nullptr};
+	return RequestResult{ JsonRequestPacketSerializer::serializeResponse(GetGameStateResponse{1,hasGameEnd, players, cardsPerPlayer, cards[this->m_user.getUsername()], this->m_game.getCurrentCard().getCode()}), nullptr};
 }

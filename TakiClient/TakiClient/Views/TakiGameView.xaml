@@ -53,6 +53,9 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
+        <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Image Source="{Binding LastCardPlayed}" Height="150" Width="100"/>
+        </StackPanel>
 
         <!-- Side 4: Bottom Right -->
         <StackPanel x:Name="side4" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center">

@@ -82,6 +82,7 @@ namespace TakiClient.Views
                 {
                     GetGameStateResponse? gameState = Manager.GetManager().getClient().GetGameState();
                     viewModel.setLocationImages(gameState.Value.cards);
+                    viewModel.LastCardPlayed = "../Images/" + gameState.Value.currentCard + ".png";
 
                     int[] cardsCount = gameState.Value.cardsPerPlayer;
 

@@ -60,6 +60,7 @@ namespace TakiClient.Modules
         public bool hasGameEnd { get; set; }
         public int[] cardsPerPlayer { get; set; }
         public string[] cards { get; set; }
+        public string currentCard { get; set; }
     }
 
     class JsonRequestPacketDeserializer
