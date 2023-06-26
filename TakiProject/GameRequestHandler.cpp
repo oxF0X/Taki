@@ -61,7 +61,7 @@ RequestResult GameRequestHandler::PlayCard(RequestInfo info)
 	{
 		return RequestResult{ JsonRequestPacketSerializer::serializeResponse(ErrorResponse{std::string(e.what())}), nullptr };
 	}
-	return RequestResult{ JsonRequestPacketSerializer::serializeResponse(PlaceCardResponse{1}), this};
+	return RequestResult{ JsonRequestPacketSerializer::serializeResponse(PlaceCardResponse{1}), nullptr};
 }
 
 RequestResult GameRequestHandler::leaveGame(RequestInfo info)

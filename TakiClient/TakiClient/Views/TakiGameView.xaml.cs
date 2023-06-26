@@ -83,8 +83,6 @@ namespace TakiClient.Views
                     GetGameStateResponse? gameState = Manager.GetManager().getClient().GetGameState();
                     viewModel.setLocationImages(gameState.Value.cards);
 
-                    viewModel.ButtonItems.Add("../Images/Back.png");
-
                     int[] cardsCount = gameState.Value.cardsPerPlayer;
 
                     for (int i = 0; i < sideImages.GetLength(0); i++)
@@ -114,9 +112,9 @@ namespace TakiClient.Views
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             Button button = (Button)sender;
-            string buttonText = button.CommandParameter.ToString(); // Access the button content from the command parameter
-
-            MessageBox.Show(buttonText);
+            string cardId = button.CommandParameter.ToString(); // Access the button content from the command parameter
+            string id = cardId.Substring(10, 2);
+            Manager.GetManager().getClient().GetPlaceCard(id);
 
         }
     }

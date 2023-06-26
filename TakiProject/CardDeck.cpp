@@ -17,7 +17,7 @@ void CardDeck::removeCard(Card c)
 	}
 }
 
-std::vector<Card> CardDeck::getCards() const
+std::vector<Card>& CardDeck::getCards()
 {
 	return this->m_cards;
 }

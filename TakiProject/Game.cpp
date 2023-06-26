@@ -1,6 +1,6 @@
 #include "Game.h"
 
-Game::Game(std::vector<std::string> players):m_currentCard("00")
+Game::Game(std::vector<std::string> players) : m_currentCard("00")
 {
 	std::srand(static_cast<unsigned>(std::time(nullptr)));
 	std::vector<std::string> cards  = { "Y1","Y2" "Y3", "Y4", "Y5", "Y6", "Y7", "Y8", "Y9","YD","YP","YS","YT", "B1","B2" "B3", "B4", "B5", "B6", "B7", "B8", "B9","BD","BP","BS","BT", "G1","G3", "G3", "G4", "G5", "G6", "G7", "G8", "G9","GD","GP","GS","GT", "R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9","RD","RP","RS","RT","Y1","Y2" "Y3", "Y4", "Y5", "Y6", "Y7", "Y8", "Y9","YD","YP","YS","YT", "B1","B2" "B3", "B4", "B5", "B6", "B7", "B8", "B9","BD","BP","BS","BT", "G1","G3", "G3", "G4", "G5", "G6", "G7", "G8", "G9","GD","GP","GS","GT", "R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9","RD","RP","RS","RT","CC","CC" ,"CC" ,"CC" };
@@ -19,6 +19,7 @@ Game::Game(std::vector<std::string> players):m_currentCard("00")
 		}
 		
 		this->m_players[new LoggedUser(players[i])] = GameData{ temp, 0 };
+		this->m_currentPlayer = m_players.begin()->first;
 	}
 	for (int i = 0; i < size; i++)
 	{
@@ -36,7 +37,7 @@ Game::Game(std::vector<std::string> players):m_currentCard("00")
 
 void Game::playCard(LoggedUser user, Card card)
 {
-	if (this->m_currentPlayer != &user)
+	if (this->m_currentPlayer->getUsername() != user.getUsername())
 	{
 		throw(TriviaException(std::string("Wrong player")));
 	}
@@ -58,7 +59,16 @@ void Game::playCard(LoggedUser user, Card card)
 	{
 		throw(TriviaException(std::string("Ileagal move")));
 	}
-	if (std::find(this->m_players[&user].m_PlayerDeck.getCards().begin(), this->m_players[&user].m_PlayerDeck.getCards().end(), card) == this->m_players[&user].m_PlayerDeck.getCards().end() || card.getCode()[1] == 'C')
+	LoggedUser* u;
+	for (auto it : this->m_players)
+	{
+		if (it.first->getUsername() == user.getUsername())
+		{
+			u = it.first;
+			break;
+		}
+	}
+	if (std::find(this->m_players[u].m_PlayerDeck.getCards().begin(), this->m_players[u].m_PlayerDeck.getCards().end(), card) == this->m_players[u].m_PlayerDeck.getCards().end() || card.getCode()[1] == 'C')
 	{
 		throw(TriviaException(std::string("Card not exsit")));
 	}
@@ -78,7 +88,7 @@ void Game::playCard(LoggedUser user, Card card)
 		this->plusTwo += 2;
 	}
 	
-	this->m_players[&user].m_PlayerDeck.removeCard(card);
+	this->m_players[u].m_PlayerDeck.removeCard(card);
 	this->m_currentCard = card;
 	this->moveToNextPlayer();
 }

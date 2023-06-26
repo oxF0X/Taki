@@ -13,7 +13,7 @@ class CardDeck
 public:
 	void addCard(Card c);
 	void removeCard(Card c);
-	std::vector<Card> getCards() const;
+	std::vector<Card>& getCards();
 	
 
 private:
