@@ -59,7 +59,7 @@
                                         <StackPanel Orientation="Horizontal" Margin="0,5">
                                             <TextBlock Text="Max Players: " FontWeight="Bold" Foreground="#6F6F6F" Width="77"/>
                                             <TextBlock Text="{Binding maxPlayers}" Foreground="#6F6F6F" Width="10"/>
-                                            <StackPanel HorizontalAlignment="Right">
+
                                                     <Button x:Name="joinBtn"                                             
                                                     CommandParameter="{Binding id}"
                                                     Click="join_btn"
@@ -68,13 +68,13 @@
                                                     FontSize="12" 
                                                     FontFamily="Montserrat" 
                                                     Cursor="Hand" 
-                                                    Width="60"
+                                                    Width="200"
                                                     Height="32"
                                                     Background="#429629"
                                                     Margin="100,-20,0,0"
                                                     BorderBrush="DarkGray"
                                                     BorderThickness="0.5" />        
-                                            </StackPanel>
+
 
                                         </StackPanel>
                                     </StackPanel>
