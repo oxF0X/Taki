@@ -97,7 +97,6 @@ void Game::playCard(LoggedUser user, Card card)
 
 void Game::removePlayer(LoggedUser user)
 {
-	//this->m_players.erase(std::remove_if(m_players.begin(), m_players.end(), [&](std::pair<LoggedUser*, GameData> u) { return u.first->getUsername() == user.getUsername(); }), m_players.end());
 	auto it = m_players.begin();
 	while (it != m_players.end()) {
 		if (it->first->getUsername() == user.getUsername()) {
@@ -152,10 +151,11 @@ void Game::moveToNextPlayer()
 	if (this->m_currentDirection == -1) {
 		auto it = this->m_players.lower_bound(this->m_currentPlayer);
 	}
-	if (it != this->m_players.end())
+	if (it == this->m_players.end())
 	{
-		this->m_currentPlayer = (it)->first;
+		it = this->m_players.begin();
 	}
+	this->m_currentPlayer = (it)->first;
 }
 
 void Game::DrawCards(int numOfCards)
