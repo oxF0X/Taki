@@ -71,7 +71,20 @@
                 <ItemsControl ItemsSource="{Binding Users}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="1">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Border BorderBrush="Gray" BorderThickness="1" Margin="5" Padding="5">
+                            <Border BorderThickness="2" Width="200" CornerRadius="6">
+                                <Border.BorderBrush>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                        <GradientStop Color="#462AD8" Offset="0"/>
+                                        <GradientStop Color="#4BD180" Offset="0.75"/>
+                                        <GradientStop Color="#D1CA18" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Border.BorderBrush>
+
+                                <Border.Background>
+                                    <LinearGradientBrush StartPoint="0,1" EndPoint="1,0">
+                                        <GradientStop Color="#C3292929" Offset="0"/>
+                                    </LinearGradientBrush>
+                                </Border.Background>
                                 <TextBlock Text="{Binding}" FontSize="16" FontWeight="Bold" />
                             </Border>
                         </DataTemplate>

@@ -49,15 +49,32 @@ namespace TakiClient.ViewsModels
 
             if (state == null)
             {
+
                 Manager.GetManager().SetThreading(false);
-                Application.Current.Dispatcher.Invoke(() =>
+
+                if (this.clientHandler.GetGameState() != null)
                 {
-                    var view = new TakiGameView();
-                    Window w = Application.Current.MainWindow;
-                    Application.Current.MainWindow = view;
-                    view.Show();
-                    w.Close();
-                });
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        var view = new TakiGameView();
+                        Window w = Application.Current.MainWindow;
+                        Application.Current.MainWindow = view;
+                        view.Show();
+                        w.Close();
+                    });
+                }
+
+                else
+                {
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        var view = new MenuView();
+                        Window w = Application.Current.MainWindow;
+                        Application.Current.MainWindow = view;
+                        view.Show();
+                        w.Close();
+                    });
+                }
                 return null;
             }
             string[] players = state?.players;
