@@ -14,50 +14,33 @@
     </Page.DataContext>
 
     <Grid VerticalAlignment="Top" HorizontalAlignment="Center" Width="900">
-        <StackPanel>
-            <TextBox x:Name="txtJoinRoomInput" 
-                             Text="{Binding Id, UpdateSourceTrigger=PropertyChanged}"
-                             FontSize="14"
-                             FontWeight="Medium" 
-                             FontFamily="Montserrat"
-                             Foreground="White"
-                             CaretBrush="LightGray"
-                             BorderBrush="DarkGray"
-                             BorderThickness="0,0,0,2"
-                             Height="28" 
-                             Margin="0,-230,0,0"
-                             Padding="20,0,0,0"
-                             Width="100">
-                <TextBox.Background>
-                    <ImageBrush ImageSource="/Images/user-icon.png" Stretch="None" AlignmentX="Left"/>
-                </TextBox.Background>
-            </TextBox>
-            <TextBlock Text="{Binding Error}" 
-                               Foreground="red"
-                                Height="15"
-                               FontSize="15" 
-                               FontWeight="Medium"
-                               FontFamily="Montserrat"
-                               Margin="0,-170,0,0"
-                               TextWrapping="Wrap"/>
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+                <TextBlock Text="{Binding Error}" 
+                           Foreground="Red"
+                           Height="15"
+                           FontSize="15" 
+                           FontWeight="Medium"
+                           FontFamily="Montserrat"
+                           Margin="0,-170,0,0"
+                           TextWrapping="Wrap"/>
 
-            <Button x:Name="btnJoin" 
-                            Command="{Binding JoinRoomCommand}"
-                            BorderThickness="0"
-                            Content="JOIN ROOM"
-                            Foreground="White"
-                            FontSize="12" 
-                            FontFamily="Montserrat" 
-                            Cursor="Hand" 
-                            Margin="0,-150,0,0"
-                            Style="{StaticResource LoginButtonStyle}"/>
-            <ScrollViewer Height="300" Margin="200, 0, 0,0 ">
-                <ItemsControl ItemsSource="{Binding Rooms}">
-                    <ItemsControl.ItemTemplate>
+                <ListBox ItemsSource="{Binding Rooms}" HorizontalAlignment="Center">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel Orientation="Vertical" />
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <Border BorderBrush="Gray" BorderThickness="1" Margin="5" Padding="5">
-                                <StackPanel>
-                                    <TextBlock Text="{Binding name}" FontSize="16" FontWeight="Bold" />
+                            <Grid Width="400">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel Grid.Column="1">
+                                    <TextBlock Text="{Binding name}" FontSize="16" FontWeight="Bold" Grid.Column="0" />
                                     <StackPanel Orientation="Horizontal" Margin="0,5">
                                         <TextBlock Text="ID: " FontWeight="Bold" />
                                         <TextBlock Text="{Binding id}" />
@@ -74,12 +57,22 @@
                                         <TextBlock Text="Is Active: " FontWeight="Bold" />
                                         <TextBlock Text="{Binding isActive}" />
                                     </StackPanel>
+                                    <Button x:Name="joinBtn" 
+                                            CommandParameter="{Binding id}"
+                                            Click="join_btn"
+                                            BorderThickness="0"
+                                            Content="JOIN"
+                                            Foreground="White"
+                                            FontSize="12" 
+                                            FontFamily="Montserrat" 
+                                            Cursor="Hand" 
+                                            Style="{StaticResource LoginButtonStyle}" />
                                 </StackPanel>
-                            </Border>
+                            </Grid>
                         </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </ScrollViewer>
-        </StackPanel>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </Page>

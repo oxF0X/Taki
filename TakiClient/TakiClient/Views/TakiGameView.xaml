@@ -78,7 +78,7 @@
             </ListBox.ItemsPanel>
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Button Content="{Binding}" Height="150" Width="100" Click="Button_Click" CommandParameter="{Binding}">
+                    <Button Content="{Binding}" Height="140" Width="100" Click="Button_Click" CommandParameter="{Binding}">
                         <Button.Background>
                             <ImageBrush ImageSource="{Binding}" Stretch="Fill"/>
                         </Button.Background>
@@ -117,7 +117,7 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
-        <Image x:Name="centerImage" Width="100" Height="100" Grid.Row="1" Grid.Column="1" />
+        <Image x:Name="centerImage" Source="{Binding LastCardPlayed}" Width="100" Height="140" Grid.Row="2" Grid.Column="1" />
 
     </Grid>
 

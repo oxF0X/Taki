@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -44,8 +45,28 @@ namespace TakiClient.Views
 
                     viewModel.UpdateRooms(updatedRooms);
 
-                await Task.Delay(5);
+                await Task.Delay(1000);
             }
+        }
+
+        private void join_btn(object sender, RoutedEventArgs e)
+        {
+            Manager.GetManager().SetThreading(false);
+            Button button = (Button)sender;
+            string Id = button.CommandParameter.ToString();
+            string res = Manager.GetManager().getClient().GetJoinRoom(Convert.ToInt32(Id));
+            if (res != "1")
+            {
+                viewModel.Error = res;
+                return;
+            }
+            var model = new JoinedRoomViewModel();
+            var view = new JoinedRoomView(model);
+            Window w = Application.Current.MainWindow;
+            Application.Current.MainWindow = view;
+            view.Show();
+            w.Close();
+
         }
     }
 }
