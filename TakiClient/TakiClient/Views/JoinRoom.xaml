@@ -24,54 +24,65 @@
                            FontFamily="Montserrat"
                            Margin="0,-170,0,0"
                            TextWrapping="Wrap"/>
+                <Border BorderThickness="1" Width="416">
+                    <Border.BorderBrush>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="#462AD8" Offset="0"/>
+                            <GradientStop Color="#4BD180" Offset="0.75"/>
+                            <GradientStop Color="#D1CA18" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Border.BorderBrush>
 
-                <ListBox ItemsSource="{Binding Rooms}" HorizontalAlignment="Center">
-                    <ListBox.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <WrapPanel Orientation="Vertical" />
-                        </ItemsPanelTemplate>
-                    </ListBox.ItemsPanel>
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <Grid Width="400">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,1" EndPoint="1,0">
+                            <GradientStop Color="#C3292929" Offset="0"/>
+                        </LinearGradientBrush>
+                    </Border.Background>
+                    
+                    <ListBox ItemsSource="{Binding Rooms}" HorizontalAlignment="Center" Background="#33222222" BorderBrush="#FF333333">
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Orientation="Vertical" />
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Width="400">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
 
-                                <StackPanel Grid.Column="1">
-                                    <TextBlock Text="{Binding name}" FontSize="16" FontWeight="Bold" Grid.Column="0" />
-                                    <StackPanel Orientation="Horizontal" Margin="0,5">
-                                        <TextBlock Text="ID: " FontWeight="Bold" />
-                                        <TextBlock Text="{Binding id}" />
+                                    <StackPanel Grid.Column="1" Orientation="Vertical">
+                                        <TextBlock Text="{Binding name}" FontSize="16" FontWeight="Bold" Grid.Column="0" Foreground="#6F6F6F"/>
+
+                                        <StackPanel Orientation="Horizontal" Margin="0,5">
+                                            <TextBlock Text="Max Players: " FontWeight="Bold" Foreground="#6F6F6F" Width="77"/>
+                                            <TextBlock Text="{Binding maxPlayers}" Foreground="#6F6F6F" Width="10"/>
+                                            <StackPanel HorizontalAlignment="Right">
+                                                    <Button x:Name="joinBtn"                                             
+                                                    CommandParameter="{Binding id}"
+                                                    Click="join_btn"
+                                                    Content="JOIN"
+                                                    Foreground="White"
+                                                    FontSize="12" 
+                                                    FontFamily="Montserrat" 
+                                                    Cursor="Hand" 
+                                                    Width="60"
+                                                    Height="32"
+                                                    Background="#429629"
+                                                    Margin="100,-20,0,0"
+                                                    BorderBrush="DarkGray"
+                                                    BorderThickness="0.5" />        
+                                            </StackPanel>
+
+                                        </StackPanel>
                                     </StackPanel>
-                                    <StackPanel Orientation="Horizontal" Margin="0,5">
-                                        <TextBlock Text="Max Players: " FontWeight="Bold" />
-                                        <TextBlock Text="{Binding maxPlayers}" />
-                                    </StackPanel>
-                                    <StackPanel Orientation="Horizontal" Margin="0,5">
-                                        <TextBlock Text="Time per Play: " FontWeight="Bold" />
-                                        <TextBlock Text="{Binding timePerPlay}" />
-                                    </StackPanel>
-                                    <StackPanel Orientation="Horizontal" Margin="0,5">
-                                        <TextBlock Text="Is Active: " FontWeight="Bold" />
-                                        <TextBlock Text="{Binding isActive}" />
-                                    </StackPanel>
-                                    <Button x:Name="joinBtn" 
-                                            CommandParameter="{Binding id}"
-                                            Click="join_btn"
-                                            BorderThickness="0"
-                                            Content="JOIN"
-                                            Foreground="White"
-                                            FontSize="12" 
-                                            FontFamily="Montserrat" 
-                                            Cursor="Hand" 
-                                            Style="{StaticResource LoginButtonStyle}" />
-                                </StackPanel>
-                            </Grid>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Border>
             </StackPanel>
         </ScrollViewer>
     </Grid>
