@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows;
 using TakiClient.Modules;
+using TakiClient.ViewsModels;
 using TakiClient.Views;
 
 namespace TakiClient.ViewsModels

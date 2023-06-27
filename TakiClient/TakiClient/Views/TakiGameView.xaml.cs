@@ -24,7 +24,6 @@ namespace TakiClient.Views
         private string[][] sideImages;
 
 
-        private Thread updateThread;
         private bool isUpdateThreadRunning;
         private Task roomUpdateTask;
         private CancellationTokenSource cancellationTokenSource;
@@ -107,7 +106,7 @@ namespace TakiClient.Views
         {
             base.OnClosed(e);
             isUpdateThreadRunning = false;
-            updateThread.Join();
+            cancellationTokenSource.Cancel();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

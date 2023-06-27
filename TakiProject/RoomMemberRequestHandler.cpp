@@ -57,7 +57,7 @@ RequestResult RoomMemberRequestHandler::getRoomState(RequestInfo info)
 		str += s;
 	}
 	std::cout << this->m_user.getUsername() << " " << str << std::endl;
-	if (!hasGameBegun)
+	if (!this->m_room.isActive())
 	{
 		return RequestResult{ JsonRequestPacketSerializer::serializeResponse(GetRoomsStateResponse{1,hasGameBegun, players }), nullptr };
 	}

@@ -43,6 +43,17 @@ namespace TakiClient.ViewsModels
         public string[] UpdateUsers()
         {
            GetRoomsStateResponse? state = this.clientHandler.GetRoomState();
+           
+            if(state == null)
+            {
+                Manager.GetManager().SetThreading(false);
+                var view = new TakiGameView();
+                Window w = Application.Current.MainWindow;
+                Application.Current.MainWindow = view;
+                view.Show();
+                w.Close();
+                return null;
+            }
             string[] players = state?.players;
             players[0] += " (admin)";
             return players;
