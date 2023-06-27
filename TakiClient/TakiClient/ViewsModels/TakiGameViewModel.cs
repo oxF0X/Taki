@@ -17,6 +17,11 @@ namespace TakiClient.ViewsModels
     {
         private ObservableCollection<string> buttonItems = new ObservableCollection<string>();
         private string lastCardPlayed;
+        private ObservableCollection<string> side1Images = new ObservableCollection<string>();
+        private ObservableCollection<string> side2Images = new ObservableCollection<string>();
+        private ObservableCollection<string> side3Images = new ObservableCollection<string>();
+
+
 
         public ObservableCollection<string> ButtonItems
         {
@@ -25,6 +30,37 @@ namespace TakiClient.ViewsModels
             {
                 buttonItems = value;
                 OnPropertyChanged(nameof(ButtonItems));
+            }
+        }
+
+
+        public ObservableCollection<string> Side1Images
+        {
+            get { return side1Images; }
+            set
+            {
+                side1Images = value;
+                OnPropertyChanged(nameof(side1Images));
+            }
+        }
+
+        public ObservableCollection<string> Side2Images
+        {
+            get { return side2Images; }
+            set
+            {
+                side2Images = value;
+                OnPropertyChanged(nameof(side2Images));
+            }
+        }
+
+        public ObservableCollection<string> Side3Images
+        {
+            get { return side3Images; }
+            set
+            {
+                side3Images = value;
+                OnPropertyChanged(nameof(side3Images));
             }
         }
 
@@ -60,6 +96,35 @@ namespace TakiClient.ViewsModels
                 buttonItems.Add("../Images/" + item + ".png");
             }
         }
+
+        public void SetSide1(int num)
+        {
+            side1Images.Clear();
+            for (int i = 0; i < num; i++)
+            {
+                side1Images.Add("../Images/Back.png");
+            }
+        }
+
+
+        public void SetSide2(int num)
+        {
+            side2Images.Clear();
+            for(int i = 0; i < num; i++)
+            {
+                side2Images.Add("../Images/Back.png");
+            }
+        }
+
+        public void SetSide3(int num)
+        {
+            side3Images.Clear();
+            for (int i = 0; i < num; i++)
+            {
+                side3Images.Add("../Images/Back.png");
+            }
+        }
+
 
         private void ExecutedMaximizeOrMinimizeCommand(object obj)
         {

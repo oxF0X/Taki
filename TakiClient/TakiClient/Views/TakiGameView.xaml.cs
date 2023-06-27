@@ -34,7 +34,7 @@ namespace TakiClient.Views
         {
             InitializeComponent();
 
-            this.sideImages = new string[4][];
+            this.sideImages = new string[3][];
             viewModel = new TakiGameViewModel();
             DataContext = viewModel;
 
@@ -68,18 +68,9 @@ namespace TakiClient.Views
                     GetGameStateResponse? gameState = Manager.GetManager().getClient().GetGameState();
                     viewModel.setLocationImages(gameState.Value.cards);
                     viewModel.LastCardPlayed = "../Images/" + gameState.Value.currentCard + ".png";
-
-                    int[] cardsCount = gameState.Value.cardsPerPlayer;
-
-                    for (int i = 0; i < sideImages.GetLength(0); i++)
-                    {
-                        this.sideImages[i] = new string[cardsCount.Length >= i ? cardsCount[i] : 0];
-
-                        for (int j = 0; j < cardsCount[i] && cardsCount.Length >= i; j++)
-                        {
-                            sideImages[i][j] = "Back";
-                        }
-                    }
+                    viewModel.SetSide1(gameState.Value.cardsPerPlayer[0]);
+                    viewModel.SetSide2(gameState.Value.cardsPerPlayer[1]);
+                    viewModel.SetSide3(gameState.Value.cardsPerPlayer[2]);
                 });
                 count++;
                 await Task.Delay(1000);

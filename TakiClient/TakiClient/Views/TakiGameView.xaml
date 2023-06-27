@@ -7,7 +7,8 @@
         xmlns:viewModel="clr-namespace:TakiClient.ViewsModels"
         xmlns:customcontrols="clr-namespace:TakiClient.CustomControls"
         mc:Ignorable="d"
-        Title="TakiGameView" Height="450" Width="800">
+        Title="TakiGameView" Height="450" Width="800"
+        MouseDown="Window_MouseDown">
 
 
     <Window.DataContext>
@@ -22,12 +23,12 @@
             <RowDefinition Height="150"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="60"/>
+            <ColumnDefinition Width="100"/>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="60"/>
+            <ColumnDefinition Width="100"/>
         </Grid.ColumnDefinitions>
 
-        <StackPanel Orientation="Horizontal" Grid.Column="2">
+        <StackPanel Orientation="Horizontal" Grid.Column="2" HorizontalAlignment="Right">
             <Button x:Name="btnMinimize"
                             Style="{StaticResource MinimizeButtonStyle}"
                             Command="{Binding HideScreenCommand}">
@@ -51,17 +52,23 @@
                                    FontWeight="Bold"/>
             </Button>
         </StackPanel>
-        <!-- Side 1: Top Left -->
-        <StackPanel x:Name="side1" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Top" Orientation="Horizontal">
-            <!-- Images will be dynamically added here -->
-        </StackPanel>
 
-        <!-- Side 2: Top Right -->
-        <StackPanel x:Name="side2" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center">
-            <!-- Images will be dynamically added here -->
-        </StackPanel>
-        
-        
+
+        <ListBox  ItemsSource="{Binding Side1Images}" Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel Orientation="Vertical" />
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Image Source="{Binding}" Height="100" Width="50">
+                    </Image>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+
 
         <ListBox x:Name="buttonListBox" ItemsSource="{Binding ButtonItems}" Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">
             <ListBox.ItemsPanel>
@@ -80,14 +87,35 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
-        <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">
-            <Image Source="{Binding LastCardPlayed}" Height="150" Width="100"/>
-        </StackPanel>
 
-        <!-- Side 4: Bottom Right -->
-        <StackPanel x:Name="side4" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center">
-            <!-- Images will be dynamically added here -->
-        </StackPanel>
+
+        <ListBox  ItemsSource="{Binding Side2Images}" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel Orientation="Vertical" />
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Image Source="{Binding}" Height="100" Width="50">
+                        
+                    </Image>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <ListBox  ItemsSource="{Binding Side3Images}" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel Orientation="Vertical" />
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Image Source="{Binding}" Height="100" Width="50"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
 
         <Image x:Name="centerImage" Width="100" Height="100" Grid.Row="1" Grid.Column="1" />
 
