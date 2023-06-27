@@ -14,13 +14,11 @@ namespace TakiClient.ViewsModels
 {
     public class CreateRoomViewModel : ViewsModelBase
     {
-        private int _maxUsers;
+        private string _maxUsers;
         private string _roomName;
-
         private Client clientHandler;
 
-
-        public int MaxUsers
+        public string MaxUsers
         {
             get { return _maxUsers; }
             set
@@ -30,7 +28,7 @@ namespace TakiClient.ViewsModels
             }
         }
 
-        public String RoomName
+        public string RoomName
         {
             get { return _roomName; }
             set
@@ -42,28 +40,28 @@ namespace TakiClient.ViewsModels
 
         public ICommand CreateRoomCommand { get; }
 
-
-
         public CreateRoomViewModel()
         {
             this.clientHandler = Manager.GetManager().getClient();
-            CreateRoomCommand = new ViewModelCommand(ExecuteCreateRooms, CanExecuteCreateRoom);
+            CreateRoomCommand = new ViewModelCommand(ExecuteCreateRoom, CanExecuteCreateRoom);
         }
 
         private bool CanExecuteCreateRoom(object obj)
         {
-            return !(string.IsNullOrWhiteSpace(RoomName) || MaxUsers == 0);
+            return !(string.IsNullOrWhiteSpace(RoomName) || string.IsNullOrWhiteSpace(MaxUsers));
         }
 
-        private void ExecuteCreateRooms(object obj)
+        private void ExecuteCreateRoom(object obj)
         {
-            this.clientHandler.CreateRoom(_roomName, _maxUsers, 3);
-            var viewModel = new AdminGameJoinViewModel();
-            var view = new AdminGameJoinView(viewModel);
-            Window w = Application.Current.MainWindow;
-            Application.Current.MainWindow = view;
-            view.Show();
-            w.Close();
+                int maxUsersValue = (int)(_maxUsers[_maxUsers.Length - 1]) - 48;
+                this.clientHandler.CreateRoom(_roomName, maxUsersValue, 3) ;
+                var viewModel = new AdminGameJoinViewModel();
+                var view = new AdminGameJoinView(viewModel);
+                Window w = Application.Current.MainWindow;
+                Application.Current.MainWindow = view;
+                view.Show();
+                w.Close();
+            
         }
     }
 }

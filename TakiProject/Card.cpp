@@ -14,6 +14,11 @@ bool Card::isLegalToPlay(Card lastCard)
 	return false;
 }
 
+void Card::setCode(std::string code)
+{
+	this->code = code;
+}
+
 std::string Card::getCode() const
 {
     return this->code;

@@ -13,6 +13,13 @@ using System.Threading;
 using System.ComponentModel;
 using System.Windows.Controls;
 using System.Collections.ObjectModel;
+using System.Windows.Forms;
+using Button = System.Windows.Controls.Button;
+using Application = System.Windows.Application;
+using System.Windows.Media.Imaging;
+using System.Windows.Media;
+using System.IO;
+using System.Net.Http;
 
 namespace TakiClient.Views
 {
@@ -23,7 +30,7 @@ namespace TakiClient.Views
     {
         private string[][] sideImages;
 
-
+        private Button[] buttons;
         private bool isUpdateThreadRunning;
         private Task roomUpdateTask;
         private CancellationTokenSource cancellationTokenSource;
@@ -73,7 +80,7 @@ namespace TakiClient.Views
                     viewModel.SetSide3(gameState.Value.cardsPerPlayer[2]);
                 });
                 count++;
-                await Task.Delay(1000);
+                await Task.Delay(500);
             }
         }
 
@@ -88,8 +95,44 @@ namespace TakiClient.Views
         {
             Button button = (Button)sender;
             string cardId = button.CommandParameter.ToString(); // Access the button content from the command parameter
+
+            string[] colors = { "RC", "BC", "GC", "YC" };
             string id = cardId.Substring(10, 2);
+            if (id[1] == 'C')
+            {
+                buttons = new Button[4];
+
+                for (int i = 0; i < 4; i++)
+                {
+                    buttons[i] = new Button();
+                    buttons[i].Width = 60;
+                    buttons[i].Height = 60;
+                    buttons[i].Margin = new Thickness(0, 10, 0, 0);
+                    buttons[i].Tag = colors[i];
+                    buttons[i].Click += ChangeColor_Click;
+                    ImageBrush imageBrush = new ImageBrush();
+                    imageBrush.ImageSource = new BitmapImage(new Uri(Path.GetFullPath("../../../Images/" + colors[i] + ".png"), UriKind.RelativeOrAbsolute));
+                    buttons[i].Background = imageBrush;
+                    middleContainer.Children.Add(buttons[i]);
+                    System.Windows.Controls.Panel.SetZIndex(buttons[i], 1);
+                }
+                return;
+            }            
             Manager.GetManager().getClient().GetPlaceCard(id);
+
+        }
+
+
+        private void ChangeColor_Click(object sender, RoutedEventArgs e)
+        {
+            Button button = (Button)sender;
+            string cardId = button.Tag.ToString();
+            for (int i = 0; i < this.buttons.Length; i++)
+            {
+                middleContainer.Children.Remove(buttons[i]);
+            }
+
+            Manager.GetManager().getClient().GetPlaceCard(cardId);
 
         }
 

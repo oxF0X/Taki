@@ -33,7 +33,8 @@ Game::Game(std::vector<std::string> players) : m_currentCard("00")
 	Card temp_card = this->m_gameDeck.getCards().front();
 	this->m_currentCard = temp_card;
 	this->m_gameDeck.removeCard(temp_card);
-	this->m_currentPlayer = new LoggedUser(players[0]);
+	this->m_currentPlayer = std::prev(m_players.end())->first;
+
 }
 
 void Game::playCard(LoggedUser user, Card card)
@@ -70,8 +71,13 @@ void Game::playCard(LoggedUser user, Card card)
 			break;
 		}
 	}
-	if (std::find(this->m_players[u].m_PlayerDeck.getCards().begin(), this->m_players[u].m_PlayerDeck.getCards().end(), card) == this->m_players[u].m_PlayerDeck.getCards().end() || card.getCode()[1] == 'C')
+	Card tmpCard = card.getCode();
+	if (tmpCard.getCode()[1] == 'C')
 	{
+		tmpCard.setCode("CC");
+	}
+	if (std::find(this->m_players[u].m_PlayerDeck.getCards().begin(), this->m_players[u].m_PlayerDeck.getCards().end(), tmpCard) == this->m_players[u].m_PlayerDeck.getCards().end())
+	{		
 		throw(TriviaException(std::string("Card not exsit")));
 	}
 
@@ -90,7 +96,15 @@ void Game::playCard(LoggedUser user, Card card)
 		this->plusTwo += 2;
 	}
 	
-	this->m_players[u].m_PlayerDeck.removeCard(card);
+	if (card.getCode()[1] == 'C')
+	{
+		this->m_players[u].m_PlayerDeck.removeCard(tmpCard);
+
+	}
+	else
+	{
+		this->m_players[u].m_PlayerDeck.removeCard(card);
+	}
 	this->m_currentCard = card;
 	this->moveToNextPlayer();
 }

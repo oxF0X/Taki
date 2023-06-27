@@ -39,7 +39,7 @@
             <TextBlock Text="Max users number" Foreground="White" FontSize="15" FontWeight="Medium" 
                                Margin="0, 10, 0, 0"  FontFamily="Montserrat" HorizontalAlignment="Left"/>
             <ComboBox x:Name="cmbMaxUsers" 
-                      SelectedItem="{Binding MaxUsers}"
+                       SelectedValue="{Binding MaxUsers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                       FontSize="14"
                       FontWeight="Medium" 
                       FontFamily="Montserrat"

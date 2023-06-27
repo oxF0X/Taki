@@ -21,6 +21,7 @@
     <None Remove="Images\back-image.jpg" />
     <None Remove="Images\Back.png" />
     <None Remove="Images\background.jpg" />
+    <None Remove="Images\BC.png" />
     <None Remove="Images\BCD.png" />
     <None Remove="Images\BD.png" />
     <None Remove="Images\BP.png" />
@@ -39,6 +40,7 @@
     <None Remove="Images\G7.png" />
     <None Remove="Images\G8.png" />
     <None Remove="Images\G9.png" />
+    <None Remove="Images\GC.png" />
     <None Remove="Images\GD.png" />
     <None Remove="Images\GP.png" />
     <None Remove="Images\group.png" />
@@ -59,6 +61,7 @@
     <None Remove="Images\R7.png" />
     <None Remove="Images\R8.png" />
     <None Remove="Images\R9.png" />
+    <None Remove="Images\RC.png" />
     <None Remove="Images\RCD.png" />
     <None Remove="Images\RD.png" />
     <None Remove="Images\RP.png" />
@@ -78,6 +81,7 @@
     <None Remove="Images\Y7.png" />
     <None Remove="Images\Y8.png" />
     <None Remove="Images\Y9.png" />
+    <None Remove="Images\YC.png" />
     <None Remove="Images\YCD.png" />
     <None Remove="Images\YD.png" />
     <None Remove="Images\YP.png" />
@@ -86,9 +90,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Images\GC.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\BC.png" />
     <Resource Include="Images\BD.png" />
     <Resource Include="Images\GD.png" />
+    <Resource Include="Images\RC.png" />
     <Resource Include="Images\RD.png" />
+    <Resource Include="Images\YC.png" />
     <Resource Include="Images\YD.png" />
   </ItemGroup>
 
