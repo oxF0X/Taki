@@ -117,11 +117,38 @@ namespace TakiClient.Views
                     System.Windows.Controls.Panel.SetZIndex(buttons[i], 1);
                 }
                 return;
-            }            
+            }         
+            if(id[1] == 'T')
+            {
+                if(!Manager.GetManager().getClient().GetPlaceCard(id))
+                {
+                    return;
+                }
+
+                buttons = new Button[1];
+                buttons[0] = new Button();
+                buttons[0].Width = 60;
+                buttons[0].Height = 60;
+                buttons[0].Content = "Finish super taki";
+                buttons[0].Margin = new Thickness(0, 10, 0, 0);
+                buttons[0].Click += Taki_Click;
+                middleContainer.Children.Add(buttons[0]);
+                System.Windows.Controls.Panel.SetZIndex(buttons[0], 1);
+                return;
+            }
             Manager.GetManager().getClient().GetPlaceCard(id);
 
         }
 
+        private void Taki_Click(object sender, RoutedEventArgs e)
+        {
+            Button button = (Button)sender;
+
+                middleContainer.Children.Remove(buttons[0]);
+
+
+            Manager.GetManager().getClient().GetPlaceCard("01");
+        }
 
         private void ChangeColor_Click(object sender, RoutedEventArgs e)
         {

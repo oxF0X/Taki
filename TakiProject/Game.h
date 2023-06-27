@@ -46,6 +46,7 @@ private:
 	bool isProgress;
 	int m_currentDirection;
 	int plusTwo;
+	bool isTaki;
 	std::map<LoggedUser*, GameData> m_players;
 
 };

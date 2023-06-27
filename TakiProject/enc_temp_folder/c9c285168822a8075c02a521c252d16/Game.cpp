@@ -95,14 +95,6 @@ void Game::playCard(LoggedUser user, Card card)
 		return;
 	}
 
-	if (card.getCode() == "ST")
-	{
-		this->m_players[u].m_PlayerDeck.removeCard(card);
-		this->m_currentCard.setCode(this->m_currentCard.getCode()[0] + "T");
-		this->isTaki = true;
-		return;
-	}
-
 	if (card.getCode()[1] == 'T')
 	{
 		this->m_players[u].m_PlayerDeck.removeCard(card);
