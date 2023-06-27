@@ -38,12 +38,18 @@ namespace TakiClient.ViewsModels
             }
         }
 
+        public ICommand CloseScreenCommand { get; }
+        public ICommand HideScreenCommand { get; }
+        public ICommand MaximizeOrMinimizeCommand { get; }
 
         public TakiGameViewModel()
         {
             //ImageClickedCommand = new RelayCommand<string>(ImageClicked);
             buttonItems = new ObservableCollection<string>();
             lastCardPlayed = "";
+            CloseScreenCommand = new ViewModelCommand(ExecutedCloseCommand);
+            HideScreenCommand = new ViewModelCommand(ExecutedHideCommand);
+            MaximizeOrMinimizeCommand = new ViewModelCommand(ExecutedMaximizeOrMinimizeCommand);
         }
 
         public void setLocationImages(string[] arr)
@@ -55,10 +61,29 @@ namespace TakiClient.ViewsModels
             }
         }
 
-        private void ImageClicked(string location)
+        private void ExecutedMaximizeOrMinimizeCommand(object obj)
         {
-            // Handle the image clicked event here
-            MessageBox.Show($"Image clicked: {location}");
+            if (Application.Current.MainWindow.WindowState == WindowState.Maximized)
+            {
+                Application.Current.MainWindow.WindowState = WindowState.Normal;
+                Application.Current.MainWindow.Width = 600;
+                Application.Current.MainWindow.Height = 500;
+            }
+            else
+            {
+                Application.Current.MainWindow.WindowState = WindowState.Maximized;
+            }
+        }
+
+        private void ExecutedHideCommand(object obj)
+        {
+            Application.Current.MainWindow.WindowState = WindowState.Minimized;
+
+        }
+
+        private void ExecutedCloseCommand(object obj)
+        {
+            Application.Current.Shutdown();
         }
 
     }

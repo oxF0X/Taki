@@ -16,27 +16,54 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="105"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="150"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="170"/>
+            <RowDefinition Height="150"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="50"/>
+            <ColumnDefinition Width="60"/>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="50"/>
+            <ColumnDefinition Width="60"/>
         </Grid.ColumnDefinitions>
 
+        <StackPanel Orientation="Horizontal" Grid.Column="2">
+            <Button x:Name="btnMinimize"
+                            Style="{StaticResource MinimizeButtonStyle}"
+                            Command="{Binding HideScreenCommand}">
+                <TextBlock Text="➖" Foreground="White" FontSize="12" FontWeight="Bold"/>
+            </Button>
+
+
+            <Button x:Name="btnMaximize" 
+                            Style="{StaticResource MinimizeButtonStyle}"
+                            Command="{Binding MaximizeOrMinimizeCommand}">
+                <TextBlock Text="🗖" Foreground="White" FontSize="12" FontWeight="Bold"/>
+            </Button>
+
+
+            <Button x:Name="btnClose"
+                            Style="{StaticResource CloseButtonStyle}"
+                            Command="{Binding CloseScreenCommand}">
+                <TextBlock Text="✖" 
+                                   Foreground="White" 
+                                   FontSize="12" 
+                                   FontWeight="Bold"/>
+            </Button>
+        </StackPanel>
         <!-- Side 1: Top Left -->
-        <StackPanel x:Name="side1" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Top" Orientation="Horizontal">
+        <StackPanel x:Name="side1" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Top" Orientation="Horizontal">
             <!-- Images will be dynamically added here -->
         </StackPanel>
 
         <!-- Side 2: Top Right -->
-        <StackPanel x:Name="side2" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center">
+        <StackPanel x:Name="side2" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center">
             <!-- Images will be dynamically added here -->
         </StackPanel>
+        
+        
 
-        <ListBox x:Name="buttonListBox" ItemsSource="{Binding ButtonItems}" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+        <ListBox x:Name="buttonListBox" ItemsSource="{Binding ButtonItems}" Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel Orientation="Horizontal" />
@@ -53,7 +80,7 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
-        <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+        <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">
             <Image Source="{Binding LastCardPlayed}" Height="150" Width="100"/>
         </StackPanel>
 

@@ -16,6 +16,7 @@ namespace TakiClient.ViewsModels
     {
         private string[] _users;
         private Client clientHandler;
+        private readonly object usersLock = new object();
 
         public String[] Users
         {
@@ -38,16 +39,19 @@ namespace TakiClient.ViewsModels
 
         public string[] UpdateUsers()
         {
-           GetRoomsStateResponse? state = this.clientHandler.GetRoomState();
-           
-            if(state == null)
+            GetRoomsStateResponse? state = this.clientHandler.GetRoomState();
+
+            if (state == null)
             {
                 Manager.GetManager().SetThreading(false);
-                var view = new TakiGameView();
-                Window w = Application.Current.MainWindow;
-                Application.Current.MainWindow = view;
-                view.Show();
-                w.Close();
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    var view = new TakiGameView();
+                    Window w = Application.Current.MainWindow;
+                    Application.Current.MainWindow = view;
+                    view.Show();
+                    w.Close();
+                });
                 return null;
             }
             string[] players = state?.players;
@@ -57,20 +61,25 @@ namespace TakiClient.ViewsModels
 
         public void UpdateUsers(string[] arr)
         {
-            Users = arr;
-            this._users = arr;
+            lock (usersLock)
+            {
+                Users = arr;
+                this._users = arr;
+            }
         }
-
 
         private void ExecuteLeaveRoom(object obj)
         {
             Manager.GetManager().SetThreading(false);
             this.clientHandler.GetLeaveRoom();
-            var view = new MenuView();
-            Window w = Application.Current.MainWindow;
-            Application.Current.MainWindow = view;
-            view.Show();
-            w.Close();
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                var view = new MenuView();
+                Window w = Application.Current.MainWindow;
+                Application.Current.MainWindow = view;
+                view.Show();
+                w.Close();
+            });
         }
     }
 }

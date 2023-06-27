@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -20,8 +19,8 @@ namespace TakiClient.Views
     public partial class JoinedRoomView : Window
     {
         private JoinedRoomViewModel viewModel;
-        private Task roomUpdateTask;
-        private CancellationTokenSource cancellationTokenSource;
+        private Thread roomUpdateThread;
+        private bool isThreadRunning;
 
         public JoinedRoomView(JoinedRoomViewModel viewModel)
         {
@@ -30,31 +29,28 @@ namespace TakiClient.Views
             this.viewModel = viewModel;
             DataContext = viewModel;
 
-            // Create and start the task for room updates
+            // Create and start the thread for room updates
             Manager.GetManager().SetThreading(true);
-            cancellationTokenSource = new CancellationTokenSource();
-            roomUpdateTask = Task.Run(() => RoomUpdateThreadMethod(cancellationTokenSource.Token));
+            isThreadRunning = true;
+            roomUpdateThread = new Thread(RoomUpdateThreadMethod);
+            roomUpdateThread.Start();
 
             Unloaded += JoinRoom_Unloaded;
         }
 
         private void JoinRoom_Unloaded(object sender, RoutedEventArgs e)
         {
-            cancellationTokenSource.Cancel();
+            isThreadRunning = false;
         }
 
-        private async Task RoomUpdateThreadMethod(CancellationToken cancellationToken)
+        private void RoomUpdateThreadMethod()
         {
-            while (!cancellationToken.IsCancellationRequested && Manager.GetManager().IsThreading())
-            {        
+            while (isThreadRunning && Manager.GetManager().IsThreading())
+            {
                 string[] users = viewModel.UpdateUsers();
-                if(users == null)
-                {
-                    return;
-                }
                 viewModel.UpdateUsers(users);
 
-                await Task.Delay(5);
+                Thread.Sleep(5);
             }
         }
     }

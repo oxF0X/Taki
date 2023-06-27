@@ -57,20 +57,6 @@ namespace TakiClient.Views
             roomUpdateTask = Task.Run(() => UpdateCardArrays(cancellationTokenSource.Token));
         }
 
-        private void CreateButtons(string[] strings)
-        {
-            foreach (string str in strings)
-            {
-                Button button = new Button();
-                button.Content = str;
-                button.Click += Button_Click;
-                button.CommandParameter = str; // Set the command parameter to the button content
-                button.Height = 150;
-                button.Width = 100;
-                buttonListBox.Items.Add(button);
-            }
-        }
-
 
         private async Task UpdateCardArrays(CancellationToken cancellationToken)
         {
@@ -100,8 +86,6 @@ namespace TakiClient.Views
             }
         }
 
-
-
         protected override void OnClosed(EventArgs e)
         {
             base.OnClosed(e);
@@ -116,6 +100,23 @@ namespace TakiClient.Views
             string id = cardId.Substring(10, 2);
             Manager.GetManager().getClient().GetPlaceCard(id);
 
+        }
+
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                DragMove();
+            }
+        }
+
+
+        private void Border_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                this.DragMove();
+            }
         }
     }
 }
