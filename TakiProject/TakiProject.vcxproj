@@ -160,6 +160,7 @@
     <ClInclude Include="RoomManager.h" />
     <ClInclude Include="RoomMemberRequestHandler.h" />
     <ClInclude Include="Server.h" />
+    <ClInclude Include="StatisticsManager.h" />
     <ClInclude Include="TriviaException.h" />
   </ItemGroup>
   <ItemGroup>
@@ -185,6 +186,7 @@
     <ClCompile Include="RoomManager.cpp" />
     <ClCompile Include="RoomMemberRequestHandler.cpp" />
     <ClCompile Include="Server.cpp" />
+    <ClCompile Include="StatisticsManager.cpp" />
     <ClCompile Include="TriviaException.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

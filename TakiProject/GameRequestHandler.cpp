@@ -22,7 +22,7 @@ RequestResult GameRequestHandler::handleRequest(RequestInfo info)
 		break;
 	case DrawCard_REQ:
 		this->m_game.playCard(this->m_user, Card("00"));
-		return RequestResult{ JsonRequestPacketSerializer::serializeResponse(DrawCardFromDeckResponse{1, }), this };
+		return RequestResult{ JsonRequestPacketSerializer::serializeResponse(DrawCardFromDeckResponse{1, }), nullptr };
 	case GetGameState_REQ:
 		return this->getGameSate(info);
 		break;

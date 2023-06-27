@@ -136,43 +136,81 @@ int MongoDB::addNewUser(std::string username, std::string password, std::string 
     return 0;
 }
 
-float MongoDB::getPlayerAverageAnswerTime(std::string username)
-{
-    return 0.0f;
-}
-
 int MongoDB::getNumOfWins(std::string username)
 {
-    return 0;
-}
+    try
+    {
+        std::vector<std::string> dbNames;
+        {
+            std::shared_lock<std::shared_mutex> lock(this->_mtx);
+            dbNames = this->_client.list_database_names();
+        }
+        if (std::find(dbNames.begin(), dbNames.end(), std::string(DB_NAME)) == dbNames.end())
+        {
+            return false;
+        }
 
-float MongoDB::getPlayerAverageNumOfCardsLeft(std::string username)
-{
-    return 0.0f;
+        {
+            std::shared_lock<std::shared_mutex> lock(this->_mtx);
+            if (!this->_client[DB_NAME].has_collection(USERS_COLLECTION))
+            {
+                return false;
+            }
+        }
+
+        bsoncxx::builder::basic::array array_builder;
+        array_builder.append(username);
+        bsoncxx::document::value query = bsoncxx::builder::basic::make_document(bsoncxx::builder::basic::kvp("players", username));
+
+        {
+            std::shared_lock<std::shared_mutex> lock(this->_mtx);
+            mongocxx::cursor result = this->_client[DB_NAME][PLAYERS_COLLECTION].find(query.view());
+            return std::distance(result.begin(), result.end());
+        }
+
+    }
+    catch (const mongocxx::operation_exception& ex) {
+        std::cerr << "Exception from mongo: " << ex.what() << std::endl;
+    }
 }
 
 int MongoDB::getNumsOfPlayerGames(std::string username)
 {
-    std::vector<std::string> dbNames = this->_client.list_database_names();
-    if (std::find(dbNames.begin(), dbNames.end(), std::string(DB_NAME)) == dbNames.end())
+    try
     {
-        return false;
+        std::vector<std::string> dbNames;
+        {
+            std::shared_lock<std::shared_mutex> lock(this->_mtx);
+            dbNames = this->_client.list_database_names();
+        }
+        if (std::find(dbNames.begin(), dbNames.end(), std::string(DB_NAME)) == dbNames.end())
+        {
+            return false;
+        }
+
+        {
+            std::shared_lock<std::shared_mutex> lock(this->_mtx);
+            if (!this->_client[DB_NAME].has_collection(USERS_COLLECTION))
+            {
+                return false;
+            }
+        }
+
+        bsoncxx::builder::basic::array array_builder;
+        array_builder.append(username);
+        bsoncxx::document::value query = bsoncxx::builder::basic::make_document(bsoncxx::builder::basic::kvp("players", bsoncxx::builder::basic::make_document(bsoncxx::builder::basic::kvp("$in", array_builder))));
+
+        {
+            std::shared_lock<std::shared_mutex> lock(this->_mtx);
+            mongocxx::cursor result = this->_client[DB_NAME][PLAYERS_COLLECTION].find(query.view());
+            return std::distance(result.begin(), result.end());
+        }
+
     }
-
-    if (!this->_client[DB_NAME].has_collection(STATISTICS_COLLECTION))
-    {
-        return false;
+    catch (const mongocxx::operation_exception& ex) {
+        std::cerr << "Exception from mongo: " << ex.what() << std::endl;
     }
-
-    auto result = this->_client[DB_NAME][STATISTICS_COLLECTION].find_one(bsoncxx::builder::basic::make_document(bsoncxx::builder::basic::kvp("username", username)));
-
-    //if (result) {
-    //    bsoncxx::document::view d = bsoncxx::to_json(result);
-    //}
     
-
-    
-
 }
 
 MongoDB& MongoDB::getDB()

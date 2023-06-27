@@ -19,6 +19,7 @@
 
 #define DB_NAME "Taki"
 #define USERS_COLLECTION "users"
+#define PLAYERS_COLLECTION "players"
 #define STATISTICS_COLLECTION "statistics"
 
 class MongoDB : public IDatabase
@@ -32,9 +33,7 @@ public:
 	int addNewUser(std::string username, std::string password, std::string email, const std::string address, const std::string phoneNumber, const std::string birthday) override;
 	
 	// statistics
-	float getPlayerAverageAnswerTime(std::string username) override;
 	int getNumOfWins(std::string username) override;
-	float getPlayerAverageNumOfCardsLeft(std::string username) override;
 	int getNumsOfPlayerGames(std::string username) override;
 	static MongoDB& getDB();
 
