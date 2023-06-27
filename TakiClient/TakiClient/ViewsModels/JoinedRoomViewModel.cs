@@ -29,9 +29,15 @@ namespace TakiClient.ViewsModels
         }
 
         public ICommand LeaveRoomCommand { get; }
+        public ICommand CloseScreenCommand { get; }
+        public ICommand HideScreenCommand { get; }
+        public ICommand MaximizeOrMinimizeCommand { get; }
 
         public JoinedRoomViewModel()
         {
+            CloseScreenCommand = new ViewModelCommand(ExecutedCloseCommand);
+            HideScreenCommand = new ViewModelCommand(ExecutedHideCommand);
+            MaximizeOrMinimizeCommand = new ViewModelCommand(ExecutedMaximizeOrMinimizeCommand);
             this.clientHandler = Manager.GetManager().getClient();
             LeaveRoomCommand = new ViewModelCommand(ExecuteLeaveRoom);
             this._users = new string[1];
@@ -80,6 +86,31 @@ namespace TakiClient.ViewsModels
                 view.Show();
                 w.Close();
             });
+        }
+
+        private void ExecutedMaximizeOrMinimizeCommand(object obj)
+        {
+            if (Application.Current.MainWindow.WindowState == WindowState.Maximized)
+            {
+                Application.Current.MainWindow.WindowState = WindowState.Normal;
+                Application.Current.MainWindow.Width = 600;
+                Application.Current.MainWindow.Height = 500;
+            }
+            else
+            {
+                Application.Current.MainWindow.WindowState = WindowState.Maximized;
+            }
+        }
+
+        private void ExecutedHideCommand(object obj)
+        {
+            Application.Current.MainWindow.WindowState = WindowState.Minimized;
+
+        }
+
+        private void ExecutedCloseCommand(object obj)
+        {
+            Application.Current.Shutdown();
         }
     }
 }

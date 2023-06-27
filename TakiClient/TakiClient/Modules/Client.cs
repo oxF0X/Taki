@@ -9,6 +9,7 @@ using System.Net.NetworkInformation;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using System.Text.Json;
+using System.Resources.Extensions;
 
 namespace TakiClient.Modules
 {
@@ -352,9 +353,8 @@ namespace TakiClient.Modules
             byte[] buffer = new byte[size];
             int bytesNum = clientStream.Read(buffer, 0, size);
             string str = Encoding.Default.GetString(buffer);
-
-
-            return true;
+            LoginResponse res = JsonRequestPacketDeserializer.DeserializeLogIn(str);
+            return res.status == 1;
         }
 
         public bool GetDrawCard()

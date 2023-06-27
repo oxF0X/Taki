@@ -54,7 +54,10 @@ namespace TakiClient.ViewsModels
         private void ExecuteCreateRoom(object obj)
         {
                 int maxUsersValue = (int)(_maxUsers[_maxUsers.Length - 1]) - 48;
-                this.clientHandler.CreateRoom(_roomName, maxUsersValue, 3) ;
+                if(this.clientHandler.CreateRoom(_roomName, maxUsersValue, 3) != "1")
+                {
+                    return;
+                }
                 var viewModel = new AdminGameJoinViewModel();
                 var view = new AdminGameJoinView(viewModel);
                 Window w = Application.Current.MainWindow;

@@ -30,6 +30,15 @@ namespace TakiClient.Views
             _viewModel = viewModel;
             DataContext = _viewModel;
 
+            WindowStyle = WindowStyle.None;
+            WindowState = WindowState.Maximized;
+
+            double screenWidth = SystemParameters.PrimaryScreenWidth;
+            double screenHeight = SystemParameters.PrimaryScreenHeight;
+
+            Width = screenWidth;
+            Height = screenHeight;
+
             // Create and start the task for room updates
             Manager.GetManager().SetThreading(true);
             cancellationTokenSource = new CancellationTokenSource();
@@ -50,6 +59,23 @@ namespace TakiClient.Views
                 _viewModel.UpdateUsers(_viewModel.UpdateUsers());
 
                 await Task.Delay(5);
+            }
+        }
+
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                DragMove();
+            }
+        }
+
+
+        private void Border_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                this.DragMove();
             }
         }
     }

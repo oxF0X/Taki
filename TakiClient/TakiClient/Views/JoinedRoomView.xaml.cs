@@ -26,6 +26,15 @@ namespace TakiClient.Views
         {
             InitializeComponent();
 
+            WindowStyle = WindowStyle.None;
+            WindowState = WindowState.Maximized;
+
+            double screenWidth = SystemParameters.PrimaryScreenWidth;
+            double screenHeight = SystemParameters.PrimaryScreenHeight;
+
+            Width = screenWidth;
+            Height = screenHeight;
+
             this.viewModel = viewModel;
             DataContext = viewModel;
 
@@ -51,6 +60,23 @@ namespace TakiClient.Views
                 viewModel.UpdateUsers(users);
 
                 Thread.Sleep(5);
+            }
+        }
+
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                DragMove();
+            }
+        }
+
+
+        private void Border_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                this.DragMove();
             }
         }
     }

@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:TakiClient.Views"
         mc:Ignorable="d"
         Title="JoinedRoomView" Height="450" Width="800"
-        xmlns:viewModel="clr-namespace:TakiClient.ViewsModels">
+        xmlns:viewModel="clr-namespace:TakiClient.ViewsModels"
+        MouseDown="Window_MouseDown">
 
     <Window.DataContext>
         <viewModel:JoinedRoomViewModel/>
@@ -34,24 +35,48 @@
 
             <Grid>
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
                     <RowDefinition Height="300"/>
                     <RowDefinition/>
 
 
                 </Grid.RowDefinitions>
 
-                <Button Grid.Row="1" Style="{StaticResource LoginButtonStyle}" Content="Leave room :(" Command="{Binding LeaveRoomCommand}"/>
-                <ScrollViewer VerticalScrollBarVisibility="Auto">
-                    <ItemsControl ItemsSource="{Binding Users}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <Border BorderBrush="Gray" BorderThickness="1" Margin="5" Padding="5">
-                                    <TextBlock Text="{Binding}" FontSize="16" FontWeight="Bold" />
-                                </Border>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                </ScrollViewer>
+                <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
+                    <Button x:Name="btnMinimize"
+                            Style="{StaticResource MinimizeButtonStyle}"
+                            Command="{Binding HideScreenCommand}">
+                        <TextBlock Text="➖" Foreground="White" FontSize="12" FontWeight="Bold"/>
+                    </Button>
+
+
+                    <Button x:Name="btnMaximize" 
+                            Style="{StaticResource MinimizeButtonStyle}"
+                            Command="{Binding MaximizeOrMinimizeCommand}">
+                        <TextBlock Text="🗖" Foreground="White" FontSize="12" FontWeight="Bold"/>
+                    </Button>
+
+                    <Button x:Name="btnClose"
+                            Style="{StaticResource CloseButtonStyle}"
+                            Command="{Binding CloseScreenCommand}">
+                        <TextBlock Text="✖" 
+                                   Foreground="White" 
+                                   FontSize="12" 
+                                   FontWeight="Bold"/>
+                    </Button>
+                </StackPanel>
+
+                <Button Grid.Row="2" Style="{StaticResource LoginButtonStyle}" Content="Leave room :(" Command="{Binding LeaveRoomCommand}"/>
+
+                <ItemsControl ItemsSource="{Binding Users}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="1">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border BorderBrush="Gray" BorderThickness="1" Margin="5" Padding="5">
+                                <TextBlock Text="{Binding}" FontSize="16" FontWeight="Bold" />
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
 
 
             </Grid>

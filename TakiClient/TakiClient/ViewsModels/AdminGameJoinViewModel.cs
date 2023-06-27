@@ -29,12 +29,18 @@ namespace TakiClient.ViewsModels
 
         public ICommand CloseRoomCommand { get; }
         public ICommand StartGameCommand { get; }
+        public ICommand CloseScreenCommand { get; }
+        public ICommand HideScreenCommand { get; }
+        public ICommand MaximizeOrMinimizeCommand { get; }
 
         public AdminGameJoinViewModel()
         {
             this.clientHandler = Manager.GetManager().getClient();
             CloseRoomCommand = new ViewModelCommand(ExecuteCloseRoom);
             StartGameCommand = new ViewModelCommand(ExecuteStartGame);
+            CloseScreenCommand = new ViewModelCommand(ExecutedCloseCommand);
+            HideScreenCommand = new ViewModelCommand(ExecutedHideCommand);
+            MaximizeOrMinimizeCommand = new ViewModelCommand(ExecutedMaximizeOrMinimizeCommand);
             this._users = new string[1];
         }
 
@@ -76,6 +82,32 @@ namespace TakiClient.ViewsModels
             Application.Current.MainWindow = view;
             view.Show();
             w.Close();
+        }
+
+
+        private void ExecutedMaximizeOrMinimizeCommand(object obj)
+        {
+            if (Application.Current.MainWindow.WindowState == WindowState.Maximized)
+            {
+                Application.Current.MainWindow.WindowState = WindowState.Normal;
+                Application.Current.MainWindow.Width = 600;
+                Application.Current.MainWindow.Height = 500;
+            }
+            else
+            {
+                Application.Current.MainWindow.WindowState = WindowState.Maximized;
+            }
+        }
+
+        private void ExecutedHideCommand(object obj)
+        {
+            Application.Current.MainWindow.WindowState = WindowState.Minimized;
+
+        }
+
+        private void ExecutedCloseCommand(object obj)
+        {
+            Application.Current.Shutdown();
         }
     }
 }

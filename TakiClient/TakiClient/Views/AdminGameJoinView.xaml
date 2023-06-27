@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:TakiClient.Views"
         mc:Ignorable="d"
         Title="AdminGameJoinView" Height="450" Width="800"
-        xmlns:viewModel="clr-namespace:TakiClient.ViewsModels">
+        xmlns:viewModel="clr-namespace:TakiClient.ViewsModels"
+        MouseDown="Window_MouseDown">
 
 
 
@@ -37,28 +38,50 @@
 
             <Grid>
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
                     <RowDefinition Height="300"/>
                     <RowDefinition/>
 
 
                 </Grid.RowDefinitions>
-                <StackPanel Grid.Row="1">
+                <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
+                    <Button x:Name="btnMinimize"
+                            Style="{StaticResource MinimizeButtonStyle}"
+                            Command="{Binding HideScreenCommand}">
+                        <TextBlock Text="➖" Foreground="White" FontSize="12" FontWeight="Bold"/>
+                    </Button>
+
+
+                    <Button x:Name="btnMaximize" 
+                            Style="{StaticResource MinimizeButtonStyle}"
+                            Command="{Binding MaximizeOrMinimizeCommand}">
+                        <TextBlock Text="🗖" Foreground="White" FontSize="12" FontWeight="Bold"/>
+                    </Button>
+
+                    <Button x:Name="btnClose"
+                            Style="{StaticResource CloseButtonStyle}"
+                            Command="{Binding CloseScreenCommand}">
+                        <TextBlock Text="✖" 
+                                   Foreground="White" 
+                                   FontSize="12" 
+                                   FontWeight="Bold"/>
+                    </Button>
+                </StackPanel>
+            
+                <StackPanel Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center">
                     <Button Style="{StaticResource LoginButtonStyle}" Content="Leave room D:" Command="{Binding CloseRoomCommand}"/>
                     <Button Style="{StaticResource LoginButtonStyle}" Content="Statet game :D" Command="{Binding StartGameCommand}"/>
                 </StackPanel>
-                <ScrollViewer VerticalScrollBarVisibility="Auto">
-                    <ItemsControl ItemsSource="{Binding Users}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <Border BorderBrush="Gray" BorderThickness="1" Margin="5" Padding="5">
-                                    <TextBlock Text="{Binding}" FontSize="16" FontWeight="Bold" />
-                                </Border>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                </ScrollViewer>
 
-
+                <ItemsControl ItemsSource="{Binding Users}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="1">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border BorderBrush="Gray" BorderThickness="1" Margin="5" Padding="5">
+                                <TextBlock Text="{Binding}" FontSize="16" FontWeight="Bold" />
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
             </Grid>
         </Border>
     </Border>
