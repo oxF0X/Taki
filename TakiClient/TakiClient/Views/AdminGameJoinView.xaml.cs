@@ -17,9 +17,6 @@ using TakiClient.ViewsModels;
 
 namespace TakiClient.Views
 {
-    /// <summary>
-    /// Interaction logic for AdminGameJoinView.xaml
-    /// </summary>
     public partial class AdminGameJoinView : Window
     {
         private AdminGameJoinViewModel _viewModel;
@@ -43,7 +40,6 @@ namespace TakiClient.Views
 
         private void JoinRoom_Unloaded(object sender, RoutedEventArgs e)
         {
-            // Stop the task when the page is unloaded
             cancellationTokenSource.Cancel();
         }
 

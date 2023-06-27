@@ -76,7 +76,8 @@ namespace TakiClient.ViewsModels
                 Error = res;
                 return;
             }
-            var view = new JoinedRoomView();
+            var model = new JoinedRoomViewModel();
+            var view = new JoinedRoomView(model);
             Window w = Application.Current.MainWindow;
             Application.Current.MainWindow = view;
             view.Show();

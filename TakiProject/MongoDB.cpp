@@ -55,6 +55,7 @@ int MongoDB::doesUserExist(std::string username)
         {
             std::shared_lock<std::shared_mutex> lock(this->_mtx);
             mongocxx::cursor result = this->_client[DB_NAME][USERS_COLLECTION].find(query.view());
+
             return std::distance(result.begin(), result.end());
 
         }

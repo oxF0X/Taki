@@ -15,9 +15,7 @@ namespace TakiClient.ViewsModels
     public  class AdminGameJoinViewModel : ViewsModelBase
     {
         private string[] _users;
-
         private Client clientHandler;
-
 
         public String[] Users
         {
@@ -32,15 +30,12 @@ namespace TakiClient.ViewsModels
         public ICommand CloseRoomCommand { get; }
         public ICommand StartGameCommand { get; }
 
-
-
         public AdminGameJoinViewModel()
         {
             this.clientHandler = Manager.GetManager().getClient();
             CloseRoomCommand = new ViewModelCommand(ExecuteCloseRoom);
             StartGameCommand = new ViewModelCommand(ExecuteStartGame);
-            //this._users = clientHandler.
-            //(Manager.GetManager().getRoomId());
+            this._users = new string[1];
         }
 
         private void ExecuteStartGame(object obj)
@@ -71,7 +66,6 @@ namespace TakiClient.ViewsModels
             Users = arr;
             this._users = arr;
         }
-
 
         private void ExecuteCloseRoom(object obj)
         {

@@ -83,7 +83,7 @@ RequestResult GameRequestHandler::getGameResults(RequestInfo info)
 	std::vector<PlayerResults> results;
 	for (auto it: cards)
 	{
-		results.push_back(PlayerResults{ it.first,(int)it.second.size() });
+		results.push_back(PlayerResults{ it.first});
 	}
 	return RequestResult{ JsonRequestPacketSerializer::serializeResponse(GetGameResultsResponse{ 1,results }), this->m_handlerFactory.createMenuRequestHandler(LoggedUser{this->m_user.getUsername()}) };
 }

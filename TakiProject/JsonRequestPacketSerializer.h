@@ -152,9 +152,7 @@ typedef struct PlaceCardResponse
 typedef struct PlayerResults
 {
 	std::string username;
-	int cardsInHand;
-	float averagePlayTime;
-	NLOHMANN_DEFINE_TYPE_INTRUSIVE(PlayerResults, username, cardsInHand, averagePlayTime)
+	NLOHMANN_DEFINE_TYPE_INTRUSIVE(PlayerResults, username)
 
 } PlayerResults;
 

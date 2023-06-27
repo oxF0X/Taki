@@ -12,13 +12,10 @@ using TakiClient.Views;
 
 namespace TakiClient.ViewsModels
 {
-    internal class JoinedRoomViewModel : ViewsModelBase
+    public class JoinedRoomViewModel : ViewsModelBase
     {
-
         private string[] _users;
-
         private Client clientHandler;
-
 
         public String[] Users
         {
@@ -32,12 +29,11 @@ namespace TakiClient.ViewsModels
 
         public ICommand LeaveRoomCommand { get; }
 
-
-
         public JoinedRoomViewModel()
         {
             this.clientHandler = Manager.GetManager().getClient();
             LeaveRoomCommand = new ViewModelCommand(ExecuteLeaveRoom);
+            this._users = new string[1];
         }
 
         public string[] UpdateUsers()
