@@ -38,43 +38,23 @@
             </TextBox>
             <TextBlock Text="Max users number" Foreground="White" FontSize="15" FontWeight="Medium" 
                                Margin="0, 10, 0, 0"  FontFamily="Montserrat" HorizontalAlignment="Left"/>
-            <TextBox x:Name="txtMaxPlayers" 
-                             Text="{Binding MaxUsers, UpdateSourceTrigger=PropertyChanged}"
-                             FontSize="14"
-                             FontWeight="Medium" 
-                             FontFamily="Montserrat"
-                             Foreground="White"
-                             CaretBrush="LightGray"
-                             BorderBrush="DarkGray"
-                             BorderThickness="0,0,0,2"
-                             Height="28"
-                                Width="400"
-                             VerticalContentAlignment="Center"
-                             Margin="0,5,0,0"
-                             Padding="20,0,0,0">
-                <TextBox.Background>
-                    <ImageBrush/>
-                </TextBox.Background>
-            </TextBox>
-            <TextBlock Text="Time per move" Foreground="White" FontSize="15" FontWeight="Medium" 
-                               Margin="0, 10, 0, 0"  FontFamily="Montserrat" HorizontalAlignment="Left"/>
-            <TextBox x:Name="txtAnswerTimeOut"
-                            Text="{Binding AnswerTimeOut, UpdateSourceTrigger=PropertyChanged}"
-                             FontSize="14"
-                             FontWeight="Medium" 
-                             FontFamily="Montserrat"
-                             Foreground="White"
-                             CaretBrush="LightGray"
-                             BorderBrush="DarkGray"
-                             BorderThickness="0,0,0,2"
-                             Height="28" 
-                             VerticalContentAlignment="Center"
-                             Margin="0,5,0,0"
-                             Padding="20,0,0,0">
-                <TextBox.Background>
-                    <ImageBrush/>
-                </TextBox.Background>
-            </TextBox>
+            <ComboBox x:Name="cmbMaxUsers" 
+                      SelectedItem="{Binding MaxUsers}"
+                      FontSize="14"
+                      FontWeight="Medium" 
+                      FontFamily="Montserrat"
+                      Foreground="Black"
+                      BorderBrush="DarkGray"                     
+                      BorderThickness="0,0,0,2"
+                      Height="28"
+                      Width="400"
+                      Margin="0,5,0,0"
+                      Padding="20,0,0,0">
+
+                <ComboBoxItem Content="2"/>
+                <ComboBoxItem Content="3"/>
+                <ComboBoxItem Content="4"/>
+            </ComboBox>
             <Button x:Name="btnCreateRoom" 
                             Command="{Binding CreateRoomCommand}"
                             BorderThickness="0"

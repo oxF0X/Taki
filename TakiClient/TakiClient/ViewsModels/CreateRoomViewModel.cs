@@ -14,22 +14,10 @@ namespace TakiClient.ViewsModels
 {
     public class CreateRoomViewModel : ViewsModelBase
     {
-        private int _answerTimeOut;
         private int _maxUsers;
         private string _roomName;
 
         private Client clientHandler;
-
-
-        public int AnswerTimeOut
-        {
-            get { return _answerTimeOut; }
-            set
-            {
-                _answerTimeOut = value;
-                OnPropertyChanged(nameof(AnswerTimeOut));
-            }
-        }
 
 
         public int MaxUsers
@@ -64,12 +52,12 @@ namespace TakiClient.ViewsModels
 
         private bool CanExecuteCreateRoom(object obj)
         {
-            return !(string.IsNullOrWhiteSpace(RoomName) || MaxUsers == 0 || AnswerTimeOut == 0);
+            return !(string.IsNullOrWhiteSpace(RoomName) || MaxUsers == 0);
         }
 
         private void ExecuteCreateRooms(object obj)
         {
-            this.clientHandler.CreateRoom(_roomName, _maxUsers, _answerTimeOut);
+            this.clientHandler.CreateRoom(_roomName, _maxUsers, 3);
             var viewModel = new AdminGameJoinViewModel();
             var view = new AdminGameJoinView(viewModel);
             Window w = Application.Current.MainWindow;
