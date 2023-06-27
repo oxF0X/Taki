@@ -117,7 +117,15 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
-        <Image x:Name="centerImage" Source="{Binding LastCardPlayed}" Width="100" Height="140" Grid.Row="2" Grid.Column="1" />
+        <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Image x:Name="centerImage" Source="{Binding LastCardPlayed}" Width="100" Height="140"/>
+            <Button  Height="140" Width="100" Command="{Binding DrawCardCommand}">
+                <Button.Background>
+                    <ImageBrush ImageSource="../Images/Back.png" Stretch="Fill"/>
+                </Button.Background>
+            </Button>
+        </StackPanel>
+
 
     </Grid>
 

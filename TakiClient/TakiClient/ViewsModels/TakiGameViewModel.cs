@@ -10,6 +10,7 @@ using System.Windows;
 using TakiClient.ViewsModels;
 using Microsoft.VisualBasic.ApplicationServices;
 using System.ComponentModel;
+using TakiClient.Modules;
 
 namespace TakiClient.ViewsModels
 {
@@ -77,6 +78,8 @@ namespace TakiClient.ViewsModels
         public ICommand CloseScreenCommand { get; }
         public ICommand HideScreenCommand { get; }
         public ICommand MaximizeOrMinimizeCommand { get; }
+        public ICommand DrawCardCommand { get; }
+
 
         public TakiGameViewModel()
         {
@@ -86,6 +89,13 @@ namespace TakiClient.ViewsModels
             CloseScreenCommand = new ViewModelCommand(ExecutedCloseCommand);
             HideScreenCommand = new ViewModelCommand(ExecutedHideCommand);
             MaximizeOrMinimizeCommand = new ViewModelCommand(ExecutedMaximizeOrMinimizeCommand);
+            DrawCardCommand = new ViewModelCommand(ExecuteDrawCardCommand);
+
+        }
+
+        private void ExecuteDrawCardCommand(object obj)
+        {
+            Manager.GetManager().getClient().GetDrawCard();
         }
 
         public void setLocationImages(string[] arr)

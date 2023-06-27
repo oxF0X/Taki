@@ -357,6 +357,26 @@ namespace TakiClient.Modules
             return true;
         }
 
+        public bool GetDrawCard()
+        {
+            string cardId = "00";
+            byte[] req = JsonRequestPacketSerializer.SerializePlayCard(cardId);
+
+            clientStream.Write(req, 0, req.Length);
+            int code = GetCodeFromSocket();
+            int size = GetSizeFromSocket();
+            if (size <= 0)
+            {
+                return false;
+            }
+
+            byte[] buffer = new byte[size];
+            int bytesNum = clientStream.Read(buffer, 0, size);
+            string str = Encoding.Default.GetString(buffer);
+
+
+            return true;
+        }
 
 
         private byte GetCodeFromSocket()
