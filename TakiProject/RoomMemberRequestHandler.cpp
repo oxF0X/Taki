@@ -47,21 +47,27 @@ RequestResult RoomMemberRequestHandler::getRoomState(RequestInfo info)
 	std::vector<std::string> LastPlayForEachPlayer;
 
 
-
-	hasGameBegun = this->m_room.isActive();
-	players = this->m_room.getAllUsers();
-
-	std::string str = "";
-	for (std::string s : players)
+	try
 	{
-		str += s;
-	}
-	std::cout << this->m_user.getUsername() << " " << str << std::endl;
-	if (!this->m_room.isActive())
-	{
-		return RequestResult{ JsonRequestPacketSerializer::serializeResponse(GetRoomsStateResponse{1,hasGameBegun, players }), nullptr };
-	}
-	Game& game(this->m_handlerFactory.getGameManger().getGame(this->m_user.getUsername()));
+		hasGameBegun = this->m_room.isActive();
+		players = this->m_room.getAllUsers();
 
-	return RequestResult{ JsonRequestPacketSerializer::serializeResponse(StartRoomResponse{ 1 }), this->m_handlerFactory.createGameRequestHandler(this->m_user,game)};
+		std::string str = "";
+		for (std::string s : players)
+		{
+			str += s;
+		}
+		std::cout << this->m_user.getUsername() << " " << str << std::endl;
+		if (!this->m_room.isActive())
+		{
+			return RequestResult{ JsonRequestPacketSerializer::serializeResponse(GetRoomsStateResponse{1,hasGameBegun, players }), nullptr };
+		}
+		Game& game(this->m_handlerFactory.getGameManger().getGame(this->m_user.getUsername()));
+
+		return RequestResult{ JsonRequestPacketSerializer::serializeResponse(StartRoomResponse{ 1 }), this->m_handlerFactory.createGameRequestHandler(this->m_user,game) };
+	}
+	catch(...)
+	{
+		return RequestResult{ JsonRequestPacketSerializer::serializeResponse(ErrorResponse{"The room was closed"}), this->m_handlerFactory.createMenuRequestHandler(this->m_user)};
+	}
 }

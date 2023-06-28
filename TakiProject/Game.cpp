@@ -40,6 +40,11 @@ Game::Game(std::vector<std::string> players) : m_currentCard("00"), m_database(&
 
 void Game::playCard(LoggedUser user, Card card)
 {
+	if (!this->isProgress)
+	{
+		return;
+	}
+
 	if (this->m_currentPlayer->getUsername() != user.getUsername() && this->isProgress)
 	{
 		throw(TriviaException(std::string("Wrong player")));
@@ -231,6 +236,14 @@ void Game::DrawCards(int numOfCards)
 
 void Game::hasCards(LoggedUser user)
 {
+	if (this->m_players.size() == 0)
+	{
+		this->m_database->writeResultToDB(this->originalPlayers, this->m_currentPlayer->getUsername());
+		this->isProgress = false;
+		this->winner = user.getUsername();
+		return;
+	}
+
 	LoggedUser* u;
 	for (auto it : this->m_players)
 	{
