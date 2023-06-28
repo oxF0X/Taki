@@ -44,6 +44,11 @@ namespace TakiClient.Views
         {
             InitializeComponent();
 
+            var resourceDict = new ResourceDictionary();
+            resourceDict.Source = new Uri("Views/Styles.xaml", UriKind.Relative);
+            Application.Current.Resources.MergedDictionaries.Add(resourceDict);
+
+
             this.sideImages = new string[3][];
             viewModel = new TakiGameViewModel();
             DataContext = viewModel;
@@ -86,6 +91,7 @@ namespace TakiClient.Views
                     viewModel.SetSide1(gameState.Value.cardsPerPlayer[0]);
                     viewModel.SetSide2(gameState.Value.cardsPerPlayer[1]);
                     viewModel.SetSide3(gameState.Value.cardsPerPlayer[2]);
+                    viewModel.CurrentPlayer = gameState.Value.currentPlayer;
                 });
                 count++;
                 await Task.Delay(500);
@@ -108,6 +114,8 @@ namespace TakiClient.Views
         {
             // Create the Popup control
             this.popup = new Popup();
+            this.popup.Style = (Style)Application.Current.Resources["CustomPopupStyle"];
+
 
             // Create a Grid to hold the content of the popup
             Grid grid = new Grid();
@@ -117,6 +125,7 @@ namespace TakiClient.Views
 
             // Create a Button control
             Button button = new Button();
+            button.Style = (Style)Application.Current.Resources["PopupButtonStyle"];
             button.Height = 300;
             button.Width = 200;
             button.Content = Manager.GetManager().getClient().GetGameResult() + "won, \nreturn to menu";
@@ -162,7 +171,6 @@ namespace TakiClient.Views
                     return;
                 }
                 buttons = new Button[4];
-
                 for (int i = 0; i < 4; i++)
                 {
                     buttons[i] = new Button();
@@ -193,6 +201,7 @@ namespace TakiClient.Views
 
                 buttons = new Button[1];
                 buttons[0] = new Button();
+                buttons[0].Style = (Style)Application.Current.Resources["LoginButtonStyle"];
                 buttons[0].Width = 100;
                 buttons[0].Height = 60;                
                 buttons[0].Content = "Finish taki";

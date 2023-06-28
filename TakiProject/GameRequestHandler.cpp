@@ -110,7 +110,7 @@ RequestResult GameRequestHandler::getGameSate(RequestInfo info)
 	{
 		cardsPerPlayer.push_back(0);
 	}
-	return RequestResult{ JsonRequestPacketSerializer::serializeResponse(GetGameStateResponse{1,isProgress, players, cardsPerPlayer, cards[this->m_user.getUsername()], this->m_game.getCurrentCard().getCode()}), nullptr};
+	return RequestResult{ JsonRequestPacketSerializer::serializeResponse(GetGameStateResponse{1,isProgress, players, cardsPerPlayer, cards[this->m_user.getUsername()], this->m_game.getCurrentCard().getCode(), this->m_game.getCurrentPlayer()}), nullptr};
 }
 
 

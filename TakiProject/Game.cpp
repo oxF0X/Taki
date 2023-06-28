@@ -109,7 +109,7 @@ void Game::playCard(LoggedUser user, Card card)
 	if (card.getCode() == "ST")
 	{
 		this->m_players[u].m_PlayerDeck.removeCard(card);
-		this->m_currentCard.setCode(this->m_currentCard.getCode()[0] + "T");
+		this->m_currentCard.setCode(std::string(this->m_currentCard.getCode()[0] + "T"));
 		this->isTaki = true;
 		this->hasCards(user);
 		return;
@@ -208,6 +208,11 @@ Card Game::getCurrentCard() const
 std::string Game::getWinner() const
 {
 	return this->winner;
+}
+
+std::string Game::getCurrentPlayer() const
+{
+	return this->m_currentPlayer->getUsername();
 }
 
 void Game::moveToNextPlayer()

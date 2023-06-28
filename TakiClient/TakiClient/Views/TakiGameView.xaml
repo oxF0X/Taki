@@ -81,7 +81,7 @@
             </ListBox.ItemsPanel>
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Button Content="{Binding}" Height="140" Width="100" Click="Button_Click" CommandParameter="{Binding}">
+                    <Button Height="140" Width="100" Click="Button_Click" CommandParameter="{Binding}">
                         <Button.Background>
                             <ImageBrush ImageSource="{Binding}" Stretch="Fill"/>
                         </Button.Background>
@@ -128,13 +128,17 @@
 
 
 
-        <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Image x:Name="centerImage" Source="{Binding LastCardPlayed}" Width="100" Height="140"/>
-            <Button  Height="140" Width="100" Command="{Binding DrawCardCommand}">
-                <Button.Background>
-                    <ImageBrush ImageSource="../Images/Back.png" Stretch="Fill"/>
-                </Button.Background>
-            </Button>
+        <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+            
+                <Label Content="{Binding CurrentPlayer}" Height="5" Foreground="#429629"/>
+            <StackPanel Orientation="Horizontal">
+                <Image x:Name="centerImage" Source="{Binding LastCardPlayed}" Width="100" Height="140"/>
+                <Button  Height="140" Width="100" Command="{Binding DrawCardCommand}">
+                    <Button.Background>
+                        <ImageBrush ImageSource="../Images/Back.png" Stretch="Fill"/>
+                    </Button.Background>
+                </Button>
+            </StackPanel>
         </StackPanel>
 
         <Grid  Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">

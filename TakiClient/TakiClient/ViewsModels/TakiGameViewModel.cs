@@ -18,6 +18,7 @@ namespace TakiClient.ViewsModels
     {
         private ObservableCollection<string> buttonItems = new ObservableCollection<string>();
         private string lastCardPlayed;
+        private string currentPlayer;
         private ObservableCollection<string> side1Images = new ObservableCollection<string>();
         private ObservableCollection<string> side2Images = new ObservableCollection<string>();
         private ObservableCollection<string> side3Images = new ObservableCollection<string>();
@@ -44,6 +45,17 @@ namespace TakiClient.ViewsModels
                 OnPropertyChanged(nameof(side1Images));
             }
         }
+
+        public string CurrentPlayer
+        {
+            get { return currentPlayer; }
+            set
+            {
+                currentPlayer = value;
+                OnPropertyChanged(nameof(CurrentPlayer));
+            }
+        }
+
 
         public ObservableCollection<string> Side2Images
         {
@@ -97,6 +109,7 @@ namespace TakiClient.ViewsModels
         {
             Manager.GetManager().getClient().GetDrawCard();
         }
+
 
         public void setLocationImages(string[] arr)
         {

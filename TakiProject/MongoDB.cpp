@@ -122,7 +122,6 @@ int MongoDB::addNewUser(std::string username, std::string password, std::string 
             << "phoneNumber" << phoneNumber
             << "birthday" << birthday
             << bsoncxx::builder::stream::finalize;
-
         {
             std::unique_lock<std::shared_mutex> lock(this->_mtx);
             collection.insert_one(doc_value.view());

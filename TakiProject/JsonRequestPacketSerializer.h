@@ -167,7 +167,8 @@ typedef struct GetGameStateResponse
 	std::vector<int> cardsPerPlayer;
 	std::vector<std::string> cards;
 	std::string currentCard;
-	NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(GetGameStateResponse, status, isProgress, players, cardsPerPlayer, cards, currentCard)
+	std::string currentPlayer;
+	NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(GetGameStateResponse, status, isProgress, players, cardsPerPlayer, cards, currentCard, currentPlayer)
 
 } GetGameStateResponse;
 
