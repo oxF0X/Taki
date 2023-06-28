@@ -150,13 +150,6 @@ void MongoDB::writeResultToDB(std::vector<std::string> players, std::string winn
             return;
         }
 
-        {
-            std::shared_lock<std::shared_mutex> lock(this->_mtx);
-            if (!this->_client[DB_NAME].has_collection(PLAYERS_COLLECTION))
-            {
-                return;
-            }
-        }
 
         mongocxx::collection collection;
         {
