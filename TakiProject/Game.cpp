@@ -34,15 +34,24 @@ Game::Game(std::vector<std::string> players) : m_currentCard("00")
 	this->m_currentCard = temp_card;
 	this->m_gameDeck.removeCard(temp_card);
 	this->m_currentPlayer = std::prev(m_players.end())->first;
-
+	this->originalPlayers = players;
 	this->isTaki = false;
 }
 
 void Game::playCard(LoggedUser user, Card card)
 {
-	if (this->m_currentPlayer->getUsername() != user.getUsername())
+	if (this->m_currentPlayer->getUsername() != user.getUsername() && this->isProgress)
 	{
 		throw(TriviaException(std::string("Wrong player")));
+	}
+	LoggedUser* u;
+	for (auto it : this->m_players)
+	{
+		if (it.first->getUsername() == user.getUsername())
+		{
+			u = it.first;
+			break;
+		}
 	}
 	if (card.getCode() == "00")
 	{
@@ -63,21 +72,15 @@ void Game::playCard(LoggedUser user, Card card)
 	{
 		this->isTaki = false;
 		this->moveToNextPlayer();
+		this->hasCards(user);
+		return;
 	}
 
 	if (!card.isLegalToPlay(this->m_currentCard))
 	{
 		throw(TriviaException(std::string("Ileagal move")));
 	}
-	LoggedUser* u;
-	for (auto it : this->m_players)
-	{
-		if (it.first->getUsername() == user.getUsername())
-		{
-			u = it.first;
-			break;
-		}
-	}
+
 	Card tmpCard = card.getCode();
 	if (tmpCard.getCode()[1] == 'C')
 	{
@@ -92,6 +95,7 @@ void Game::playCard(LoggedUser user, Card card)
 	{
 		this->m_players[u].m_PlayerDeck.removeCard(card);
 		this->m_currentCard = card;
+		this->hasCards(user);
 		return;
 	}
 
@@ -100,6 +104,7 @@ void Game::playCard(LoggedUser user, Card card)
 		this->m_players[u].m_PlayerDeck.removeCard(card);
 		this->m_currentCard.setCode(this->m_currentCard.getCode()[0] + "T");
 		this->isTaki = true;
+		this->hasCards(user);
 		return;
 	}
 
@@ -108,6 +113,7 @@ void Game::playCard(LoggedUser user, Card card)
 		this->m_players[u].m_PlayerDeck.removeCard(card);
 		this->m_currentCard = card;
 		this->isTaki = true;
+		this->hasCards(user);
 		return;
 	}
 
@@ -130,6 +136,7 @@ void Game::playCard(LoggedUser user, Card card)
 		this->m_players[u].m_PlayerDeck.removeCard(card);
 	}
 	this->m_currentCard = card;
+	this->hasCards(user);
 	this->moveToNextPlayer();
 }
 
@@ -159,6 +166,11 @@ std::vector<std::string> Game::getPlayers() const
 		v.push_back((*it.first).getUsername());
 	}
 	return v;
+}
+
+std::string Game::getWinner() const
+{
+	return this->winner;
 }
 
 std::map<std::string, std::vector<std::string>> Game::getCardsByPlayer() const
@@ -204,6 +216,26 @@ void Game::DrawCards(int numOfCards)
 		this->m_players[this->m_currentPlayer].m_PlayerDeck.addCard(temp_card);
 		this->m_gameDeck.removeCard(temp_card);
 	}
+
+}
+
+void Game::hasCards(LoggedUser user)
+{
+	LoggedUser* u;
+	for (auto it : this->m_players)
+	{
+		if (it.first->getUsername() == user.getUsername())
+		{
+			u = it.first;
+			break;
+		}
+	}
+	if (this->m_players[u].m_PlayerDeck.getCards().size() != 0)
+	{
+		return;
+	}
+	this->winner = (*u).getUsername();
+	this->isProgress = false;
 
 }
 

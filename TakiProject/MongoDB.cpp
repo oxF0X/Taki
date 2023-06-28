@@ -136,6 +136,56 @@ int MongoDB::addNewUser(std::string username, std::string password, std::string 
     return 0;
 }
 
+void MongoDB::writeResultToDB(std::vector<std::string> players, std::string winner)
+{
+    try
+    {
+        bsoncxx::builder::basic::array array_builder;
+        std::vector<std::string> dbNames;
+        {
+            std::shared_lock<std::shared_mutex> lock(this->_mtx);
+            dbNames = this->_client.list_database_names();
+        }
+        if (std::find(dbNames.begin(), dbNames.end(), std::string(DB_NAME)) == dbNames.end())
+        {
+            return;
+        }
+
+        {
+            std::shared_lock<std::shared_mutex> lock(this->_mtx);
+            if (!this->_client[DB_NAME].has_collection(PLAYERS_COLLECTION))
+            {
+                return;
+            }
+        }
+
+        mongocxx::collection collection;
+        {
+            std::shared_lock<std::shared_mutex> lock(this->_mtx);
+            collection = this->_client[DB_NAME][PLAYERS_COLLECTION];
+        }
+       
+
+        for (const auto& player : players) {
+            array_builder.append(player);
+        }
+        bsoncxx::document::value doc_value = bsoncxx::builder::stream::document{}
+            << "players" << array_builder
+            << "winner" << winner
+            << bsoncxx::builder::stream::finalize;
+
+        {
+            std::unique_lock<std::shared_mutex> lock(this->_mtx);
+            collection.insert_one(doc_value.view());
+        }
+
+    }
+    catch (const mongocxx::operation_exception& ex) {
+        std::cerr << "Exception from mongo: " << ex.what() << std::endl;
+    }
+}
+
+
 int MongoDB::getNumOfWins(std::string username)
 {
     try

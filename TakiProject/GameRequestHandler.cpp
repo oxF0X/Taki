@@ -32,7 +32,7 @@ RequestResult GameRequestHandler::handleRequest(RequestInfo info)
 	}
 }
 
-GameRequestHandler::GameRequestHandler(LoggedUser user, Game& game): m_user(user), m_game(game), m_gameManager(GameManager::getGameManager()), m_handlerFactory(RequestHandlerFactory::getFactory(&MongoDB::getDB()))
+GameRequestHandler::GameRequestHandler(LoggedUser user, Game& game): m_user(user), m_game(game), m_gameManager(GameManager::getGameManager()), m_handlerFactory(RequestHandlerFactory::getFactory(&MongoDB::getDB())),m_database(&MongoDB::getDB())
 {
 }
 
@@ -85,17 +85,18 @@ RequestResult GameRequestHandler::getGameResults(RequestInfo info)
 	{
 		results.push_back(PlayerResults{ it.first});
 	}
+	this->m_database->writeResultToDB(this->m_game.originalPlayers, this->m_game.getWinner());
 	return RequestResult{ JsonRequestPacketSerializer::serializeResponse(GetGameResultsResponse{ 1,results }), this->m_handlerFactory.createMenuRequestHandler(LoggedUser{this->m_user.getUsername()}) };
 }
 
 RequestResult GameRequestHandler::getGameSate(RequestInfo info)
 {
-	bool hasGameEnd;
+	bool isProgress;
 	std::vector<std::string> players;
 	std::vector<int> cardsPerPlayer;
 	std::map<std::string, std::vector<std::string>> cards;
 
-	hasGameEnd = this->m_game.IsProgress();
+	isProgress = this->m_game.IsProgress();
 	players = this->m_game.getPlayers();
 	cards = this->m_game.getCardsByPlayer();
 	for (auto it: cards)
@@ -109,5 +110,7 @@ RequestResult GameRequestHandler::getGameSate(RequestInfo info)
 	{
 		cardsPerPlayer.push_back(0);
 	}
-	return RequestResult{ JsonRequestPacketSerializer::serializeResponse(GetGameStateResponse{1,hasGameEnd, players, cardsPerPlayer, cards[this->m_user.getUsername()], this->m_game.getCurrentCard().getCode()}), nullptr};
+	return RequestResult{ JsonRequestPacketSerializer::serializeResponse(GetGameStateResponse{1,isProgress, players, cardsPerPlayer, cards[this->m_user.getUsername()], this->m_game.getCurrentCard().getCode()}), nullptr};
 }
+
+

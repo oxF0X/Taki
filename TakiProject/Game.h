@@ -28,12 +28,14 @@ public:
 	void removePlayer(LoggedUser user);
 	bool IsProgress() const;
 	std::vector<std::string> getPlayers() const;
+	std::string getWinner()const;
 	std::map<std::string, std::vector<std::string>> getCardsByPlayer() const;
 	Card  getCurrentCard() const;
-
+	std::vector<std::string> originalPlayers;
 private:
 	void moveToNextPlayer();
 	void DrawCards(int numOfCards);
+	void hasCards(LoggedUser user);
 	
 	
 	
@@ -47,6 +49,7 @@ private:
 	int m_currentDirection;
 	int plusTwo;
 	bool isTaki;
+	std::string winner;
 	std::map<LoggedUser*, GameData> m_players;
 
 };

@@ -167,12 +167,13 @@ typedef struct GetGameResultsResponse
 typedef struct GetGameStateResponse
 {
 	unsigned int status;
-	bool hasGameEnd;
+	//bool hasGameEnd;
+	bool isProgress;
 	std::vector<std::string> players;
 	std::vector<int> cardsPerPlayer;
 	std::vector<std::string> cards;
 	std::string currentCard;
-	NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(GetGameStateResponse, status, hasGameEnd, players, cardsPerPlayer, cards, currentCard)
+	NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(GetGameStateResponse, status, isProgress, players, cardsPerPlayer, cards, currentCard)
 
 } GetGameStateResponse;
 

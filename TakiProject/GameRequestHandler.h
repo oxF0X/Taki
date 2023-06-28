@@ -3,6 +3,7 @@
 #include "GameManager.h"
 #include "RequestHandlerFactory.h"
 #include "IRequestHandler.h"
+#include "MongoDB.h"
 
 
 
@@ -21,9 +22,12 @@ private:
 	RequestResult getGameResults(RequestInfo info);
 	RequestResult getGameSate(RequestInfo info);
 
+
+
 	LoggedUser m_user;
 	GameManager& m_gameManager;
 	RequestHandlerFactory& m_handlerFactory;
 	Game& m_game;
+	IDatabase* m_database;
 
 };
