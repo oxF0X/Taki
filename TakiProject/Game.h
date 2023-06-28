@@ -10,6 +10,7 @@
 #include "Card.h"
 #include "LoggedUser.h"
 #include "TriviaException.h"
+#include "MongoDB.h"
 
 #define MAX_CARDS 8
 
@@ -28,10 +29,9 @@ public:
 	void removePlayer(LoggedUser user);
 	bool IsProgress() const;
 	std::vector<std::string> getPlayers() const;
-	std::string getWinner()const;
 	std::map<std::string, std::vector<std::string>> getCardsByPlayer() const;
 	Card  getCurrentCard() const;
-	std::vector<std::string> originalPlayers;
+
 private:
 	void moveToNextPlayer();
 	void DrawCards(int numOfCards);
@@ -49,7 +49,7 @@ private:
 	int m_currentDirection;
 	int plusTwo;
 	bool isTaki;
-	std::string winner;
+	std::vector<std::string> originalPlayers;
 	std::map<LoggedUser*, GameData> m_players;
-
+	IDatabase* m_database;
 };

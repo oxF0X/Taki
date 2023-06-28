@@ -3,7 +3,7 @@
 #include "GameManager.h"
 #include "RequestHandlerFactory.h"
 #include "IRequestHandler.h"
-#include "MongoDB.h"
+
 
 
 
@@ -28,6 +28,6 @@ private:
 	GameManager& m_gameManager;
 	RequestHandlerFactory& m_handlerFactory;
 	Game& m_game;
-	IDatabase* m_database;
+	
 
 };

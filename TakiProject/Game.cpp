@@ -1,6 +1,6 @@
 #include "Game.h"
 
-Game::Game(std::vector<std::string> players) : m_currentCard("00")
+Game::Game(std::vector<std::string> players) : m_currentCard("00"), m_database(&MongoDB::getDB())
 {
 	std::srand(static_cast<unsigned>(std::time(nullptr)));
 	std::vector<std::string> cards  = { "ST", "ST", "Y1","Y2", "Y3", "Y4", "Y5", "Y6", "Y7", "Y8", "Y9","YD","YP","YS","YT", "B1","B2", "B3", "B4", "B5", "B6", "B7", "B8", "B9","BD","BP","BS","BT", "G1","G3", "G3", "G4", "G5", "G6", "G7", "G8", "G9","GD","GP","GS","GT", "R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9","RD","RP","RS","RT","Y1","Y2", "Y3", "Y4", "Y5", "Y6", "Y7", "Y8", "Y9","YD","YP","YS","YT", "B1","B2", "B3", "B4", "B5", "B6", "B7", "B8", "B9","BD","BP","BS","BT", "G1","G3", "G3", "G4", "G5", "G6", "G7", "G8", "G9","GD","GP","GS","GT", "R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9","RD","RP","RS","RT","CC","CC" ,"CC" ,"CC" };
@@ -168,10 +168,6 @@ std::vector<std::string> Game::getPlayers() const
 	return v;
 }
 
-std::string Game::getWinner() const
-{
-	return this->winner;
-}
 
 std::map<std::string, std::vector<std::string>> Game::getCardsByPlayer() const
 {
@@ -234,7 +230,7 @@ void Game::hasCards(LoggedUser user)
 	{
 		return;
 	}
-	this->winner = (*u).getUsername();
+	this->m_database->writeResultToDB(this->originalPlayers, (*u).getUsername());
 	this->isProgress = false;
 
 }
