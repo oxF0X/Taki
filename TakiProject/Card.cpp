@@ -7,7 +7,7 @@ Card::Card(std::string code)
 
 bool Card::isLegalToPlay(Card lastCard)
 {
-	if (lastCard.code[0] == this->code[0] || lastCard.code[1] == this->code[1] || this->code[1] == 'C' || this->code == "ST")
+	if (lastCard.code[0] == this->code[0] || lastCard.code[1] == this->code[1] || this->code[1] == 'C' || this->code == "ST" || this->code == "CZ")
 	{
 		return true;
 	}

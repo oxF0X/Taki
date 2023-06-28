@@ -4,6 +4,7 @@
 #include "RoomManager.h"
 #include "RequestHandlerFactory.h"
 #include "IRequestHandler.h"
+#include "MongoDB.h"
 
 class RequestHandlerFactory;
 
@@ -23,11 +24,14 @@ private:
 	RequestResult getPlayersInRoom(RequestInfo info);
 	RequestResult joinRoom(RequestInfo info);
 	RequestResult createRoom(RequestInfo info);
+	RequestResult getPersonalStats(RequestInfo info);
+	RequestResult getHighScore(RequestInfo info);
 
 
 	LoggedUser m_user;
 	RoomManager& m_roomManager;
 	RequestHandlerFactory& m_handlerFactory;
+	IDatabase* m_database;
 
 
 };

@@ -1,6 +1,6 @@
 #include "MenuRequestHandler.h"
 
-MenuRequestHandler::MenuRequestHandler(LoggedUser user, RoomManager& roomManager, RequestHandlerFactory& handlerFactory) : m_user(user), m_roomManager(roomManager), m_handlerFactory(handlerFactory)
+MenuRequestHandler::MenuRequestHandler(LoggedUser user, RoomManager& roomManager, RequestHandlerFactory& handlerFactory) : m_user(user), m_roomManager(roomManager), m_handlerFactory(handlerFactory), m_database(&MongoDB::getDB())
 {
 
 }
@@ -12,7 +12,7 @@ void MenuRequestHandler::exitUser()
 
 bool MenuRequestHandler::isRequestRelevant(RequestInfo info)
 {
-	if (info.requestId == Signout_REQ || info.requestId == GetRooms_REQ || info.requestId == getPlayers_REQ || info.requestId == JoinRoom_REQ || info.requestId == CreateRoom_REQ)
+	if (info.requestId == Signout_REQ || info.requestId == GetRooms_REQ || info.requestId == getPlayers_REQ || info.requestId == JoinRoom_REQ || info.requestId == CreateRoom_REQ|| info.requestId == GetNumOfGames_REQ || info.requestId == GetNumOfWins_REQ)
 	{
 		return true;
 	}
@@ -33,6 +33,10 @@ RequestResult MenuRequestHandler::handleRequest(RequestInfo info)
 		return this->joinRoom(info);
 	case CreateRoom_REQ:
 		return this->createRoom(info);
+	case GetNumOfGames_REQ:
+		return this->getPersonalStats(info);
+	case GetNumOfWins_REQ:
+		return this->getHighScore(info);
 	}
 }
 
@@ -110,5 +114,35 @@ RequestResult MenuRequestHandler::createRoom(RequestInfo info)
 		return RequestResult{ JsonRequestPacketSerializer::serializeResponse(ErrorResponse{std::string(e.what())}), nullptr };
 	}
 	return RequestResult{ JsonRequestPacketSerializer::serializeResponse(CreateRoomResponse{1}),  this->m_handlerFactory.createRoomAdminRequestHandler(this->m_user, this->m_roomManager.getRoom(this->m_roomManager.getNumbersRooms() - 1)) };
+}
+
+RequestResult MenuRequestHandler::getPersonalStats(RequestInfo info)
+{
+
+	std::vector<std::string> stats;
+	stats = this->m_handlerFactory.getStatisticsManager().getUserStats(this->m_user.getUsername());
+	return RequestResult{ JsonRequestPacketSerializer::serializeResponse(GetPersonalStatsResponse{1, stats}), nullptr };
+	
+}
+
+RequestResult MenuRequestHandler::getHighScore(RequestInfo info)
+{
+	std::vector<std::string> users = this->m_database->getUsers();
+	std::vector<std::string> stats;
+	std::string winner;
+	std::string numOfWins = "0";
+	for (int i = 0; i < users.size(); i++)
+	{
+		stats = this->m_handlerFactory.getStatisticsManager().getUserStats(users[i]);
+		if (numOfWins < stats[2])
+		{
+			winner = stats[0];
+			numOfWins = stats[2];
+		}
+	}
+	stats.clear();
+	stats.push_back(winner);
+	stats.push_back(numOfWins);
+	return RequestResult{ JsonRequestPacketSerializer::serializeResponse(GetHightScoreResponse{1, stats}), nullptr };
 }
 
