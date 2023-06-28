@@ -55,6 +55,8 @@ void Game::playCard(LoggedUser user, Card card)
 	}
 	if (card.getCode() == "00")
 	{
+		this->hasCards(user);
+
 		if (this->plusTwo == 0)
 		{
 			this->DrawCards(1);
@@ -117,6 +119,12 @@ void Game::playCard(LoggedUser user, Card card)
 		return;
 	}
 
+	if (card.getCode()[1] == 'S')
+	{
+		this->moveToNextPlayer();
+		this->hasCards(user);
+	}
+
 	if (card.getCode()[1] == 'D')
 	{
 		this->changeDirection();
@@ -135,6 +143,7 @@ void Game::playCard(LoggedUser user, Card card)
 	{
 		this->m_players[u].m_PlayerDeck.removeCard(card);
 	}
+
 	this->m_currentCard = card;
 	this->hasCards(user);
 	this->moveToNextPlayer();
@@ -191,6 +200,11 @@ Card Game::getCurrentCard() const
 	return m_currentCard;
 }
 
+std::string Game::getWinner() const
+{
+	return this->winner;
+}
+
 void Game::moveToNextPlayer()
 {
 	auto it = this->m_players.upper_bound(this->m_currentPlayer);
@@ -232,7 +246,7 @@ void Game::hasCards(LoggedUser user)
 	}
 	this->m_database->writeResultToDB(this->originalPlayers, (*u).getUsername());
 	this->isProgress = false;
-
+	this->winner = user.getUsername();
 }
 
 

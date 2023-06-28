@@ -149,18 +149,12 @@ typedef struct PlaceCardResponse
 
 } PlaceCardResponse;
 
-typedef struct PlayerResults
-{
-	std::string username;
-	NLOHMANN_DEFINE_TYPE_INTRUSIVE(PlayerResults, username)
 
-} PlayerResults;
 
 typedef struct GetGameResultsResponse
 {
-	unsigned int status;
-	std::vector<PlayerResults> results;
-	NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(GetGameResultsResponse, status, results)
+	std::string winner;
+	NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(GetGameResultsResponse, winner)
 
 } GetGameResultsResponse;
 

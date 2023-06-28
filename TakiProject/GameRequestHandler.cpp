@@ -80,13 +80,13 @@ RequestResult GameRequestHandler::leaveGame(RequestInfo info)
 RequestResult GameRequestHandler::getGameResults(RequestInfo info)
 {
 	std::map<std::string, std::vector<std::string>> cards = this->m_game.getCardsByPlayer();
-	std::vector<PlayerResults> results;
-	for (auto it: cards)
-	{
-		results.push_back(PlayerResults{ it.first});
-	}
 
-	return RequestResult{ JsonRequestPacketSerializer::serializeResponse(GetGameResultsResponse{ 1,results }), this->m_handlerFactory.createMenuRequestHandler(LoggedUser{this->m_user.getUsername()}) };
+	if (!this->m_game.IsProgress())
+	{
+		return RequestResult{ JsonRequestPacketSerializer::serializeResponse(GetGameResultsResponse{ this->m_game.getWinner()}), this->m_handlerFactory.createMenuRequestHandler(LoggedUser{this->m_user.getUsername()}) };
+	}
+	return RequestResult{ JsonRequestPacketSerializer::serializeResponse(GetGameResultsResponse{""}), nullptr };
+
 }
 
 RequestResult GameRequestHandler::getGameSate(RequestInfo info)

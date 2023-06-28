@@ -20,6 +20,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Media;
 using System.IO;
 using System.Net.Http;
+using System.Windows.Controls.Primitives;
+using Label = System.Windows.Controls.Label;
 
 namespace TakiClient.Views
 {
@@ -35,6 +37,7 @@ namespace TakiClient.Views
         private Task roomUpdateTask;
         private CancellationTokenSource cancellationTokenSource;
         private TakiGameViewModel viewModel;
+        private Popup popup;
 
 
         public TakiGameView()
@@ -73,6 +76,11 @@ namespace TakiClient.Views
                 Application.Current.Dispatcher.Invoke(() =>
                 {
                     GetGameStateResponse? gameState = Manager.GetManager().getClient().GetGameState();
+                    if (gameState.Value.isProgress == false)
+                    {
+                        this.ShowPopup();
+                        return;
+                    }
                     viewModel.setLocationImages(gameState.Value.cards);
                     viewModel.LastCardPlayed = "../Images/" + gameState.Value.currentCard + ".png";
                     viewModel.SetSide1(gameState.Value.cardsPerPlayer[0]);
@@ -83,6 +91,55 @@ namespace TakiClient.Views
                 await Task.Delay(500);
             }
         }
+
+        private void EndGame_Click(object sender, RoutedEventArgs e)
+        {
+            middleContainer.Children.Remove(this.popup);
+
+            Manager.GetManager().SetThreading(false);
+            var view = new MenuView();
+            Window w = Application.Current.MainWindow;
+            Application.Current.MainWindow = view;
+            view.Show();
+            w.Close();
+        }
+
+        private void ShowPopup()
+        {
+            // Create the Popup control
+            this.popup = new Popup();
+
+            // Create a Grid to hold the content of the popup
+            Grid grid = new Grid();
+            grid.Background = Brushes.White;
+            grid.Margin = new Thickness(10);
+
+
+            // Create a Button control
+            Button button = new Button();
+            button.Height = 300;
+            button.Width = 200;
+            button.Content = Manager.GetManager().getClient().GetGameResult() + "won, \nreturn to menu";
+            button.Margin = new Thickness(10);
+            button.Click += EndGame_Click;
+
+            // Add the button to the grid
+            grid.Children.Add(button);
+
+            // Set the content of the popup to the grid
+            this.popup.Child = grid;
+
+            // Set the position and size of the popup
+            this.popup.PlacementTarget = this;
+            this.popup.Placement = PlacementMode.Center;
+            this.popup.Width = 200;
+            this.popup.Height = 200;
+
+            // Open the popup
+            this.popup.IsOpen = true;
+            middleContainer.Children.Add(popup);
+        }
+
 
         protected override void OnClosed(EventArgs e)
         {
@@ -100,6 +157,10 @@ namespace TakiClient.Views
             string id = cardId.Substring(10, 2);
             if (id[1] == 'C')
             {
+                if(middleContainer.Children.Count > 0)
+                {
+                    return;
+                }
                 buttons = new Button[4];
 
                 for (int i = 0; i < 4; i++)
@@ -120,16 +181,21 @@ namespace TakiClient.Views
             }         
             if(id[1] == 'T')
             {
-                if(!Manager.GetManager().getClient().GetPlaceCard(id))
+                if (middleContainer.Children.Count > 0)
+                {
+                    return;
+                }
+                
+                if (!Manager.GetManager().getClient().GetPlaceCard(id))
                 {
                     return;
                 }
 
                 buttons = new Button[1];
                 buttons[0] = new Button();
-                buttons[0].Width = 60;
-                buttons[0].Height = 60;
-                buttons[0].Content = "Finish super taki";
+                buttons[0].Width = 100;
+                buttons[0].Height = 60;                
+                buttons[0].Content = "Finish taki";
                 buttons[0].Margin = new Thickness(0, 10, 0, 0);
                 buttons[0].Click += Taki_Click;
                 middleContainer.Children.Add(buttons[0]);

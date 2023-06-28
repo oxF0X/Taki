@@ -31,6 +31,7 @@ public:
 	std::vector<std::string> getPlayers() const;
 	std::map<std::string, std::vector<std::string>> getCardsByPlayer() const;
 	Card  getCurrentCard() const;
+	std::string getWinner() const;
 
 private:
 	void moveToNextPlayer();
@@ -47,9 +48,10 @@ private:
 	Card m_currentCard;
 	bool isProgress;
 	int m_currentDirection;
-	int plusTwo;
 	bool isTaki;
+	int plusTwo;	
 	std::vector<std::string> originalPlayers;
 	std::map<LoggedUser*, GameData> m_players;
 	IDatabase* m_database;
+	std::string winner;
 };

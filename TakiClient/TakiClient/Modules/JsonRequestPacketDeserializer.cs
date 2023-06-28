@@ -24,6 +24,11 @@ namespace TakiClient.Modules
         public string message { get; set; }
     }
 
+    struct GameResultResponse
+    {
+        public string winner { get; set; }
+    }
+
     public struct RoomData
     {
         public int id { get; set; }
@@ -57,7 +62,7 @@ namespace TakiClient.Modules
     {
         public int status { get; set; }
         public string[] players { get; set; }
-        public bool hasGameEnd { get; set; }
+        public bool isProgress { get; set; }
         public int[] cardsPerPlayer { get; set; }
         public string[] cards { get; set; }
         public string currentCard { get; set; }
@@ -98,6 +103,11 @@ namespace TakiClient.Modules
         static public GetGameStateResponse DeserializeGetGameState(string res)
         {
             return JsonSerializer.Deserialize<GetGameStateResponse>(res);
+        }
+
+        static public GameResultResponse DeserializeGetGameResult(string res)
+        {
+            return JsonSerializer.Deserialize<GameResultResponse>(res);
         }
     }
 }

@@ -44,7 +44,6 @@ namespace TakiClient.Modules
 
 
 
-
         private TcpClient socket;
         private static Client instance;
         NetworkStream clientStream;
@@ -376,6 +375,28 @@ namespace TakiClient.Modules
 
 
             return true;
+        }
+
+
+        public string GetGameResult()
+        {
+            string cardId = "00";
+            byte[] req = new byte[5] { GetGameResult_REQ, 0, 0, 0, 0 };
+
+            clientStream.Write(req, 0, req.Length);
+            int code = GetCodeFromSocket();
+            int size = GetSizeFromSocket();
+            if (size <= 0)
+            {
+                return "";
+            }
+
+            byte[] buffer = new byte[size];
+            int bytesNum = clientStream.Read(buffer, 0, size);
+            string str = Encoding.Default.GetString(buffer);
+
+            return JsonRequestPacketDeserializer.DeserializeGetGameResult(str).winner;
+           
         }
 
 
