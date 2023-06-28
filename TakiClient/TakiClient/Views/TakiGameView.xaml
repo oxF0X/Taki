@@ -129,8 +129,11 @@
 
 
         <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
-            
-                <Label Content="{Binding CurrentPlayer}" Height="5" Foreground="#429629"/>
+
+            <Label Content="{Binding CurrentPlayer}" FontSize="18"
+                                   FontWeight="Medium" 
+                                   FontFamily="Montserrat"
+                   Foreground="#429629"/>
             <StackPanel Orientation="Horizontal">
                 <Image x:Name="centerImage" Source="{Binding LastCardPlayed}" Width="100" Height="140"/>
                 <Button  Height="140" Width="100" Command="{Binding DrawCardCommand}">

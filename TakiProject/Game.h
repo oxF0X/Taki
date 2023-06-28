@@ -32,6 +32,7 @@ public:
 	std::map<std::string, std::vector<std::string>> getCardsByPlayer() const;
 	Card  getCurrentCard() const;
 	std::string getWinner() const;
+	std::string getCurrentPlayer() const;
 
 private:
 	void moveToNextPlayer();

@@ -91,7 +91,7 @@ namespace TakiClient.Views
                     viewModel.SetSide1(gameState.Value.cardsPerPlayer[0]);
                     viewModel.SetSide2(gameState.Value.cardsPerPlayer[1]);
                     viewModel.SetSide3(gameState.Value.cardsPerPlayer[2]);
-                    viewModel.CurrentPlayer = gameState.Value.currentPlayer;
+                    viewModel.CurrentPlayer = "Current player: " + gameState.Value.currentPlayer;
                 });
                 count++;
                 await Task.Delay(500);
