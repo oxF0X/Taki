@@ -126,8 +126,8 @@ namespace TakiClient.Views
             // Create a Button control
             Button button = new Button();
             button.Style = (Style)Application.Current.Resources["PopupButtonStyle"];
-            button.Height = 300;
-            button.Width = 200;
+            button.Height = 500;
+            button.Width = 350;
             button.Content = Manager.GetManager().getClient().GetGameResult() + "won, \nreturn to menu";
             button.Margin = new Thickness(10);
             button.Click += EndGame_Click;

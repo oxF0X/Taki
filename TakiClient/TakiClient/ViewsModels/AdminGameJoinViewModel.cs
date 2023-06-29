@@ -27,6 +27,19 @@ namespace TakiClient.ViewsModels
             }
         }
 
+
+        private string _username;
+        public string Username
+        {
+            get { return _username; }
+            set
+            {
+                _username = value;
+                OnPropertyChanged(nameof(_username));
+            }
+        }
+
+
         public ICommand CloseRoomCommand { get; }
         public ICommand StartGameCommand { get; }
         public ICommand CloseScreenCommand { get; }
@@ -35,6 +48,8 @@ namespace TakiClient.ViewsModels
 
         public AdminGameJoinViewModel()
         {
+            Username = "You are logged in as " + Manager.GetManager().GetUsername();
+
             this.clientHandler = Manager.GetManager().getClient();
             CloseRoomCommand = new ViewModelCommand(ExecuteCloseRoom);
             StartGameCommand = new ViewModelCommand(ExecuteStartGame);
@@ -46,8 +61,9 @@ namespace TakiClient.ViewsModels
 
         private void ExecuteStartGame(object obj)
         {
-            Manager.GetManager().SetThreading(false);
             this.clientHandler.GetStartGame();
+
+            Manager.GetManager().SetThreading(false);
             var view = new TakiGameView();
             Window w = Application.Current.MainWindow;
             Application.Current.MainWindow = view;

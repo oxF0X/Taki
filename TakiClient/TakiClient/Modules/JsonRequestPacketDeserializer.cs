@@ -69,6 +69,13 @@ namespace TakiClient.Modules
         public string currentPlayer { get; set; }
     }
 
+
+    public struct GetPersonalStatsResponse
+    {
+        public int status { get; set; }
+        public string[] statistics { get; set; }        
+    }
+
     class JsonRequestPacketDeserializer
     {
         static public ErrorResponse DeserializeError(string err)
@@ -109,6 +116,11 @@ namespace TakiClient.Modules
         static public GameResultResponse DeserializeGetGameResult(string res)
         {
             return JsonSerializer.Deserialize<GameResultResponse>(res);
+        }
+
+        static public GetPersonalStatsResponse DeserializeGetStats(string res)
+        {
+            return JsonSerializer.Deserialize<GetPersonalStatsResponse>(res);
         }
     }
 }

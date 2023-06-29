@@ -11,6 +11,7 @@ namespace TakiClient.Modules
         private Client client;
         private bool _isThreading;
         private static Manager _instanse;
+        private string username;
         int roomId;
 
         private Manager()
@@ -45,6 +46,10 @@ namespace TakiClient.Modules
         public void SetRoomId(int roomId) {  this.roomId = roomId; }
 
         public int GetRoomId() { return roomId;}
+
+        public void SetUsername(string username) {  this.username = username;}
+
+        public string GetUsername() { return username;}
 
     }
 }

@@ -43,6 +43,8 @@
                 </Grid.RowDefinitions>
 
                 <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
+                    <Label Foreground="White" Content="{Binding Username}" HorizontalAlignment="Center"/>
+
                     <Button x:Name="btnMinimize"
                             Style="{StaticResource MinimizeButtonStyle}"
                             Command="{Binding HideScreenCommand}">
@@ -66,7 +68,11 @@
                     </Button>
                 </StackPanel>
 
-                <Button Grid.Row="2" Style="{StaticResource LoginButtonStyle}" Content="Leave room :(" Command="{Binding LeaveRoomCommand}"/>
+                <Button Grid.Row="2" 
+                         Foreground="White"
+                            FontSize="12" 
+                            FontFamily="Montserrat" 
+                        Style="{StaticResource LoginButtonStyle}" Content="Leave room :(" Command="{Binding LeaveRoomCommand}"/>
 
                 <ItemsControl ItemsSource="{Binding Users}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="1">
                     <ItemsControl.ItemTemplate>

@@ -250,7 +250,7 @@ int MongoDB::getNumOfWins(std::string username)
 
         bsoncxx::builder::basic::array array_builder;
         array_builder.append(username);
-        bsoncxx::document::value query = bsoncxx::builder::basic::make_document(bsoncxx::builder::basic::kvp("players", username));
+        bsoncxx::document::value query = bsoncxx::builder::basic::make_document(bsoncxx::builder::basic::kvp("winner", username));
 
         {
             std::shared_lock<std::shared_mutex> lock(this->_mtx);

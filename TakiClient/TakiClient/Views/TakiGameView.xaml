@@ -14,143 +14,166 @@
     <Window.DataContext>
         <viewModel:TakiGameViewModel/>
     </Window.DataContext>
+    <Border CornerRadius="12">
+        <Border.Background>
+            <ImageBrush ImageSource="/Images/background.jpg" Stretch="Fill"/>
+        </Border.Background>
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="20"/>
-            <RowDefinition Height="100"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="150"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="100"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="100"/>
-        </Grid.ColumnDefinitions>
+        <Border CornerRadius="10" BorderThickness="2" Opacity="0.95">
+            <Border.BorderBrush>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="#462AD8" Offset="0"/>
+                    <GradientStop Color="#4BD180" Offset="0.75"/>
+                    <GradientStop Color="#D1CA18" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.BorderBrush>
 
-        <StackPanel Orientation="Horizontal" Grid.Column="2" HorizontalAlignment="Right">
-            <Button x:Name="btnMinimize"
+            <Border.Background>
+                <LinearGradientBrush StartPoint="0,1" EndPoint="1,0">
+                    <GradientStop Color="#C3292929" Offset="0"/>
+                </LinearGradientBrush>
+            </Border.Background>
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="100"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="150"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="100"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Orientation="Horizontal" Grid.Column="2" HorizontalAlignment="Right">
+                    <Label Foreground="White" Content="{Binding Username}" HorizontalAlignment="Center"/>
+
+                    <Button x:Name="btnMinimize"
                             Style="{StaticResource MinimizeButtonStyle}"
                             Command="{Binding HideScreenCommand}">
-                <TextBlock Text="➖" Foreground="White" FontSize="12" FontWeight="Bold"/>
-            </Button>
+                        <TextBlock Text="➖" Foreground="White" FontSize="12" FontWeight="Bold"/>
+                    </Button>
 
 
-            <Button x:Name="btnMaximize" 
+                    <Button x:Name="btnMaximize" 
                             Style="{StaticResource MinimizeButtonStyle}"
                             Command="{Binding MaximizeOrMinimizeCommand}">
-                <TextBlock Text="🗖" Foreground="White" FontSize="12" FontWeight="Bold"/>
-            </Button>
+                        <TextBlock Text="🗖" Foreground="White" FontSize="12" FontWeight="Bold"/>
+                    </Button>
 
 
-            <Button x:Name="btnClose"
+                    <Button x:Name="btnClose"
                             Style="{StaticResource CloseButtonStyle}"
                             Command="{Binding CloseScreenCommand}">
-                <TextBlock Text="✖" 
+                        <TextBlock Text="✖" 
                                    Foreground="White" 
                                    FontSize="12" 
                                    FontWeight="Bold"/>
-            </Button>
-        </StackPanel>
-
-
-        <ListBox  ItemsSource="{Binding Side1Images}" Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center">
-            <ListBox.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <WrapPanel Orientation="Vertical" />
-                </ItemsPanelTemplate>
-            </ListBox.ItemsPanel>
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <Image Margin="0,-10,0,0" Source="{Binding}" Height="100" Width="60">
-                        <Image.LayoutTransform>
-                            <RotateTransform Angle="90"/>
-                        </Image.LayoutTransform>
-                    </Image>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-
-
-
-        <ListBox x:Name="buttonListBox" ItemsSource="{Binding ButtonItems}" Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">
-            <ListBox.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <WrapPanel Orientation="Horizontal" />
-                </ItemsPanelTemplate>
-            </ListBox.ItemsPanel>
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <Button Height="140" Width="100" Click="Button_Click" CommandParameter="{Binding}">
-                        <Button.Background>
-                            <ImageBrush ImageSource="{Binding}" Stretch="Fill"/>
-                        </Button.Background>
                     </Button>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+                </StackPanel>
+
+
+                <ListBox  ItemsSource="{Binding Side1Images}" Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel Orientation="Vertical" />
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Image Margin="0,-10,0,0" Source="{Binding}" Height="100" Width="60">
+                                <Image.LayoutTransform>
+                                    <RotateTransform Angle="90"/>
+                                </Image.LayoutTransform>
+                            </Image>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
 
 
 
-        <ListBox  ItemsSource="{Binding Side2Images}" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center">
-            <ListBox.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <WrapPanel Orientation="Vertical" />
-                </ItemsPanelTemplate>
-            </ListBox.ItemsPanel>
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <Image Margin="0,-10,0,0" Source="{Binding}" Height="100" Width="50">
-                        <Image.LayoutTransform>
-                            <RotateTransform Angle="90"/>
-                        </Image.LayoutTransform>
-                    </Image>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-
-        <ListBox  ItemsSource="{Binding Side3Images}" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">
-            <ListBox.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <WrapPanel Orientation="Vertical" />
-                </ItemsPanelTemplate>
-            </ListBox.ItemsPanel>
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <Image Margin="0,-10,0,0" Source="{Binding}" Height="100" Width="50">
-                        <Image.LayoutTransform>
-                            <RotateTransform Angle="180"/>
-                        </Image.LayoutTransform>
-                    </Image>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+                <ListBox x:Name="buttonListBox" ItemsSource="{Binding ButtonItems}" Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Button Height="140" Width="100" Click="Button_Click" CommandParameter="{Binding}">
+                                <Button.Background>
+                                    <ImageBrush ImageSource="{Binding}" Stretch="Fill"/>
+                                </Button.Background>
+                            </Button>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
 
 
 
-        <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <ListBox  ItemsSource="{Binding Side2Images}" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel Orientation="Vertical" />
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Image Margin="0,-10,0,0" Source="{Binding}" Height="100" Width="50">
+                                <Image.LayoutTransform>
+                                    <RotateTransform Angle="90"/>
+                                </Image.LayoutTransform>
+                            </Image>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
 
-            <Label Content="{Binding CurrentPlayer}" FontSize="18"
+                <ListBox  ItemsSource="{Binding Side3Images}" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel Orientation="Vertical" />
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Image Margin="0,-10,0,0" Source="{Binding}" Height="100" Width="50">
+                                <Image.LayoutTransform>
+                                    <RotateTransform Angle="180"/>
+                                </Image.LayoutTransform>
+                            </Image>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+
+
+
+                <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+
+                    <Label Content="{Binding CurrentPlayer}" FontSize="18"
                                    FontWeight="Medium" 
                                    FontFamily="Montserrat"
                    Foreground="#429629"/>
-            <StackPanel Orientation="Horizontal">
-                <Image x:Name="centerImage" Source="{Binding LastCardPlayed}" Width="100" Height="140"/>
-                <Button  Height="140" Width="100" Command="{Binding DrawCardCommand}">
-                    <Button.Background>
-                        <ImageBrush ImageSource="../Images/Back.png" Stretch="Fill"/>
-                    </Button.Background>
-                </Button>
-            </StackPanel>
-        </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Image x:Name="centerImage" Source="{Binding LastCardPlayed}" Width="100" Height="140"/>
+                        <Button  Height="140" Width="100" Command="{Binding DrawCardCommand}">
+                            <Button.Background>
+                                <ImageBrush ImageSource="../Images/Back.png" Stretch="Fill"/>
+                            </Button.Background>
+                        </Button>
+                    </StackPanel>
+                </StackPanel>
 
-        <Grid  Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <WrapPanel Orientation="Horizontal" x:Name="middleContainer">
-                <!-- Buttons will be added here -->
-            </WrapPanel>
-        </Grid>
+                <Grid  Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <WrapPanel Orientation="Horizontal" x:Name="middleContainer">
+                        <!-- Buttons will be added here -->
+                    </WrapPanel>
+                </Grid>
 
 
-    </Grid>
+            </Grid>
+        </Border>
+    </Border>
 
 </Window>

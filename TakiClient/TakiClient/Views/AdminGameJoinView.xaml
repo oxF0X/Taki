@@ -45,6 +45,8 @@
 
                 </Grid.RowDefinitions>
                 <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
+                    <Label Foreground="White" Content="{Binding Username}" HorizontalAlignment="Center"/>
+
                     <Button x:Name="btnMinimize"
                             Style="{StaticResource MinimizeButtonStyle}"
                             Command="{Binding HideScreenCommand}">
@@ -69,8 +71,14 @@
                 </StackPanel>
 
                 <StackPanel Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center">
-                    <Button Style="{StaticResource LoginButtonStyle}" Content="Leave room D:" Command="{Binding CloseRoomCommand}" Margin="0,-35,0,0"/>
-                    <Button Style="{StaticResource LoginButtonStyle}" Content="Statet game :D" Command="{Binding StartGameCommand}" Margin="0,-20,0,0"/>
+                    <Button Style="{StaticResource LoginButtonStyle}" Content="Close  game D:" Command="{Binding CloseRoomCommand}" Margin="0,-35,0,0"
+                             Foreground="White"
+                            FontSize="12" 
+                            FontFamily="Montserrat" />
+                    <Button Style="{StaticResource LoginButtonStyle}" Content="Statet game :D" Command="{Binding StartGameCommand}" Margin="0,-20,0,0"
+                             Foreground="White"
+                            FontSize="12" 
+                            FontFamily="Montserrat" />
                 </StackPanel>
 
                     

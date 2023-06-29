@@ -41,6 +41,8 @@ namespace TakiClient.Modules
         const int PlayCard_REQ = 22;
         const int DrawCard_REQ = 23;
         const int GetGameResult_REQ = 25;
+        const int GetNumOfGames_REQ = 26;
+        const int GetNumOfWins_REQ = 27;
 
 
 
@@ -397,6 +399,40 @@ namespace TakiClient.Modules
 
             return JsonRequestPacketDeserializer.DeserializeGetGameResult(str).winner;
            
+        }
+
+
+
+        public string[] GetUsersStats()
+        {
+            string cardId = "00";
+            byte[] req = new byte[5] {GetNumOfGames_REQ, 0, 0, 0, 0 };
+
+            clientStream.Write(req, 0, req.Length);
+            int code = GetCodeFromSocket();
+            int size = GetSizeFromSocket();
+            byte[] buffer = new byte[size];
+            int bytesNum = clientStream.Read(buffer, 0, size);
+            string str = Encoding.Default.GetString(buffer);
+
+            return JsonRequestPacketDeserializer.DeserializeGetStats(str).statistics;
+
+        }
+
+        public string[] GetBestPlayer()
+        {
+            string cardId = "00";
+            byte[] req = new byte[5] { GetNumOfWins_REQ, 0, 0, 0, 0 };
+
+            clientStream.Write(req, 0, req.Length);
+            int code = GetCodeFromSocket();
+            int size = GetSizeFromSocket();
+            byte[] buffer = new byte[size];
+            int bytesNum = clientStream.Read(buffer, 0, size);
+            string str = Encoding.Default.GetString(buffer);
+
+            return JsonRequestPacketDeserializer.DeserializeGetStats(str).statistics;
+
         }
 
 

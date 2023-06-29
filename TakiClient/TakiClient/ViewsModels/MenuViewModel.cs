@@ -27,7 +27,7 @@ namespace TakiClient.ViewsModels
 {
     public class MenuViewModel : ViewsModelBase
     {
-        private string _username;
+
         private SecureString _password;
         private string _error;
         private Client clientHandler;
@@ -44,6 +44,17 @@ namespace TakiClient.ViewsModels
             }
         }
 
+
+        private string _username;
+        public string Username
+        {
+            get { return _username; }
+            set
+            {
+                _username = value;
+                OnPropertyChanged(nameof(_username));
+            }
+        }
 
 
         public ICommand StatisticsCommand { get; }
@@ -64,6 +75,8 @@ namespace TakiClient.ViewsModels
 
         public MenuViewModel()
         {
+            Username = "You are logged in as " + Manager.GetManager().GetUsername();
+
             this.clientHandler = Manager.GetManager().getClient();
             StatisticsCommand = new ViewModelCommand(ExecuteShowStatistics);
             JoinRoomCommand = new ViewModelCommand(ExecuteJoinRoom);

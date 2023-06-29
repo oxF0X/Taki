@@ -36,6 +36,18 @@ namespace TakiClient.ViewsModels
         }
 
 
+        private string _username;
+        public string Username
+        {
+            get { return _username; }
+            set
+            {
+                _username = value;
+                OnPropertyChanged(nameof(_username));
+            }
+        }
+
+
         public ObservableCollection<string> Side1Images
         {
             get { return side1Images; }
@@ -95,6 +107,8 @@ namespace TakiClient.ViewsModels
 
         public TakiGameViewModel()
         {
+            Username = "You are logged in as " + Manager.GetManager().GetUsername();
+
             //ImageClickedCommand = new RelayCommand<string>(ImageClicked);
             buttonItems = new ObservableCollection<string>();
             lastCardPlayed = "";

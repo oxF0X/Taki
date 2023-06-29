@@ -137,7 +137,9 @@ namespace TakiClient.ViewsModels
             string result = clientHandler.GetLogin(Username, password);
             if(result == "1")
             {
+                Manager.GetManager().SetUsername(_username);
                 var menuView = new MenuView();
+
                 Window w = Application.Current.MainWindow;
                 Application.Current.MainWindow = menuView;
                 menuView.Show();

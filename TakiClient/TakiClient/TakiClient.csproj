@@ -29,6 +29,7 @@
     <None Remove="Images\BT.png" />
     <None Remove="Images\CC.png" />
     <None Remove="Images\close.png" />
+    <None Remove="Images\CZ.png" />
     <None Remove="Images\dashboard-template.png" />
     <None Remove="Images\Email.png" />
     <None Remove="Images\G1.png" />
@@ -90,6 +91,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Images\CZ.png" />
     <Resource Include="Images\GC.png" />
   </ItemGroup>
 

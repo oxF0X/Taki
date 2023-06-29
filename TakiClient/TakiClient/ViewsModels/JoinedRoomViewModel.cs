@@ -28,6 +28,20 @@ namespace TakiClient.ViewsModels
             }
         }
 
+
+
+        private string _username;
+        public string Username
+        {
+            get { return _username; }
+            set
+            {
+                _username = value;
+                OnPropertyChanged(nameof(_username));
+            }
+        }
+
+
         public ICommand LeaveRoomCommand { get; }
         public ICommand CloseScreenCommand { get; }
         public ICommand HideScreenCommand { get; }
@@ -35,6 +49,7 @@ namespace TakiClient.ViewsModels
 
         public JoinedRoomViewModel()
         {
+            Username = "You are logged in as " + Manager.GetManager().GetUsername();
             CloseScreenCommand = new ViewModelCommand(ExecutedCloseCommand);
             HideScreenCommand = new ViewModelCommand(ExecutedHideCommand);
             MaximizeOrMinimizeCommand = new ViewModelCommand(ExecutedMaximizeOrMinimizeCommand);

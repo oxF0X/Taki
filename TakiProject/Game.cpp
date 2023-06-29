@@ -32,6 +32,15 @@ Game::Game(std::vector<std::string> players) : m_currentCard("00"), m_database(&
 	this->isProgress = true;
 	this->m_currentDirection = 1;
 	Card temp_card = this->m_gameDeck.getCards().front();
+	for (auto& it : this->m_gameDeck.getCards())
+	{
+		std::string code = it.getCode();
+		if (it.getCode() != "ST" && code != "CC" && code != "CZ" && code[1] != 'T')
+		{
+			temp_card = it;
+			break;
+		}
+	}
 	this->m_currentCard = temp_card;
 	this->m_gameDeck.removeCard(temp_card);
 	this->m_currentPlayer = std::prev(m_players.end())->first;
@@ -109,6 +118,9 @@ void Game::playCard(LoggedUser user, Card card)
 	if (card.getCode() == "CZ")
 	{
 		this->crazyCard();
+		this->m_players[u].m_PlayerDeck.removeCard(card);
+		this->hasCards(user);
+		return;
 	}
 	if (card.getCode() == "ST")
 	{
