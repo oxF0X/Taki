@@ -56,5 +56,5 @@ private:
 	std::map<LoggedUser*, GameData> m_players;
 	IDatabase* m_database;
 	std::string winner;
-	std::mutex _mtx;
+
 };

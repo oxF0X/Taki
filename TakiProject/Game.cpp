@@ -188,7 +188,6 @@ void Game::removePlayer(LoggedUser user)
 
 	while (it != m_players.end()) {
 		if (it->first->getUsername() == user.getUsername()) {
-			std::lock_guard<std::mutex>(this->_mtx);
 			it = m_players.erase(it);
 		}
 		else {
