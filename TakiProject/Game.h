@@ -11,6 +11,7 @@
 #include "LoggedUser.h"
 #include "TriviaException.h"
 #include "MongoDB.h"
+#include <mutex>
 
 #define MAX_CARDS 8
 
@@ -55,4 +56,5 @@ private:
 	std::map<LoggedUser*, GameData> m_players;
 	IDatabase* m_database;
 	std::string winner;
+	std::mutex _mtx;
 };

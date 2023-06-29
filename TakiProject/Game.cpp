@@ -55,13 +55,6 @@ void Game::playCard(LoggedUser user, Card card)
 		return;
 	}
 
-	if (this->m_players.size() == 1)
-	{
-		this->isProgress = false;
-		this->winner = this->m_players.begin()->first->getUsername();
-		return;
-	}
-
 	if (this->m_currentPlayer->getUsername() != user.getUsername() && this->isProgress)
 	{
 		throw(TriviaException(std::string("Wrong player")));
@@ -195,6 +188,7 @@ void Game::removePlayer(LoggedUser user)
 
 	while (it != m_players.end()) {
 		if (it->first->getUsername() == user.getUsername()) {
+			std::lock_guard<std::mutex>(this->_mtx);
 			it = m_players.erase(it);
 		}
 		else {
@@ -205,6 +199,7 @@ void Game::removePlayer(LoggedUser user)
 	if (this->m_players.size() == 1)
 	{
 		this->isProgress = false;
+		this->m_database->writeResultToDB(this->originalPlayers, this->m_players.begin()->first->getUsername());
 		this->winner = this->m_players.begin()->first->getUsername();
 	}
 }
