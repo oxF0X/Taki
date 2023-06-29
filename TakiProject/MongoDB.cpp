@@ -211,7 +211,7 @@ std::vector<std::string> MongoDB::getUsers()
             std::shared_lock<std::shared_mutex> lock(this->_mtx);
             mongocxx::cursor result = this->_client[DB_NAME][USERS_COLLECTION].find(query.view());
             for (auto&& document : result) {
-            //    auto username = std::string(document["username"].get_utf8().value);
+           
                 std::string username = std::string(document["username"].get_string().value);
                 users.push_back(username);
             }
