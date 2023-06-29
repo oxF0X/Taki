@@ -38,8 +38,8 @@ private:
 	void moveToNextPlayer();
 	void DrawCards(int numOfCards);
 	void hasCards(LoggedUser user);
-	
-	
+	void crazyCard();
+	void resetGameDeck();
 	
 	void changeDirection();
 	void stopPlayer();

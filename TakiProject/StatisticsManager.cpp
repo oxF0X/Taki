@@ -4,6 +4,11 @@ StatisticsManager::StatisticsManager() :m_database(&MongoDB::getDB())
 {
 }
 
+std::vector<std::string> StatisticsManager::getHighScore()
+{
+	return std::vector<std::string>();
+}
+
 std::vector<std::string> StatisticsManager::getUserStats(std::string username)
 {
 	std::vector<std::string> result;

@@ -3,8 +3,8 @@
 Game::Game(std::vector<std::string> players) : m_currentCard("00"), m_database(&MongoDB::getDB())
 {
 	std::srand(static_cast<unsigned>(std::time(nullptr)));
-	std::vector<std::string> cards = { "ST", "ST", "Y1","Y2", "Y3", "Y4", "Y5", "Y6", "Y7", "Y8", "Y9","YD","YP","YS","YT", "B1","B2", "B3", "B4", "B5", "B6", "B7", "B8", "B9","BD","BP","BS","BT", "G1","G3", "G3", "G4", "G5", "G6", "G7", "G8", "G9","GD","GP","GS","GT", "R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9","RD","RP","RS","RT","Y1","Y2", "Y3", "Y4", "Y5", "Y6", "Y7", "Y8", "Y9","YD","YP","YS","YT", "B1","B2", "B3", "B4", "B5", "B6", "B7", "B8", "B9","BD","BP","BS","BT", "G1","G3", "G3", "G4", "G5", "G6", "G7", "G8", "G9","GD","GP","GS","GT", "R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9","RD","RP","RS","RT","CC","CC" ,"CC" ,"CC" };
 
+	std::vector<std::string> cards = { "CZ","CZ","ST", "ST", "Y1","Y2", "Y3", "Y4", "Y5", "Y6", "Y7", "Y8", "Y9","YD","YP","YS","YT", "B1","B2", "B3", "B4", "B5", "B6", "B7", "B8", "B9","BD","BP","BS","BT", "G1","G3", "G3", "G4", "G5", "G6", "G7", "G8", "G9","GD","GP","GS","GT", "R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9","RD","RP","RS","RT","Y1","Y2", "Y3", "Y4", "Y5", "Y6", "Y7", "Y8", "Y9","YD","YP","YS","YT", "B1","B2", "B3", "B4", "B5", "B6", "B7", "B8", "B9","BD","BP","BS","BT", "G1","G3", "G3", "G4", "G5", "G6", "G7", "G8", "G9","GD","GP","GS","GT", "R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9","RD","RP","RS","RT","CC","CC" ,"CC" ,"CC" };
 	int size = cards.size();
 	int random_index;
 
@@ -106,7 +106,10 @@ void Game::playCard(LoggedUser user, Card card)
 		this->hasCards(user);
 		return;
 	}
-
+	if (card.getCode() == "CZ")
+	{
+		this->crazyCard();
+	}
 	if (card.getCode() == "ST")
 	{
 		this->m_players[u].m_PlayerDeck.removeCard(card);
@@ -240,6 +243,7 @@ void Game::DrawCards(int numOfCards)
 		Card temp_card = this->m_gameDeck.getCards().front();
 		this->m_players[this->m_currentPlayer].m_PlayerDeck.addCard(temp_card);
 		this->m_gameDeck.removeCard(temp_card);
+		this->resetGameDeck();
 	}
 
 }
@@ -270,6 +274,41 @@ void Game::hasCards(LoggedUser user)
 	this->m_database->writeResultToDB(this->originalPlayers, (*u).getUsername());
 	this->isProgress = false;
 	this->winner = user.getUsername();
+}
+
+void Game::crazyCard()
+{
+	GameData first = this->m_players.begin()->second;
+	for (auto it: this->m_players)
+	{
+		if (this->m_players.upper_bound(it.first) == this->m_players.end())
+		{
+			this->m_players[it.first] = first;
+			return;
+		}
+		this->m_players[it.first] = this->m_players.upper_bound(it.first)->second;
+	}
+
+}
+
+void Game::resetGameDeck()
+{
+	if (this->m_gameDeck.getCards().size() == 0)
+	{
+		std::srand(static_cast<unsigned>(std::time(nullptr)));
+		std::vector<std::string> cards = { "CZ","CZ","ST", "ST", "Y1","Y2", "Y3", "Y4", "Y5", "Y6", "Y7", "Y8", "Y9","YD","YP","YS","YT", "B1","B2", "B3", "B4", "B5", "B6", "B7", "B8", "B9","BD","BP","BS","BT", "G1","G3", "G3", "G4", "G5", "G6", "G7", "G8", "G9","GD","GP","GS","GT", "R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9","RD","RP","RS","RT","Y1","Y2", "Y3", "Y4", "Y5", "Y6", "Y7", "Y8", "Y9","YD","YP","YS","YT", "B1","B2", "B3", "B4", "B5", "B6", "B7", "B8", "B9","BD","BP","BS","BT", "G1","G3", "G3", "G4", "G5", "G6", "G7", "G8", "G9","GD","GP","GS","GT", "R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9","RD","RP","RS","RT","CC","CC" ,"CC" ,"CC" };
+
+		int size = cards.size();
+		int random_index;
+
+		while (size != 0)
+		{
+			random_index = std::rand() % size;
+			this->m_gameDeck.addCard(Card(cards[random_index]));
+			cards.erase(cards.begin() + random_index);
+			size--;
+		}
+	}
 }
 
 

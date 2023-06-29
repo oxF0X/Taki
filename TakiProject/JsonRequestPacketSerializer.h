@@ -161,7 +161,6 @@ typedef struct GetGameResultsResponse
 typedef struct GetGameStateResponse
 {
 	unsigned int status;
-	//bool hasGameEnd;
 	bool isProgress;
 	std::vector<std::string> players;
 	std::vector<int> cardsPerPlayer;

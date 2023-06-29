@@ -2,7 +2,7 @@
 
 class LoginRequestHandler;
 
-RequestHandlerFactory::RequestHandlerFactory(IDatabase* db) : m_database(db), m_roomManager(RoomManager::getManager()), m_loginManager(LoginManager::getLoginManager(db)), m_gameManager(GameManager::getGameManager())
+RequestHandlerFactory::RequestHandlerFactory(IDatabase* db) : m_database(db), m_roomManager(RoomManager::getManager()), m_loginManager(LoginManager::getLoginManager(db)), m_gameManager(GameManager::getGameManager()), m_statisticsManager()
 {
 
 }
@@ -28,6 +28,11 @@ RoomManager& RequestHandlerFactory::getRoomManager()
 GameManager& RequestHandlerFactory::getGameManger()
 {
 	return this->m_gameManager;
+}
+
+StatisticsManager& RequestHandlerFactory::getStatisticsManager()
+{
+	return this->m_statisticsManager;
 }
 
 LoginRequestHandler* RequestHandlerFactory::createLoginRequestHandler()

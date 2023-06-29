@@ -177,6 +177,54 @@ void MongoDB::writeResultToDB(std::vector<std::string> players, std::string winn
     }
 }
 
+std::vector<std::string> MongoDB::getUsers()
+{
+    try
+    {
+        std::vector<std::string> users;
+        std::vector<std::string> dbNames;
+        {
+            std::shared_lock<std::shared_mutex> lock(this->_mtx);
+            dbNames = this->_client.list_database_names();
+        }
+        if (std::find(dbNames.begin(), dbNames.end(), std::string(DB_NAME)) == dbNames.end())
+        {
+            throw(TriviaException("Error when accessing db"));
+        }
+
+        {
+            std::shared_lock<std::shared_mutex> lock(this->_mtx);
+            if (!this->_client[DB_NAME].has_collection(USERS_COLLECTION))
+            {
+                throw(TriviaException("Error when accessing db"));
+            }
+        }
+        mongocxx::collection collection;
+        {
+            std::shared_lock<std::shared_mutex> lock(this->_mtx);
+            collection = this->_client[DB_NAME][USERS_COLLECTION];
+        }
+
+        bsoncxx::document::value query = bsoncxx::builder::basic::make_document();
+
+        {
+            std::shared_lock<std::shared_mutex> lock(this->_mtx);
+            mongocxx::cursor result = this->_client[DB_NAME][USERS_COLLECTION].find(query.view());
+            for (auto&& document : result) {
+           
+                std::string username = std::string(document["username"].get_string().value);
+                users.push_back(username);
+            }
+
+        }
+        return users;
+    }
+    catch (const mongocxx::operation_exception& ex)
+    {
+        std::cerr << "MongoDB Exception: " << ex.what() << std::endl;
+    }
+}
+
 
 int MongoDB::getNumOfWins(std::string username)
 {
@@ -194,7 +242,7 @@ int MongoDB::getNumOfWins(std::string username)
 
         {
             std::shared_lock<std::shared_mutex> lock(this->_mtx);
-            if (!this->_client[DB_NAME].has_collection(USERS_COLLECTION))
+            if (!this->_client[DB_NAME].has_collection(PLAYERS_COLLECTION))
             {
                 return false;
             }
@@ -232,7 +280,7 @@ int MongoDB::getNumsOfPlayerGames(std::string username)
 
         {
             std::shared_lock<std::shared_mutex> lock(this->_mtx);
-            if (!this->_client[DB_NAME].has_collection(USERS_COLLECTION))
+            if (!this->_client[DB_NAME].has_collection(PLAYERS_COLLECTION))
             {
                 return false;
             }

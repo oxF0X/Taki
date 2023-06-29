@@ -20,6 +20,8 @@
 #define DrawCard_REQ 23
 #define GetGameState_REQ 24
 #define GetGameResult_REQ 25
+#define GetNumOfGames_REQ 26
+#define GetNumOfWins_REQ 27
 
 
 class IRequestHandler;

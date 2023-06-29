@@ -1,6 +1,7 @@
 #pragma once
 
 #include "LoginManager.h"
+#include "StatisticsManager.h"
 #include "LoginRequestHandler.h"
 #include "MenuRequestHandler.h"
 #include "RoomMemberRequestHandler.h"
@@ -24,6 +25,7 @@ public:
 	LoginManager& getLoginManger();
 	RoomManager& getRoomManager();
 	GameManager& getGameManger();
+	StatisticsManager& getStatisticsManager();
 
 	LoginRequestHandler* createLoginRequestHandler();
 	MenuRequestHandler* createMenuRequestHandler(LoggedUser user);
@@ -38,6 +40,7 @@ private:
 	RoomManager& m_roomManager;
 	LoginManager& m_loginManager;
 	GameManager& m_gameManager;
+	StatisticsManager m_statisticsManager;
 	IDatabase* m_database;
 	static bool is_exsit;
 };
