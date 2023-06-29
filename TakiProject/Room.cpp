@@ -10,6 +10,7 @@ Room::Room()
 
 }
 
+
 void Room::addUser(LoggedUser user)
 {
 	if (this->m_users.size() >= this->m_metatdata.maxPlayers)
@@ -22,13 +23,20 @@ void Room::addUser(LoggedUser user)
 	{
 		throw(TriviaException("This user already in the room"));
 	}
-	this->m_users.push_back(user);
+
+	{
+
+		this->m_users.push_back(user);
+	}
 }
 
 void Room::removeUser(LoggedUser user)
 {
-	this->m_users.erase(std::remove_if(m_users.begin(), m_users.end(),
-		[&](LoggedUser u) { return u.getUsername() == user.getUsername(); }));
+	{
+
+		this->m_users.erase(std::remove_if(m_users.begin(), m_users.end(),
+			[&](LoggedUser u) { return u.getUsername() == user.getUsername(); }));
+	}
 }
 
 std::vector<std::string> Room::getAllUsers() const
@@ -41,7 +49,7 @@ std::vector<std::string> Room::getAllUsers() const
 	return v;
 }
 
-RoomData Room::getRoomData() const
+RoomData Room::getRoomData()
 {
 	return this->m_metatdata;
 }
@@ -53,5 +61,7 @@ const unsigned int Room::isActive() const
 
 const void Room::setState(const bool state)
 {
-	this->m_metatdata.isActive = state;
+	{
+		this->m_metatdata.isActive = state;
+	}
 }

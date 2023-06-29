@@ -125,9 +125,8 @@ namespace TakiClient.Views
 
             // Create a Button control
             Button button = new Button();
-            button.Style = (Style)Application.Current.Resources["PopupButtonStyle"];
-            button.Height = 500;
-            button.Width = 350;
+            button.Height = 200;
+            button.Width = 200;            
             button.Content = Manager.GetManager().getClient().GetGameResult() + "won, \nreturn to menu";
             button.Margin = new Thickness(10);
             button.Click += EndGame_Click;
@@ -141,8 +140,8 @@ namespace TakiClient.Views
             // Set the position and size of the popup
             this.popup.PlacementTarget = this;
             this.popup.Placement = PlacementMode.Center;
-            this.popup.Width = 200;
-            this.popup.Height = 200;
+            this.popup.Width = 300;            
+            this.popup.Height = 300;
 
             // Open the popup
             this.popup.IsOpen = true;

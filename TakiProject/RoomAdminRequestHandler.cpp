@@ -37,6 +37,11 @@ RequestResult RoomAdminRequestHandler::handleRequest(RequestInfo info)
 
 RequestResult RoomAdminRequestHandler::startGame(RequestInfo info)
 {
+	if (this->m_room.getAllUsers().size() < 2)
+	{
+		return RequestResult{ JsonRequestPacketSerializer::serializeResponse(ErrorResponse{"Too few players :("}), nullptr};
+
+	}
 	Game& game(this->m_handlerFactory.getGameManger().createGame(this->m_room));
 	this->m_room.setState(true);
 	this->m_roomManager.deleteRoom(this->m_room.getRoomData().id);

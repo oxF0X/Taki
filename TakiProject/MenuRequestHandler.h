@@ -5,6 +5,7 @@
 #include "RequestHandlerFactory.h"
 #include "IRequestHandler.h"
 #include "MongoDB.h"
+#include <mutex>
 
 class RequestHandlerFactory;
 
@@ -32,6 +33,5 @@ private:
 	RoomManager& m_roomManager;
 	RequestHandlerFactory& m_handlerFactory;
 	IDatabase* m_database;
-
 
 };

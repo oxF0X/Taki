@@ -75,7 +75,7 @@
                              Foreground="White"
                             FontSize="12" 
                             FontFamily="Montserrat" />
-                    <Button Style="{StaticResource LoginButtonStyle}" Content="Statet game :D" Command="{Binding StartGameCommand}" Margin="0,-20,0,0"
+                    <Button Style="{StaticResource LoginButtonStyle}" Content="Start game :D" Command="{Binding StartGameCommand}" Margin="0,-20,0,0"
                              Foreground="White"
                             FontSize="12" 
                             FontFamily="Montserrat" />

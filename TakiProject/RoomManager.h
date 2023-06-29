@@ -11,6 +11,7 @@ public:
 	static RoomManager& getManager();
 	void createRoom(const LoggedUser& user, const RoomData& data);
 	void deleteRoom(const int& id);
+	void addUser(LoggedUser user, int id);
 	const unsigned int getRoomState(const int& id) const;
 	std::vector<RoomData> getRooms() const;
 	unsigned int getNumbersRooms() const;

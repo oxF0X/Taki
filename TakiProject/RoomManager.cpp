@@ -24,7 +24,7 @@ void RoomManager::createRoom(const LoggedUser& user, const RoomData& data)
 
 	{
 		std::lock_guard(this->_rooms_mtx);
-		this->m_rooms.insert(std::pair<int, Room>(data.id, Room(data, user)));
+		this->m_rooms.emplace(data.id, Room(data, user));
 	}
 }
 
@@ -33,6 +33,14 @@ void RoomManager::deleteRoom(const int& id)
 	{
 		std::lock_guard(this->_rooms_mtx);
 		this->m_rooms.erase(id);
+	}
+}
+
+void RoomManager::addUser(LoggedUser user, int id)
+{
+	{
+		std::lock_guard(this->_rooms_mtx);
+		this->getRoom(id).addUser(user);
 	}
 }
 

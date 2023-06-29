@@ -55,6 +55,13 @@ void Game::playCard(LoggedUser user, Card card)
 		return;
 	}
 
+	if (this->m_players.size() == 1)
+	{
+		this->isProgress = false;
+		this->winner = this->m_players.begin()->first->getUsername();
+		return;
+	}
+
 	if (this->m_currentPlayer->getUsername() != user.getUsername() && this->isProgress)
 	{
 		throw(TriviaException(std::string("Wrong player")));
@@ -117,9 +124,10 @@ void Game::playCard(LoggedUser user, Card card)
 	}
 	if (card.getCode() == "CZ")
 	{
-		this->crazyCard();
 		this->m_players[u].m_PlayerDeck.removeCard(card);
+		this->crazyCard();
 		this->hasCards(user);
+		this->moveToNextPlayer();
 		return;
 	}
 	if (card.getCode() == "ST")
@@ -177,6 +185,14 @@ void Game::playCard(LoggedUser user, Card card)
 void Game::removePlayer(LoggedUser user)
 {
 	auto it = m_players.begin();
+
+	if (this->m_currentPlayer->getUsername() == user.getUsername())
+	{
+		this->moveToNextPlayer();
+	}
+
+
+
 	while (it != m_players.end()) {
 		if (it->first->getUsername() == user.getUsername()) {
 			it = m_players.erase(it);
@@ -184,6 +200,12 @@ void Game::removePlayer(LoggedUser user)
 		else {
 			++it;
 		}
+	}
+
+	if (this->m_players.size() == 1)
+	{
+		this->isProgress = false;
+		this->winner = this->m_players.begin()->first->getUsername();
 	}
 }
 

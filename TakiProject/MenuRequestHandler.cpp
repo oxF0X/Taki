@@ -82,7 +82,7 @@ RequestResult MenuRequestHandler::joinRoom(RequestInfo info)
 	try
 	{
 		room = JsonRequestPacketDeserializer::deserializeJoinRoomRequest(info.buffer);
-		this->m_roomManager.getRoom(room.roomId).addUser(this->m_user);
+		this->m_roomManager.addUser(this->m_user, room.roomId);
 
 	}
 	catch (ParsingExceprion& e)

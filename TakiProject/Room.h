@@ -27,7 +27,7 @@ public:
 	void addUser(LoggedUser user);
 	void removeUser(LoggedUser user);
 	std::vector<std::string> getAllUsers() const;
-	RoomData getRoomData() const;
+	RoomData getRoomData();
 	const unsigned int isActive() const;
 	const void setState(const bool state);
 

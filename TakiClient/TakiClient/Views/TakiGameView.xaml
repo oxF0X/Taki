@@ -42,9 +42,9 @@
                     <RowDefinition Height="150"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="130"/>
                     <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="130"/>
                 </Grid.ColumnDefinitions>
 
                 <StackPanel Orientation="Horizontal" Grid.Column="2" HorizontalAlignment="Right">
@@ -75,7 +75,7 @@
                 </StackPanel>
 
 
-                <ListBox  ItemsSource="{Binding Side1Images}" Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <ListBox  ItemsSource="{Binding Side1Images}" Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" Background="Transparent" BorderBrush="Transparent">
                     <ListBox.ItemsPanel>
                         <ItemsPanelTemplate>
                             <WrapPanel Orientation="Vertical" />
@@ -94,7 +94,7 @@
 
 
 
-                <ListBox x:Name="buttonListBox" ItemsSource="{Binding ButtonItems}" Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <ListBox x:Name="buttonListBox" ItemsSource="{Binding ButtonItems}" Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Background="Transparent" BorderBrush="Transparent">
                     <ListBox.ItemsPanel>
                         <ItemsPanelTemplate>
                             <WrapPanel Orientation="Horizontal" />
@@ -113,7 +113,7 @@
 
 
 
-                <ListBox  ItemsSource="{Binding Side2Images}" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <ListBox  ItemsSource="{Binding Side2Images}" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Background="Transparent" BorderBrush="Transparent">
                     <ListBox.ItemsPanel>
                         <ItemsPanelTemplate>
                             <WrapPanel Orientation="Vertical" />
@@ -121,7 +121,7 @@
                     </ListBox.ItemsPanel>
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <Image Margin="0,-10,0,0" Source="{Binding}" Height="100" Width="50">
+                            <Image Margin="0,-10,0,0" Source="{Binding}" Height="140" Width="100">
                                 <Image.LayoutTransform>
                                     <RotateTransform Angle="90"/>
                                 </Image.LayoutTransform>
@@ -130,15 +130,15 @@
                     </ListBox.ItemTemplate>
                 </ListBox>
 
-                <ListBox  ItemsSource="{Binding Side3Images}" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <ListBox  ItemsSource="{Binding Side3Images}" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Background="Transparent" BorderBrush="Transparent">
                     <ListBox.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <WrapPanel Orientation="Vertical" />
+                            <WrapPanel Orientation="Horizontal" />
                         </ItemsPanelTemplate>
                     </ListBox.ItemsPanel>
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <Image Margin="0,-10,0,0" Source="{Binding}" Height="100" Width="50">
+                            <Image Margin="0,-10,0,0" Source="{Binding}" Height="140" Width="100">
                                 <Image.LayoutTransform>
                                     <RotateTransform Angle="180"/>
                                 </Image.LayoutTransform>

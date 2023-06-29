@@ -61,8 +61,9 @@ namespace TakiClient.ViewsModels
 
         private void ExecuteStartGame(object obj)
         {
-            this.clientHandler.GetStartGame();
-
+                        if(!this.clientHandler.GetStartGame())
+                        { return; }
+            //this.clientHandler.GetStartGame();
             Manager.GetManager().SetThreading(false);
             var view = new TakiGameView();
             Window w = Application.Current.MainWindow;
