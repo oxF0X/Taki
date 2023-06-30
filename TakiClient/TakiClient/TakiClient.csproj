@@ -1,0 +1,184 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Images\Amitjakhu-Drip-Plus.512.png" />
+    <None Remove="Images\B1.png" />
+    <None Remove="Images\B2.png" />
+    <None Remove="Images\B3.png" />
+    <None Remove="Images\B4.png" />
+    <None Remove="Images\B5.png" />
+    <None Remove="Images\B6.png" />
+    <None Remove="Images\B7.png" />
+    <None Remove="Images\B8.png" />
+    <None Remove="Images\B9.png" />
+    <None Remove="Images\back-image.jpg" />
+    <None Remove="Images\Back.png" />
+    <None Remove="Images\background.jpg" />
+    <None Remove="Images\BC.png" />
+    <None Remove="Images\BCD.png" />
+    <None Remove="Images\BD.png" />
+    <None Remove="Images\BP.png" />
+    <None Remove="Images\BS.png" />
+    <None Remove="Images\BT.png" />
+    <None Remove="Images\CC.png" />
+    <None Remove="Images\close.png" />
+    <None Remove="Images\CZ.png" />
+    <None Remove="Images\dashboard-template.png" />
+    <None Remove="Images\Email.png" />
+    <None Remove="Images\G1.png" />
+    <None Remove="Images\G2.png" />
+    <None Remove="Images\G3.png" />
+    <None Remove="Images\G4.png" />
+    <None Remove="Images\G5.png" />
+    <None Remove="Images\G6.png" />
+    <None Remove="Images\G7.png" />
+    <None Remove="Images\G8.png" />
+    <None Remove="Images\G9.png" />
+    <None Remove="Images\GC.png" />
+    <None Remove="Images\GD.png" />
+    <None Remove="Images\GP.png" />
+    <None Remove="Images\group.png" />
+    <None Remove="Images\groupIcon.png" />
+    <None Remove="Images\GS.png" />
+    <None Remove="Images\GT.png" />
+    <None Remove="Images\iconGroup.png" />
+    <None Remove="Images\key-icon.png" />
+    <None Remove="Images\Lock.png" />
+    <None Remove="Images\logo.png" />
+    <None Remove="Images\name.png" />
+    <None Remove="Images\R1.png" />
+    <None Remove="Images\R2.png" />
+    <None Remove="Images\R3.png" />
+    <None Remove="Images\R4.png" />
+    <None Remove="Images\R5.png" />
+    <None Remove="Images\R6.png" />
+    <None Remove="Images\R7.png" />
+    <None Remove="Images\R8.png" />
+    <None Remove="Images\R9.png" />
+    <None Remove="Images\RC.png" />
+    <None Remove="Images\RCD.png" />
+    <None Remove="Images\RD.png" />
+    <None Remove="Images\RP.png" />
+    <None Remove="Images\RS.png" />
+    <None Remove="Images\RT.png" />
+    <None Remove="Images\ST.png" />
+    <None Remove="Images\StartBackground.jpeg" />
+    <None Remove="Images\Taki_Logo.png" />
+    <None Remove="Images\user-icon.png" />
+    <None Remove="Images\username.png" />
+    <None Remove="Images\Y1.png" />
+    <None Remove="Images\Y2.png" />
+    <None Remove="Images\Y3.png" />
+    <None Remove="Images\Y4.png" />
+    <None Remove="Images\Y5.png" />
+    <None Remove="Images\Y6.png" />
+    <None Remove="Images\Y7.png" />
+    <None Remove="Images\Y8.png" />
+    <None Remove="Images\Y9.png" />
+    <None Remove="Images\YC.png" />
+    <None Remove="Images\YCD.png" />
+    <None Remove="Images\YD.png" />
+    <None Remove="Images\YP.png" />
+    <None Remove="Images\YS.png" />
+    <None Remove="Images\YT.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\CZ.png" />
+    <Resource Include="Images\GC.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\BC.png" />
+    <Resource Include="Images\BD.png" />
+    <Resource Include="Images\GD.png" />
+    <Resource Include="Images\RC.png" />
+    <Resource Include="Images\RD.png" />
+    <Resource Include="Images\YC.png" />
+    <Resource Include="Images\YD.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FontAwesome" Version="4.7.0" />
+    <PackageReference Include="FontAwesome.Sharp" Version="6.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\Amitjakhu-Drip-Plus.512.png" />
+    <Resource Include="Images\B1.png" />
+    <Resource Include="Images\B2.png" />
+    <Resource Include="Images\B3.png" />
+    <Resource Include="Images\B4.png" />
+    <Resource Include="Images\B5.png" />
+    <Resource Include="Images\B6.png" />
+    <Resource Include="Images\B7.png" />
+    <Resource Include="Images\B8.png" />
+    <Resource Include="Images\B9.png" />
+    <Resource Include="Images\back-image.jpg" />
+    <Resource Include="Images\Back.png" />
+    <Resource Include="Images\background.jpg" />
+    <Resource Include="Images\BP.png" />
+    <Resource Include="Images\BS.png" />
+    <Resource Include="Images\BT.png" />
+    <Resource Include="Images\CC.png" />
+    <Resource Include="Images\close.png" />
+    <Resource Include="Images\dashboard-template.png" />
+    <Resource Include="Images\Email.png" />
+    <Resource Include="Images\G1.png" />
+    <Resource Include="Images\G2.png" />
+    <Resource Include="Images\G3.png" />
+    <Resource Include="Images\G4.png" />
+    <Resource Include="Images\G5.png" />
+    <Resource Include="Images\G6.png" />
+    <Resource Include="Images\G7.png" />
+    <Resource Include="Images\G8.png" />
+    <Resource Include="Images\G9.png" />
+    <Resource Include="Images\GP.png" />
+    <Resource Include="Images\group.png" />
+    <Resource Include="Images\groupIcon.png" />
+    <Resource Include="Images\GS.png" />
+    <Resource Include="Images\GT.png" />
+    <Resource Include="Images\iconGroup.png" />
+    <Resource Include="Images\key-icon.png" />
+    <Resource Include="Images\Lock.png" />
+    <Resource Include="Images\logo.png" />
+    <Resource Include="Images\name.png" />
+    <Resource Include="Images\R1.png" />
+    <Resource Include="Images\R2.png" />
+    <Resource Include="Images\R3.png" />
+    <Resource Include="Images\R4.png" />
+    <Resource Include="Images\R5.png" />
+    <Resource Include="Images\R6.png" />
+    <Resource Include="Images\R7.png" />
+    <Resource Include="Images\R8.png" />
+    <Resource Include="Images\R9.png" />
+    <Resource Include="Images\RP.png" />
+    <Resource Include="Images\RS.png" />
+    <Resource Include="Images\RT.png" />
+    <Resource Include="Images\ST.png" />
+    <Resource Include="Images\StartBackground.jpeg" />
+    <Resource Include="Images\Taki_Logo.png" />
+    <Resource Include="Images\user-icon.png" />
+    <Resource Include="Images\username.png" />
+    <Resource Include="Images\Y1.png" />
+    <Resource Include="Images\Y2.png" />
+    <Resource Include="Images\Y3.png" />
+    <Resource Include="Images\Y4.png" />
+    <Resource Include="Images\Y5.png" />
+    <Resource Include="Images\Y6.png" />
+    <Resource Include="Images\Y7.png" />
+    <Resource Include="Images\Y8.png" />
+    <Resource Include="Images\Y9.png" />
+    <Resource Include="Images\YP.png" />
+    <Resource Include="Images\YS.png" />
+    <Resource Include="Images\YT.png" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,55 @@
+﻿<Page x:Class="TakiClient.Views.StatisticsPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:TakiClient.Views"
+             xmlns:viewModel="clr-namespace:TakiClient.ViewsModels"
+
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800"
+             Title="Stats View" Height="550" Width="800">
+
+
+    <Page.DataContext>
+        <viewModel:StatisticsViewModel/>
+    </Page.DataContext>
+
+    <Grid>
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock Text="Statistics" Foreground="White" FontSize="25" FontWeight="Medium"
+                               Margin="0, 15, 0, 0"  FontFamily="Montserrat" HorizontalAlignment="Center"/>
+
+            <TextBlock Text="Bets results:" Foreground="White" FontSize="20" FontWeight="Medium" 
+                               Margin="0, 5, 0, 0"  FontFamily="Montserrat" HorizontalAlignment="Left"/>
+
+            <TextBlock Text="Username:" Foreground="White" FontSize="15" FontWeight="Medium" 
+                               Margin="0, 5, 0, 0"  FontFamily="Montserrat" HorizontalAlignment="Left"/>
+            <TextBlock Text="{Binding BestPlayer}" Foreground="White" FontSize="12" 
+                               Margin="0, 5, 0, 0"  FontFamily="Montserrat" HorizontalAlignment="Left"/>
+
+            <TextBlock Text="Wins:" Foreground="White" FontSize="15" FontWeight="Medium" 
+                               Margin="0, 5, 0, 0"  FontFamily="Montserrat" HorizontalAlignment="Left"/>
+            <TextBlock Text="{Binding MaxWins}" Foreground="White" FontSize="12" 
+                               Margin="0, 5, 0, 0"  FontFamily="Montserrat" HorizontalAlignment="Left"/>
+
+
+            <TextBlock Text="Your results:" Foreground="White"  FontSize="20" FontWeight="Medium" 
+                               Margin="0, 50, 0, 0"  FontFamily="Montserrat" HorizontalAlignment="Left"/> 
+            
+            <TextBlock Text="You won:" Foreground="White" FontSize="15" FontWeight="Medium" 
+                               Margin="0, 15, 0, 0"  FontFamily="Montserrat" HorizontalAlignment="Left"/>
+            <TextBlock Text="{Binding WinsNum}" Foreground="White" FontSize="12" 
+                               Margin="0, 5, 0, 0"  FontFamily="Montserrat" HorizontalAlignment="Left"/>
+
+            <TextBlock Text="You played:" Foreground="White" FontSize="15" FontWeight="Medium" 
+                               Margin="0, 5, 0, 0"  FontFamily="Montserrat" HorizontalAlignment="Left"/>
+            <TextBlock Text="{Binding GamesNum}" Foreground="White" FontSize="12" 
+                               Margin="0, 5, 0, 0"  FontFamily="Montserrat" HorizontalAlignment="Left"/>
+        </StackPanel>
+
+
+    </Grid>
+
+
+</Page>
