@@ -7,10 +7,10 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
+// This class has functions for message deserialization (function for each type of response)
 
 namespace TakiClient.Modules
 {
-
     struct SignupResponse
     {
         public int status { get; set; }
@@ -73,7 +73,7 @@ namespace TakiClient.Modules
     public struct GetPersonalStatsResponse
     {
         public int status { get; set; }
-        public string[] statistics { get; set; }        
+        public string[] statistics { get; set; }
     }
 
     class JsonRequestPacketDeserializer

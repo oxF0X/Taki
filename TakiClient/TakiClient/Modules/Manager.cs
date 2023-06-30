@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+// This class stores the shared data between thw windows, socket, username and etc
 namespace TakiClient.Modules
 {
     public class Manager
@@ -20,9 +21,11 @@ namespace TakiClient.Modules
             this._isThreading = false;
         }
 
+        // Implemenating singelton ( singelton is required since it stores shared data between the windows and if the class
+        // will be create each time it will lose the point)
         public static Manager GetManager()
         {
-            if(_instanse == null)
+            if (_instanse == null)
             {
                 _instanse = new Manager();
             }
@@ -31,7 +34,7 @@ namespace TakiClient.Modules
 
         public Client getClient()
         {
-            return client; 
+            return client;
         }
 
         public bool IsThreading()
@@ -40,16 +43,30 @@ namespace TakiClient.Modules
         }
 
         public void SetThreading(bool isThreading)
-        { _isThreading = isThreading; }
+        {
+            _isThreading = isThreading;
+        }
 
 
-        public void SetRoomId(int roomId) {  this.roomId = roomId; }
+        public void SetRoomId(int roomId)
+        {
+            this.roomId = roomId;
+        }
 
-        public int GetRoomId() { return roomId;}
+        public int GetRoomId()
+        {
+            return roomId;
+        }
 
-        public void SetUsername(string username) {  this.username = username;}
+        public void SetUsername(string username)
+        {
+            this.username = username;
+        }
 
-        public string GetUsername() { return username;}
+        public string GetUsername()
+        {
+            return username;
+        }
 
     }
 }

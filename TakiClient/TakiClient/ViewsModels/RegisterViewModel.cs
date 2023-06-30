@@ -199,6 +199,7 @@ namespace TakiClient.ViewsModels
         {
             string password = new System.Net.NetworkCredential(string.Empty, Password).Password;
             string result = clientHandler.GetSignup(Username, password, Email, Address, Birthday, PhoneNumber);
+            Manager.GetManager().SetUsername(_username);
             if (result == "1")
             {
                 var menuView = new MenuView();

@@ -8,8 +8,12 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
+// This class has functions for message serialization (a function for each type of request)
+
+
 namespace TakiClient.Modules
 {
+
     struct LoginRequest
     {
         public string username { get; set; }
@@ -28,7 +32,7 @@ namespace TakiClient.Modules
 
     struct JoinRoomRequest
     {
-        public int roomId { get; set; }    
+        public int roomId { get; set; }
     }
 
     struct GetPalayersInRoomRequest
@@ -45,7 +49,7 @@ namespace TakiClient.Modules
 
     public struct PlaceCardReq
     {
-        public string cardId { get; set;}
+        public string cardId { get; set; }
     }
 
     class JsonRequestPacketSerializer
@@ -73,7 +77,7 @@ namespace TakiClient.Modules
         }
 
 
-        public static  byte[] SerializeSignup(string username, string password, string email, string address, string birthday, string phoneNumber)
+        public static byte[] SerializeSignup(string username, string password, string email, string address, string birthday, string phoneNumber)
         {
             SignupRequest request = new SignupRequest()
             {

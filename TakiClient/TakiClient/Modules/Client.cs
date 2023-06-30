@@ -11,6 +11,9 @@ using System.Windows.Forms;
 using System.Text.Json;
 using System.Resources.Extensions;
 
+
+// This class handles the communication with the server
+
 namespace TakiClient.Modules
 {
     public class Client
@@ -30,8 +33,6 @@ namespace TakiClient.Modules
         const int GET_GAME_STATE_RES = 112;
 
 
-
-
         const int GET_ROOMS_REQ = 13;
         const int GET_SIGN_OUT = 12;
         const int GET_LEAVE_ROOM = 19;
@@ -43,7 +44,6 @@ namespace TakiClient.Modules
         const int GetGameResult_REQ = 25;
         const int GetNumOfGames_REQ = 26;
         const int GetNumOfWins_REQ = 27;
-
 
 
         private TcpClient socket;
@@ -62,7 +62,8 @@ namespace TakiClient.Modules
             this.socket.Close();
         }
 
-
+        // This function sends login request to the server
+        // return 1 - success, else return error msg
         public string GetLogin(string username, string password)
         {
             byte[] data = JsonRequestPacketSerializer.SerializeLogin(username, password);
@@ -91,9 +92,11 @@ namespace TakiClient.Modules
             }
         }
 
+        // This function get the current active rooms on the server and returns
+        // array of room data struct
         public RoomData[] GetRooms()
         {
-            byte [] reqCode = new byte[5] { GET_ROOMS_REQ, 0, 0, 0, 0 };
+            byte[] reqCode = new byte[5] { GET_ROOMS_REQ, 0, 0, 0, 0 };
             clientStream.Write(reqCode, 0, reqCode.Length);
             int code = GetCodeFromSocket();
             int size = GetSizeFromSocket();
@@ -118,6 +121,9 @@ namespace TakiClient.Modules
                     return null;
             }
         }
+
+        // This function sends a create room request to the server
+        // return 1 - success, else return error msg
 
         public string CreateRoom(string roomName, int maxUsers, int answerTimeout)
         {
@@ -146,6 +152,8 @@ namespace TakiClient.Modules
             }
         }
 
+        // This function send signup request to the server
+        // return 1 - success, else return error msg
         public string GetSignup(string username, string password, string email, string address, string birthday, string phoneNumber)
         {
             byte[] data = JsonRequestPacketSerializer.SerializeSignup(username, password, email, address, birthday, phoneNumber);
@@ -170,11 +178,12 @@ namespace TakiClient.Modules
                     return JsonRequestPacketDeserializer.DeserializeLogIn(str).status.ToString();
 
                 default:
-             
+
                     return "Something went wrong";
             }
         }
 
+        // This function sends logout request and return if the request was done correctly
         public bool GetLogout()
         {
             byte[] reqCode = new byte[5] { GET_SIGN_OUT, 0, 0, 0, 0 };
@@ -189,12 +198,13 @@ namespace TakiClient.Modules
             byte[] buffer = new byte[size];
             int bytesNum = clientStream.Read(buffer, 0, size);
             string str = Encoding.Default.GetString(buffer);
-            
+
 
             return code == SIGNOUT_RES;
         }
 
 
+        // This function send request to get players in room and returns string array with their usernames
         public string[] GetPlayersInRoom(int roomId)
         {
             byte[] data = JsonRequestPacketSerializer.SerializeGetPalayersInRoom(roomId);
@@ -217,6 +227,7 @@ namespace TakiClient.Modules
 
         }
 
+        // This function adds a user to a room
         public string GetJoinRoom(int roomId)
         {
             byte[] data = JsonRequestPacketSerializer.SerializeJoinRoom(roomId);
@@ -242,7 +253,7 @@ namespace TakiClient.Modules
 
         }
 
-
+        // This function returns the current room state ( its players and etc)
         public GetRoomsStateResponse? GetRoomState()
         {
             byte[] reqCode = new byte[5] { JsonRequestPacketSerializer.GET_ROOM_STATE_REQ, 0, 0, 0, 0 };
@@ -257,11 +268,11 @@ namespace TakiClient.Modules
             byte[] buffer = new byte[size];
             int bytesNum = clientStream.Read(buffer, 0, size);
             string str = Encoding.Default.GetString(buffer);
-            
+
             return code == GET_ROOM_STATE_RES ? JsonRequestPacketDeserializer.DeserializeGetRoomState(str) : null;
         }
 
-
+        // This function sends request to leave the room
         public bool GetLeaveRoom()
         {
             byte[] reqCode = new byte[5] { GET_LEAVE_ROOM, 0, 0, 0, 0 };
@@ -281,6 +292,7 @@ namespace TakiClient.Modules
             return code == GET_LEAVE_ROOM_RES;
         }
 
+        // This function send request to close the room
         public bool GetCloseRoom()
         {
             byte[] reqCode = new byte[5] { GET_CLOSE_ROOM, 0, 0, 0, 0 };
@@ -300,6 +312,7 @@ namespace TakiClient.Modules
             return code == GET_CLOSE_ROOM_RES;
         }
 
+        // This function sends request to the server to strat a new game
         public bool GetStartGame()
         {
             byte[] reqCode = new byte[5] { GET_START_GAME_REQ, 0, 0, 0, 0 };
@@ -313,14 +326,11 @@ namespace TakiClient.Modules
 
             byte[] buffer = new byte[size];
             int bytesNum = clientStream.Read(buffer, 0, size);
-            
-            //string str = Encoding.Default.GetString(buffer);
-
 
             return code == GET_START_GAME_RES;
         }
 
-
+        // This function returns the data with the current gae state
         public GetGameStateResponse? GetGameState()
         {
             byte[] reqCode = new byte[5] { GET_GAME_STATE_REQ, 0, 0, 0, 0 };
@@ -339,6 +349,7 @@ namespace TakiClient.Modules
             return code == GET_GAME_STATE_RES ? JsonRequestPacketDeserializer.DeserializeGetGameState(str) : null;
         }
 
+        // This function send to the server the card that the user want to place
         public bool GetPlaceCard(string cardId)
         {
             byte[] req = JsonRequestPacketSerializer.SerializePlayCard(cardId);
@@ -358,6 +369,7 @@ namespace TakiClient.Modules
             return res.status == 1;
         }
 
+        // This function send to the server that the user takes card from the deck
         public bool GetDrawCard()
         {
             string cardId = "00";
@@ -380,6 +392,7 @@ namespace TakiClient.Modules
         }
 
 
+        // This function returns username of the player who won
         public string GetGameResult()
         {
             string cardId = "00";
@@ -398,15 +411,15 @@ namespace TakiClient.Modules
             string str = Encoding.Default.GetString(buffer);
 
             return JsonRequestPacketDeserializer.DeserializeGetGameResult(str).winner;
-           
+
         }
 
 
-
+        // This function returns array where the values are {username, played games, wins}
         public string[] GetUsersStats()
         {
             string cardId = "00";
-            byte[] req = new byte[5] {GetNumOfGames_REQ, 0, 0, 0, 0 };
+            byte[] req = new byte[5] { GetNumOfGames_REQ, 0, 0, 0, 0 };
 
             clientStream.Write(req, 0, req.Length);
             int code = GetCodeFromSocket();
@@ -419,9 +432,9 @@ namespace TakiClient.Modules
 
         }
 
+        // This function returns username with the best statisttics
         public string[] GetBestPlayer()
         {
-            string cardId = "00";
             byte[] req = new byte[5] { GetNumOfWins_REQ, 0, 0, 0, 0 };
 
             clientStream.Write(req, 0, req.Length);
@@ -435,18 +448,19 @@ namespace TakiClient.Modules
 
         }
 
-
+        // Get the message code ( get 1 byte from teh  socket and converts it to int)
         private byte GetCodeFromSocket()
         {
             byte[] buffer = new byte[1];
-            int bytesNum = clientStream.Read(buffer, 0, 1);
+            clientStream.Read(buffer, 0, 1);
             return buffer[0];
         }
 
+        // Get the daya size from socket (gets 4 bytes from socket and converts them to 4 byte int)
         private int GetSizeFromSocket()
         {
             byte[] bytes = new byte[4];
-            int bytesNum = clientStream.Read(bytes, 0, 4);
+            clientStream.Read(bytes, 0, 4);
             return bytes[3] << 24 | bytes[2] << 16 | bytes[1] << 8 | bytes[0];
         }
 
