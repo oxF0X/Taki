@@ -4,11 +4,13 @@ StatisticsManager::StatisticsManager() :m_database(&MongoDB::getDB())
 {
 }
 
+// This function returns all the stats of the best user
 std::vector<std::string> StatisticsManager::getHighScore()
 {
 	return std::vector<std::string>();
 }
 
+// This function returns all the stats of the user
 std::vector<std::string> StatisticsManager::getUserStats(std::string username)
 {
 	std::vector<std::string> result;

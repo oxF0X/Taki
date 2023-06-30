@@ -48,6 +48,7 @@ Game::Game(std::vector<std::string> players) : m_currentCard("00"), m_database(&
 	this->isTaki = false;
 }
 
+// This function get a card and a user and שבא according to the logic of the game 
 void Game::playCard(LoggedUser user, Card card)
 {
 	if (!this->isProgress)
@@ -175,6 +176,7 @@ void Game::playCard(LoggedUser user, Card card)
 	this->moveToNextPlayer();
 }
 
+// This function remove player from the game
 void Game::removePlayer(LoggedUser user)
 {
 	auto it = m_players.begin();
@@ -187,7 +189,7 @@ void Game::removePlayer(LoggedUser user)
 
 
 	while (it != m_players.end()) {
-		if (it->first->getUsername() == user.getUsername()) {
+		if (it->first->getUsername() == user.getUsername()) { 
 			it = m_players.erase(it);
 		}
 		else {
@@ -217,7 +219,6 @@ std::vector<std::string> Game::getPlayers() const
 	}
 	return v;
 }
-
 
 std::map<std::string, std::vector<std::string>> Game::getCardsByPlayer() const
 {
@@ -251,6 +252,7 @@ std::string Game::getCurrentPlayer() const
 	return this->m_currentPlayer->getUsername();
 }
 
+// The function set the current player variable to the next player
 void Game::moveToNextPlayer()
 {
 	auto it = this->m_players.upper_bound(this->m_currentPlayer);
@@ -264,6 +266,7 @@ void Game::moveToNextPlayer()
 	this->m_currentPlayer = (it)->first;
 }
 
+// The function draw cards from the game card deck to the player card deck
 void Game::DrawCards(int numOfCards)
 {
 	for (int i = 0;  i < numOfCards;  i++)
@@ -276,6 +279,7 @@ void Game::DrawCards(int numOfCards)
 
 }
 
+// This function check if the current player has cards, and if he doesn't have card he wins
 void Game::hasCards(LoggedUser user)
 {
 	if (this->m_players.size() == 0)
@@ -304,6 +308,7 @@ void Game::hasCards(LoggedUser user)
 	this->winner = user.getUsername();
 }
 
+// This function change the cards deck for the players
 void Game::crazyCard()
 {
 	GameData first = this->m_players.begin()->second;
@@ -319,6 +324,7 @@ void Game::crazyCard()
 
 }
 
+// This function checks if the game card is empty and reset him
 void Game::resetGameDeck()
 {
 	if (this->m_gameDeck.getCards().size() == 0)
@@ -339,8 +345,7 @@ void Game::resetGameDeck()
 	}
 }
 
-
-
+// This function change the game flow
 void Game::changeDirection()
 {
 	if (this->m_currentDirection == 1)
@@ -353,6 +358,7 @@ void Game::changeDirection()
 	}
 }
 
+// This function move one extra player to stop the next player
 void Game::stopPlayer()
 {
 	this->moveToNextPlayer();

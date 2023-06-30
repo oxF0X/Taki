@@ -32,6 +32,7 @@ int Helper::getIntPartFromSocket(const SOCKET sc, const int bytesNum)
 	return (int)((bytes[3] << 24) | (bytes[2] << 16) | (bytes[1] << 8) | bytes[0]);
 }
 
+// This function recive a data from the socket by the bytes num 
 std::vector<uint8_t> Helper::getDataFromSocket(SOCKET sc, const int bytesNum)
 {
 	if (bytesNum == 0)
@@ -74,6 +75,7 @@ std::vector<uint8_t> Helper::intToBytes(int value)
 	return bytes;
 }
 
+// This function recive a data from the socket by the bytes num 
 std::string Helper::getPartFromSocket(const SOCKET sc, const int bytesNum)
 {
 	if (bytesNum == 0)

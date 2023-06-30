@@ -20,6 +20,7 @@ Comunicator::~Comunicator()
 	catch (...) {}
 }
 
+// This function starting to listen to clients
 void Comunicator::startHandleRequests()
 {
 	this->bindAndListen();
@@ -31,6 +32,7 @@ Comunicator& Comunicator::getComunicator(RequestHandlerFactory& handler)
 	return c;
 }
 
+// This function listen to requests of clients
 void Comunicator::bindAndListen()
 {
 	SOCKET client_socket;
@@ -57,6 +59,7 @@ void Comunicator::bindAndListen()
 	}
 }
 
+// This function create new socket with client
 void Comunicator::acceptClient()
 {
 	SOCKET clientSocket = accept(this->m_serverSocket, NULL, NULL);
@@ -65,13 +68,14 @@ void Comunicator::acceptClient()
 		throw std::exception(__FUNCTION__);
 
 	std::cout << "Client accepted. Server and client can speak" << std::endl;
-	// the function that handle the conversation with the client
+	// The function that handle the conversation with the client
 
 	this->m_clients[clientSocket] = this->m_handlerFactory.createLoginRequestHandler();
 	std::thread t(&Comunicator::handleNewClient, this, clientSocket);
 	t.detach();
 }
 
+//This function accept requests from the client and handle them with IRequestHandler
 void Comunicator::handleNewClient(SOCKET socket)
 {
 	int msgCode, msgSize;
@@ -128,6 +132,7 @@ void Comunicator::handleNewClient(SOCKET socket)
 	}
 }
 
+// This function remove user stats in there state if they disconnect 
 void Comunicator::disconnectUser(SOCKET socket)
 {
 	this->m_clients[socket]->exitUser();

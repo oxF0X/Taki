@@ -22,6 +22,7 @@ typedef struct GameData
 
 } GameData;
 
+//This function is responsible for the game's progress
 class Game
 {
 public:

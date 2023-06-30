@@ -45,6 +45,7 @@ void GameRequestHandler::exitUser()
 
 }
 
+// This function activates the function play card in the game
 RequestResult GameRequestHandler::PlayCard(RequestInfo info)
 {
 	PlaceCardRequest card;
@@ -64,6 +65,7 @@ RequestResult GameRequestHandler::PlayCard(RequestInfo info)
 	return RequestResult{ JsonRequestPacketSerializer::serializeResponse(PlaceCardResponse{1}), nullptr};
 }
 
+// This function activates the remove player from the game
 RequestResult GameRequestHandler::leaveGame(RequestInfo info)
 {
 	try
@@ -77,6 +79,7 @@ RequestResult GameRequestHandler::leaveGame(RequestInfo info)
 	return RequestResult{JsonRequestPacketSerializer::serializeResponse(LeaveGameResponse{ 1 }), this->m_handlerFactory.createMenuRequestHandler(LoggedUser{this->m_user.getUsername()})};
 }
 
+// This function gets the game result from the game class
 RequestResult GameRequestHandler::getGameResults(RequestInfo info)
 {
 	std::map<std::string, std::vector<std::string>> cards = this->m_game.getCardsByPlayer();
@@ -89,6 +92,7 @@ RequestResult GameRequestHandler::getGameResults(RequestInfo info)
 
 }
 
+// This function return the game stats
 RequestResult GameRequestHandler::getGameSate(RequestInfo info)
 {
 	bool isProgress;

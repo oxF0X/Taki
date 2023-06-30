@@ -35,6 +35,7 @@ RequestResult RoomAdminRequestHandler::handleRequest(RequestInfo info)
 	}
 }
 
+// This function are starting the game and close the current room
 RequestResult RoomAdminRequestHandler::startGame(RequestInfo info)
 {
 	if (this->m_room.getAllUsers().size() < 2)
@@ -48,13 +49,14 @@ RequestResult RoomAdminRequestHandler::startGame(RequestInfo info)
 	return RequestResult{ JsonRequestPacketSerializer::serializeResponse(StartRoomResponse{ 1 }), this->m_handlerFactory.createGameRequestHandler(this->m_user,game)};
 }
 
-
+// This function close the current room
 RequestResult RoomAdminRequestHandler::closeRoom(RequestInfo info)
 {
 	this->m_roomManager.deleteRoom(this->m_room.getRoomData().id);
 	return RequestResult{ JsonRequestPacketSerializer::serializeResponse(CloseRoomResponse{1}), this->m_handlerFactory.createMenuRequestHandler(this->m_user) };
 }
 
+// This function return the room stats
 RequestResult RoomAdminRequestHandler::getRoomState(RequestInfo info)
 {
 	unsigned int status;

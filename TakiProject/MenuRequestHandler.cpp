@@ -48,6 +48,7 @@ RequestResult MenuRequestHandler::signout()
 	return RequestResult{ JsonRequestPacketSerializer::serializeResponse(LogoutResponse{1}), this->m_handlerFactory.createLoginRequestHandler() };
 }
 
+// This function returns all the rooms that are available
 RequestResult MenuRequestHandler::getRooms(RequestInfo info)
 {
 	std::vector<RoomData> rooms;
@@ -55,6 +56,7 @@ RequestResult MenuRequestHandler::getRooms(RequestInfo info)
 	return RequestResult{ JsonRequestPacketSerializer::serializeResponse(GetRoomsResponse{1, rooms}), nullptr };
 }
 
+// This function returns all the players in the room
 RequestResult MenuRequestHandler::getPlayersInRoom(RequestInfo info)
 {
 	GetPalayersInRoomRequest room;
@@ -76,6 +78,7 @@ RequestResult MenuRequestHandler::getPlayersInRoom(RequestInfo info)
 	return RequestResult{ JsonRequestPacketSerializer::serializeResponse(GetPlayersInRoomResponse{players}), nullptr };
 }
 
+// This function connect user to room
 RequestResult MenuRequestHandler::joinRoom(RequestInfo info)
 {
 	JoinRoomRequest room;
@@ -116,6 +119,7 @@ RequestResult MenuRequestHandler::createRoom(RequestInfo info)
 	return RequestResult{ JsonRequestPacketSerializer::serializeResponse(CreateRoomResponse{1}),  this->m_handlerFactory.createRoomAdminRequestHandler(this->m_user, this->m_roomManager.getRoom(this->m_roomManager.getNumbersRooms() - 1)) };
 }
 
+// This function returns all the stats of the user
 RequestResult MenuRequestHandler::getPersonalStats(RequestInfo info)
 {
 
@@ -125,6 +129,7 @@ RequestResult MenuRequestHandler::getPersonalStats(RequestInfo info)
 	
 }
 
+// This function returns all the stats of the best user
 RequestResult MenuRequestHandler::getHighScore(RequestInfo info)
 {
 	std::vector<std::string> users = this->m_database->getUsers();

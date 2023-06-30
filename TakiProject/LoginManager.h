@@ -6,6 +6,7 @@
 #include "TriviaException.h"
 #include <algorithm>
 #include <regex>
+#include <mutex>
 
 
 class LoginManager
@@ -19,7 +20,7 @@ public:
 private:
 	IDatabase *m_database;
 	std::vector<LoggedUser> m_loggedUsers;
-
+	std::mutex m_mutex;
 	LoginManager(IDatabase* db);
 	void matchRegex(std::regex r, std::string s, std::string err);
 };

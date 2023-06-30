@@ -16,6 +16,7 @@ MongoDB::~MongoDB()
 {
 }
 
+// This function connect to the database server
 bool MongoDB::open()
 {
     this->_client = mongocxx::client{ mongocxx::uri{} };
@@ -28,6 +29,7 @@ bool MongoDB::close()
     return true;
 }
 
+// This function check if the name exit in the database
 int MongoDB::doesUserExist(std::string username)
 {
     try
@@ -65,6 +67,7 @@ int MongoDB::doesUserExist(std::string username)
     }
 }
 
+// This function check if the name and the password are match
 int MongoDB::doesPasswordMatch(std::string username, std::string password)
 {
     try
@@ -101,6 +104,7 @@ int MongoDB::doesPasswordMatch(std::string username, std::string password)
     }
 }
 
+// This function add new user to the database
 int MongoDB::addNewUser(std::string username, std::string password, std::string email, const std::string address, const std::string phoneNumber, const std::string birthday)
 {
     try
@@ -135,6 +139,7 @@ int MongoDB::addNewUser(std::string username, std::string password, std::string 
     return 0;
 }
 
+// This function write game result to the database
 void MongoDB::writeResultToDB(std::vector<std::string> players, std::string winner)
 {
     try
@@ -177,6 +182,7 @@ void MongoDB::writeResultToDB(std::vector<std::string> players, std::string winn
     }
 }
 
+// This function returns all the users from the database
 std::vector<std::string> MongoDB::getUsers()
 {
     try
@@ -225,7 +231,7 @@ std::vector<std::string> MongoDB::getUsers()
     }
 }
 
-
+// This function returns all the wins of the user from the database
 int MongoDB::getNumOfWins(std::string username)
 {
     try
@@ -264,6 +270,7 @@ int MongoDB::getNumOfWins(std::string username)
     }
 }
 
+// This function returns all the games of the user from the database
 int MongoDB::getNumsOfPlayerGames(std::string username)
 {
     try

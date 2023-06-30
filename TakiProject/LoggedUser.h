@@ -3,6 +3,7 @@
 #include <iostream>
 #include <string>
 
+//This class represents a online user
 class LoggedUser
 {
 public:

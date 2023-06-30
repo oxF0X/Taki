@@ -29,13 +29,16 @@ void LoginManager::signup(const std::string username, const std::string password
 		throw(TriviaException(std::string("This user already exists")));
 	}
 
-	this->m_loggedUsers.push_back(LoggedUser(username));
+	{
+		std::lock_guard<std::mutex>(this->m_mutex);
+		this->m_loggedUsers.push_back(LoggedUser(username));
+	}
 }
 
 void LoginManager::login(const std::string username, const std::string password)
 {
 	if (std::find_if(this->m_loggedUsers.begin(), this->m_loggedUsers.end(),
-	[&](const LoggedUser& c) { return (c.getUsername() == username); }) != this->m_loggedUsers.end())
+		[&](const LoggedUser& c) { return (c.getUsername() == username); }) != this->m_loggedUsers.end())
 	{
 		throw(TriviaException(std::string("This user already logged in")));
 	}
@@ -44,8 +47,10 @@ void LoginManager::login(const std::string username, const std::string password)
 	{
 		throw(TriviaException(std::string("Invalid credetionals")));
 	}
-
-	this->m_loggedUsers.push_back(LoggedUser(username));
+	{
+		std::lock_guard<std::mutex>(this->m_mutex);
+		this->m_loggedUsers.push_back(LoggedUser(username));
+	}
 }
 
 void LoginManager::logout(const std::string username)
@@ -57,14 +62,17 @@ void LoginManager::logout(const std::string username)
 	{
 		throw(TriviaException(std::string("This user isn't logged in")));
 	}
-
-	this->m_loggedUsers.erase(it);
+	{
+		std::lock_guard<std::mutex>(this->m_mutex);
+		this->m_loggedUsers.erase(it);
+	}
 }
 
 LoginManager::~LoginManager()
 {
 }
 
+// This function execute regex on a giving string
 void LoginManager::matchRegex(std::regex r, std::string s, std::string err)
 {
 	if (!std::regex_search(s, r))

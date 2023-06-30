@@ -18,6 +18,7 @@ class RoomMemberRequestHandler;
 class RoomAdminRequestHandler;
 class GameRequestHandler;
 
+// This class are responsible for the all Situations that exist in the game
 class RequestHandlerFactory
 {
 public:

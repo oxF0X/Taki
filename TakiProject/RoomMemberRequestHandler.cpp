@@ -38,6 +38,7 @@ RequestResult RoomMemberRequestHandler::leaveRoom(RequestInfo info)
 	return RequestResult{ JsonRequestPacketSerializer::serializeResponse(LeaveRoomResponse{1}), this->m_handlerFactory.createMenuRequestHandler(this->m_user) };
 }
 
+// This function return the room stats
 RequestResult RoomMemberRequestHandler::getRoomState(RequestInfo info)
 {
 	unsigned int status;

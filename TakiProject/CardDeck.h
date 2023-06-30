@@ -6,8 +6,7 @@
 #include "json.hpp"
 #include "Card.h"
 
-
-
+// This class are represents a player card deck
 class CardDeck
 {
 public:

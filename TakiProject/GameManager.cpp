@@ -30,6 +30,7 @@ void GameManager::deleteGame(Game& g)
 	}
 }
 
+// This function gets name and return a game if the name is one of the players
 Game& GameManager::getGame(std::string name)
 {
 	for (int i = 0; i < this->m_games.size(); i++)
